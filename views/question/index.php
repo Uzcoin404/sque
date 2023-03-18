@@ -1,7 +1,7 @@
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>
-            <?=$this->rendePartial("_viewQuestion",["question"=>$question]);?>
+            <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
     </div>
     <div class="questions_menu">

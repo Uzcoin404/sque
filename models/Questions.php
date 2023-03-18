@@ -33,9 +33,23 @@ class Questions extends \yii\db\ActiveRecord
     {
         return [
             [['title','text','coast','status','data','owner_id'], 'required',],
-            [['name'],'string'],
+            [['title'],'string'],
+            [['text'],'string'],
+            [['coast'], 'double', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]*\s*$/'],
+            [['status','data','owner_id'],'integer'],
         ];
     }
     
+    public function attributeLabels()
+    {
+        return [
+            'title' => \Yii::t('app', 'Title of question'),
+            'text' => \Yii::t('app', 'Text of question'),
+            'coast' => \Yii::t('app', 'Coast of question'),
+            'status' => \Yii::t('app', 'Status of question'),
+            'data' => \Yii::t('app', 'Data created of question'),
+            'owner_id' => \Yii::t('app', 'Owner of question'),
+        ];
+    }
 
 }

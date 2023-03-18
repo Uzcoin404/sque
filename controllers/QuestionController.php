@@ -55,6 +55,32 @@ class QuestionController extends Controller
             ]
         );
     }
+
+    public function actionCreate()
+    {
+        
+        $model = new Questions();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $user = Yii::$app->user->identity;
+            $model->owner_id=$user->id;
+            $model->data=strtotime('now');
+            $model->status=1;
+            if($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            
+        }
+
+        return $this->render(
+            'create',
+            [
+                "model"=>$model,
+            ]
+        );
+    }
+
+
     
     protected function findModel($id)
     {

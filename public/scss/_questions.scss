@@ -1,15 +1,15 @@
 .questions{
     padding: 2em;
-    &_list{
+    .questions__list{
         padding: 2em;
-        &__element{
+        .questions__list__element{
             padding: 2em;
             border-radius:10px;
             background:#fff;
         }
     }
-    &_menu{
-        &__buttons{
+    .questions_menu{
+        .questions_menu__buttons{
 
         }
     }   
