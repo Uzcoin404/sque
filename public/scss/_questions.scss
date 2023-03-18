@@ -1,0 +1,16 @@
+.questions{
+    padding: 2em;
+    &_list{
+        padding: 2em;
+        &__element{
+            padding: 2em;
+            border-radius:10px;
+            background:#fff;
+        }
+    }
+    &_menu{
+        &__buttons{
+
+        }
+    }   
+}

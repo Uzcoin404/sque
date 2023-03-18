@@ -7,11 +7,25 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru-RU', 
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en-US',
+                    'fileMap' => [
+                        'app'       => 'app.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'iHJRmiE30qxWpFJx7khGqtkDczonibjs',
@@ -24,7 +38,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'error/error',
         ],
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
@@ -52,23 +66,25 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                "/"=>"site/main",
-                "/login"=>'site/login',
-                '/main'=>'site/main',
-                '/logout'=>'site/logout',
-                "/registration"=>'site/registration',
-                "restore"=>"site/restore",
+                "/"=>"question/index",
+                "/login"=>'registration/login',
+                '/main'=>'registration/main',
+                '/logout'=>'registration/logout',
+                "/registration"=>'registration/registration',
+                "/restore"=>"registration/restore",
+                "/ChangeEmail/<hash>"=>"registration/changeemail",
+                "/activate/<hash>"=>"registration/activate",
+                "/changepassword"=>"registration/changepassword",
+                "/user/clearimg"=>"registration/clearimg",
                 /* Пользователь */
                 "/profile"=>'user/index',
                 "/profile/download"=>'user/download',
                 "/profile/ajx/get"=>'user/get',
                 "/profile/ajx/update"=>'user/update',
-                "/ChangeEmail/<hash>"=>"site/changeemail",
-                "/activate/<hash>"=>"site/activate",
-                "/restore"=>"site/restore",
-                "/changepassword"=>"site/changepassword",
-                "/user/clearimg"=>"site/clearimg",
                 /* Пользователь */
+                /* Вопросы */
+                '/questions/create'=>"question/create",
+                /* Вопросы */
             ],
         ],
     ],

@@ -24,16 +24,15 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
+<?php $this->beginBody() ?>
+    <div class="wrapper">
+        <?= $this->render('main/_header') ?>
     
-    <?php $this->beginBody() ?>
-        <div class="page">
-            <?= $this->render('_header') ?>
-            <?= $content ?>
-        </div>
-
-    <?php $this->endBody() ?>
-
-    <?= $this->render('_footer') ?>
+            <?= $this->render('main/_content',["content"=>$content]) ?>
+       
+        <?= $this->render('main/_footer') ?>
+    </div>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>

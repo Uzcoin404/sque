@@ -1,5 +1,16 @@
 <?php
+
+/* @var $this \yii\web\View */
+/* @var $content string */
+
+use app\widgets\Alert;
 use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\RegisterAsset;
+
+RegisterAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -11,25 +22,17 @@ use yii\helpers\Html;
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link href="/css/simplebar.css" rel="stylesheet">
-    <link href="/css/jquery.formstyler.css" rel="stylesheet">
-    <link href="/css/jquery.formstyler.theme.css" rel="stylesheet">
-    <link href="/css/main.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-
-        <div class="page login">
-            <?= $content ?>
-        </div>
-        <div class="main-footer-free">
-                                <!-- <a href="/Terms_of_use.pdf">Пользовательское соглашение</a> |
-                                <a href="/Privacy_Policy.pdf">Политика конфиденциальности</a> -->
-                        </div>
-        <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-        <script src="/js/simplebar.js"></script>
-        <script src="/js/bootstrap.bundle.min.js"></script>
-        <script src="/js/all.js"></script>
+<?php $this->beginBody() ?>
+    <div class="wrapper">
+        <?= $this->render('free/_header') ?>
+    
+            <?= $this->render('free/_content',["content"=>$content]) ?>
+       
+        <?= $this->render('free/_footer') ?>
+    </div>
+<?php $this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
