@@ -1,3 +1,4 @@
+<?php $this->title = \Yii::t('app', 'Questions list'); ?>
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>

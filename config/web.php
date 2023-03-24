@@ -84,6 +84,8 @@ $config = [
                 /* Пользователь */
                 /* Вопросы */
                 '/questions/create'=>"question/create",
+                '/questions/view/<slug:\w+>'=>'question/view',
+                '/questions/myquestions'=>'question/myquestions',
                 /* Вопросы */
             ],
         ],

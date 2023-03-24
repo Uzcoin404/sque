@@ -16,7 +16,20 @@
         "Coast of question"=>"Стоимость за правильный ответ",
         "Status of question"=>"Статус вопроса",
         "Data created of question"=>"Дата создания вопроса",
-        "Owner of question"=>"Пользователь который создал вопрос"
+        "Owner of question"=>"Пользователь который создал вопрос",
+        "Country"=>"Страна",
+        "Draft"=>"Черновик",
+        "Submitted for moderation"=>"На модерации",
+        "Reviewed"=>"Возвращен",
+        "Ready for publication"=>"Опубликован",
+        "Published, you can answer"=>"Открыт",
+        "Published, you can not answer"=>"Закрыт для ответов",
+        "Closed"=>"Закрыт",
+        "Payments"=>"Оплачен",
+        "Rejection"=>"Отказ",
+        "{d} days {h} hours"=>"{d} дни {h} часа",
+        "{h} hours"=>"{h} часа",
+        "My questions"=>"Мои вопросы",
     ];
 
 ?>
