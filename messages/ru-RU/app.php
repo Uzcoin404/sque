@@ -23,13 +23,23 @@
         "Reviewed"=>"Возвращен",
         "Ready for publication"=>"Опубликован",
         "Published, you can answer"=>"Открыт",
-        "Published, you can not answer"=>"Закрыт для ответов",
+        "Voting"=>"Голосование",
         "Closed"=>"Закрыт",
         "Payments"=>"Оплачен",
         "Rejection"=>"Отказ",
         "{d} days {h} hours"=>"{d} дни {h} часа",
         "{h} hours"=>"{h} часа",
         "My questions"=>"Мои вопросы",
+        "Views"=>"Просмотры",
+        "More detailed"=>"Подробнее",
+        "Russian"=>"Россия",
+        "Vote"=>"Проголосовать",
+        "Like"=>"Нравится",
+        "Dislike"=>"Не нравится",
+        "Answer the question"=>"Ответить на вопрос",
+        "Create answer"=>"Создать ответ",
+        "Text of answer"=>"Текст ответа",
+        "Answers"=>"Ответы"
     ];
 
 ?>

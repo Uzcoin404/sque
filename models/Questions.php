@@ -63,7 +63,7 @@ class Questions extends \yii\db\ActiveRecord
             2 => \Yii::t('app', 'Reviewed'),
             3 => \Yii::t('app', 'Ready for publication'),
             4 => \Yii::t('app', 'Published, you can answer'),
-            5 => \Yii::t('app', 'Published, you can not answer'),
+            5 => \Yii::t('app', 'Voting'),
             6 => \Yii::t('app', 'Closed'),
             7 => \Yii::t('app', 'Payments'),
             8 => \Yii::t('app', 'Rejection'),

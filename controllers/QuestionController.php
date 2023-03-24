@@ -13,6 +13,7 @@ use app\models\Questions;
 use app\models\User;
 use app\models\ChangeEmail;
 
+
 // AJAX
 use yii\widgets\ActiveForm;
 
@@ -62,6 +63,7 @@ class QuestionController extends Controller
     //Внутреннея страница
 
     public function actionView($slug){
+
         $questions = Questions::find()->where(["id"=>$slug])->all();
         return $this->render(
             'view',
@@ -70,6 +72,9 @@ class QuestionController extends Controller
             ]
         );
     }
+
+
+
 
     // Страница моих вопросов
 
@@ -94,11 +99,10 @@ class QuestionController extends Controller
             $model->owner_id=$user->id;
             $model->data=strtotime('now');
             $model->status=1;
-            $model->grand='Россия';
+            $model->grand= \Yii::t('app','Russian');
             if($model->save()){
                 return $this->redirect('/questions/view/'.$model->id.'');
             }
-            
         }
 
         return $this->render(

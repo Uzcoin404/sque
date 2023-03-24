@@ -1,0 +1,74 @@
+.answers_post{
+    &__list{
+        background: #fff;
+        padding: 2em;
+        border-radius: 10px;
+        &_element{
+            margin-bottom: 30px;
+            p.title{
+                font-size: 22px;
+                font-weight: 400;
+            }
+            p.text{
+                font-size: 18px;
+            }
+            .answers_post__list_element_text_price_full{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                align-items: center;
+                p.views{
+                    position: relative;
+                    padding-left: 25px;
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        background: url(/icons/visibility.png);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        width: 20px;
+                        height: 20px;
+                        left: 0px;
+                    }
+                }
+                p.like_answer{
+                    position: relative;
+                    padding-left: 25px;
+                    button{
+                        position: absolute;
+                        background: url(/icons/like.png);
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                        width: 20px;
+                        height: 20px;
+                        left: 0px;
+                        border: none !important;
+                        border-radius: 0px !important;
+                        box-shadow: 0px 0px 0px !important;
+                        transition: all 0.2s ease-in-out;
+                    }
+                }
+                p.dislike_answer{
+                    position: relative;
+                    padding-left: 25px;
+                    button{
+                        position: absolute;
+                        background: url(/icons/dislike.png);
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                        width: 20px;
+                        height: 20px;
+                        left: 0px;
+                        border: none !important;
+                        border-radius: 0px !important;
+                        box-shadow: 0px 0px 0px !important;
+                        transition: all 0.2s ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}
