@@ -1,33 +1,81 @@
 
 
+$(function(){
+    $('.answers_post .answers_post__list .answers_post__list_element').each(function(i,element){
+        $( element).on("mousemove",function() {
+            $(element).attr("data-status",1);
+            
+          });
+    });
+});
 
-function LikeSubmit(){
-    $key = 'SDbB23X3@FGLbisk%'
-    $('.btn_like').prop('disabled', true);
-    $('.btn_dislike').prop('disabled', true);
-    $('.btn_like').css('height', '30px');
-    setTimeout(function(){
-        $('.btn_like').css('height', '20px');
-        $('.btn_like').css('background','url(/icons/like_before.png)')
-        $('.btn_questions').css('pointer-events', 'auto');
-    }, 1000);
+function VoteSave(){
 
-    $('.btn_questions').each(function(){
-        this.href += '?like='+$key+'';
-   })
+    var status=[];
+    var like=[];
+    var like_post=[];
+    var dislike_post=[];
+    var dislike=[];
+    var id_question=[];
+
+    $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
+        status.push($(element).attr("data-answer-id"));
+        id_question.push($(element).attr("data-id-question"));
+    });
+    $('.answers_post .answers_post__list .answers_post__list_element .btn_like_answer[data-like-status="1"]').each(function(i,element){
+        like.push($(element).attr("data-id"));
+    });
+    $('.answers_post .answers_post__list .answers_post__list_element .btn_dislike_answer[data-dislike-status="1"]').each(function(i,element){
+        dislike.push($(element).attr("data-id"));
+    });
+
+    $.ajax({
+        url: '/like/',
+        method: 'get',
+        dataType: 'html',
+        data: {id_answer_like: like},
+        success: function(data){
+        }
+    })
+
+    $.ajax({
+        url: '/dislike/',
+        method: 'get',
+        dataType: 'html',
+        data: {id_answer_dislike: dislike},
+        success: function(data){
+        }
+    })
+
+    $.ajax({
+        url: '/viewanswer',
+        method: 'get',
+        dataType: 'html',
+        data: {status_view: status},
+        success: function(data){
+            window.location.replace("/")
+        }
+    })
+    
+
 }
-function DislikeSubmit(){
-    $key = 'SDbB23X3@FGLbisk%'
-    $('.btn_dislike').prop('disabled', true);
-    $('.btn_like').prop('disabled', true);
-    $('.btn_dislike').css('height', '30px');
+
+function SubmitLikeStatus(element){
+    $(element).attr('data-like-status', 1);
+    $(element).css('height', '30px');
     setTimeout(function(){
-        $('.btn_dislike').css('height', '20px');
-        $('.btn_dislike').css('background','url(/icons/dislike_before.png)')
+        $(element).css('height', '20px');
+        $(element).css('background','url(/icons/like_before.png)')
         $('.btn_questions').css('pointer-events', 'auto');
     }, 1000);
+}
 
-    $('.btn_questions').each(function(){
-        this.href += '/dislike?dislike='+$key+'';
-   })
+function SubmitDislikeStatus(element){
+    $(element).attr('data-dislike-status', 1);
+    $(element).css('height', '30px');
+    setTimeout(function(){
+        $(element).css('height', '20px');
+        $(element).css('background','url(/icons/dislike_before.png)')
+        $('.btn_questions').css('pointer-events', 'auto');
+    }, 1000);
 }

@@ -22,7 +22,7 @@ class DislikeAnswer extends \yii\db\ActiveRecord
     {
         return [
             [['id_answer'], 'required',],
-            [['id_questions','data','id_answer'],'integer'],
+            [['data','id_answer'],'integer'],
             [['id_user'],'safe']
         ];
     }

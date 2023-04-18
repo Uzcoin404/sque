@@ -35,6 +35,10 @@
                 p.like_answer{
                     position: relative;
                     padding-left: 25px;
+                    button.active{
+                        background: url(/icons/like_before.png);
+                        pointer-events: none !important;
+                    }
                     button{
                         position: absolute;
                         background: url(/icons/like.png);
@@ -53,6 +57,10 @@
                 p.dislike_answer{
                     position: relative;
                     padding-left: 25px;
+                    button.active{
+                        background: url(/icons/dislike_before.png);
+                        pointer-events: none !important;
+                    }
                     button{
                         position: absolute;
                         background: url(/icons/dislike.png);

@@ -53,12 +53,6 @@ use kartik\select2\Select2;
                       <button type="submit" class="btn form-modal__footer-btn">
                         <i class="bi bi-box-arrow-in-left"></i>Сохранить
                       </button>
-                      <a OnClick="DownloadProfile(this);" data-token="<?=$model->accessToken;?>" class="btn form-modal__footer-btn">
-                        <i class="bi bi-cloud-download"></i>Скачать профиль
-                      </a>
-                      <a OnClick="ChangePassword(this);" data-token="<?=$model->accessToken;?>" class="btn form-modal__footer-btn">
-                                  <i class="bi bi-save"></i>Сбросить пароль
-                      </a>
                     </div>
                   </div>
               </div>

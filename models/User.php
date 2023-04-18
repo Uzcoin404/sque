@@ -175,11 +175,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'username' => 'Имя пользователя',
+            'username' => '',
             'name' => 'Имя',
             'second_name' => 'Фамилия',
-            'imageFile' => 'Фото',
-            'email' => 'Email',
+            'imageFile' => '',
+            'email' => '',
         ];
     }
  

@@ -39,7 +39,10 @@
         "Answer the question"=>"Ответить на вопрос",
         "Create answer"=>"Создать ответ",
         "Text of answer"=>"Текст ответа",
-        "Answers"=>"Ответы"
+        "Answers"=>"Ответы",
+        "Username"=>"Имя пользователя",
+        "Email User"=>"Почта пользователя",
+        "Images user"=>"Фото пользователя"
     ];
 
 ?>

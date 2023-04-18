@@ -27,11 +27,34 @@ class Answers extends \yii\db\ActiveRecord
             [['id_user'], 'safe'],
         ];
     }
+
     public function attributeLabels()
     {
         return [
             'text' => \Yii::t('app', 'Text of answer'),
         ];
+    }
+
+    public function GetUserName(){
+        return User::find()->where(["id"=>$this->id_user])->one()->username;
+
+    }
+
+    public function GetText(){
+        return $this->text;
+    }
+
+    public function getLiks(){
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM like_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
+        return $sql['count'];
+    }
+    public function getDisliks(){
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislike_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
+        return $sql['count'];
+    }
+    public function getView(){
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM views_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
+        return $sql['count'];
     }
 
 }

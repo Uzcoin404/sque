@@ -21,8 +21,6 @@ use yii\widgets\ActiveForm;
 
 class LikeController extends Controller
 {
-    public $key_like="SDbB23X3@FGLbisk%";
-    public $key_like_answer = "KmbD4ASdgbla@FGLbiskFzxb";
     //Настройка прав доступа
     public function behaviors()
     {
@@ -43,38 +41,26 @@ class LikeController extends Controller
             
         ];
     }
-
-    public function actionIndex($slug)
+    public $info = [];
+    public function actionIndex()
     {
         $like = new Like();
         $request = Yii::$app->request;
 
         $user=Yii::$app->user->identity;
 
-        $like->id_questions = $slug;
+        $like->id_questions = 12;
         $like->id_user = $user->id;
         $like->data = strtotime('now');
+    
+        $this->LikeAnswers();
 
-        $like_status = $request->get('like');
-
-        
-        if($like_status == $this->key_like_answer){
-            $this->LikeAnswers($slug);
-        }
-
-        if($this->CheckUserPost($slug)){
-            return $this->redirect('/questions/view/'.$slug.'');
-        }
-        if($like_status == $this->key_like){
-            if($like->save()){
-                return $this->redirect('/questions/view/'.$slug.'');
-            }
-        }
+        $like->save();
 
         
     }
 
-    public function LikeAnswers($slug){
+    public function LikeAnswers(){
 
         $like_answer = new LikeAnswers();
 
@@ -82,47 +68,25 @@ class LikeController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $id = $request->get('id_answer');
+        $this->info = [
+            $request->get('id_answer_like'),
+        ];
+        
+        foreach($this->info as $post){
+            foreach($post as $id_answers){
 
-        $like_answer->id_questions = $slug;
-        $like_answer->id_user = $user->id;
-        $like_answer->data = strtotime('now');
-        $like_answer->id_answer = $id;
+                $like_answer = new LikeAnswers();
 
-        if($this->CheckUserAnswer($id)){
-            return $this->redirect('/questions/view/'.$slug.'');
+                $like_answer->id_answer = $id_answers;
+                $like_answer->id_user = $user->id;
+                $like_answer->data = strtotime('now');
+                
+                $like_answer->save(0);
+
+                //unset($like_answer);
+            }
         }
 
-        if($like_answer->save()){
-            return $this->redirect('/questions/view/'.$slug.'');
-        }
-
-    }
-
-    public function CheckUserPost($slug)
-    {
-        $user=Yii::$app->user->identity;
-
-        $like_user=Like::find()->where(["id_questions"=>$slug,"id_user"=>$user->id])->one();
-
-        if(!isset($like_user)){
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    public function CheckUserAnswer($id)
-    {
-        $user=Yii::$app->user->identity;
-
-        $like_user=LikeAnswers::find()->where(["id_answer"=>$id,"id_user"=>$user->id])->one();
-
-        if(!isset($like_user)){
-            return 0;
-        } else {
-            return 1;
-        }
     }
   
 }

@@ -34,9 +34,10 @@
                       }
                     ?>
                 </div>
-                <div class="menu__list_element_user_avatar">
-                    <a href=""><?=$user->username?></a>
-                </div>
+                <a class="menu__list_element_user_avatar">
+                    <button onclick="FormImgSubmit()" class="menu__list_element_user_avatar_img" style="background:url(/img/users/<?=$user->image?>)"></button>
+                    <p><?=$user->username?></p>
+                </a>
               <?php
                 }
               ?>
@@ -59,3 +60,13 @@
     </div>
   </div>
 </header>
+<?php
+  if($user){
+?>
+  <div class="form_img">
+      <div class="form_img_back" onclick="FormImgClose()"></div>
+      <?= \app\widgets\ImgUser::widget() ?>
+  </div>
+<?php
+  }
+?>

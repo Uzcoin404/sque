@@ -21,8 +21,7 @@ use yii\widgets\ActiveForm;
 
 class DislikeController extends Controller
 {
-    public $key_dislike="SDbB23X3@FGLbisk%";
-    public $key_dislike_answer = "KmbD4ASdgbla@FGLbiskFzxb";
+    public $info = [];
     //Настройка прав доступа
     public function behaviors()
     {
@@ -44,84 +43,49 @@ class DislikeController extends Controller
         ];
     }
 
-    public function actionIndex($slug)
+    public function actionIndex()
     {
         $dislike = new Dislike();
+
         $request = Yii::$app->request;
 
         $user=Yii::$app->user->identity;
 
-        $dislike->id_questions = $slug;
+        $dislike->id_questions = 12;
         $dislike->id_user = $user->id;
         $dislike->data = strtotime('now');
 
-        $dislike_status = $request->get('dislike');
+        $this->DislikeAnswers();
 
-        if($dislike_status == $this->key_dislike_answer){
-            $this->DislikeAnswers($slug);
-        }
-        
-        if($this->CheckUser($slug)){
-            return $this->redirect('/questions/view/'.$slug.'');
-        }
-        if($dislike_status == $this->key_dislike){
-            if($dislike->save()){
-                return $this->redirect('/questions/view/'.$slug.'');
-            }
-        }
+        $dislike->save();
         
 
     }
 
-    public function DislikeAnswers($slug){
-
-        $dislike_answer = new DislikeAnswer();
-
+    public function DislikeAnswers(){
+        
         $request = Yii::$app->request;
 
         $user=Yii::$app->user->identity;
 
-        $id = $request->get('id_answer');
+        $this->info = [
+            $request->get('id_answer_dislike'),
+        ];
+        foreach($this->info as $post){
+            foreach($post as $id_answers){
+                
+                $dislike_answer = new DislikeAnswer();
 
-        $dislike_answer->id_questions = $slug;
-        $dislike_answer->id_user = $user->id;
-        $dislike_answer->data = strtotime('now');
-        $dislike_answer->id_answer = $id;
+                $dislike_answer->id_answer = $id_answers;
+                $dislike_answer->id_user = $user->id;
+                $dislike_answer->data = strtotime('now');
+                
+                $dislike_answer->save(0);
 
-        if($this->CheckUserAnswer($id)){
-            return $this->redirect('/questions/view/'.$slug.'');
+                //unset($like_answer);
+            }
         }
 
-        if($dislike_answer->save()){
-            return $this->redirect('/questions/view/'.$slug.'');
-        }
-
-    }
-
-    public function CheckUserAnswer($id)
-    {
-        $user=Yii::$app->user->identity;
-
-        $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$id,"id_user"=>$user->id])->one();
-
-        if(!isset($dislike_user)){
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    public function CheckUser($slug)
-    {
-        $user=Yii::$app->user->identity;
-
-        $dislike_user=Dislike::find()->where(["id_questions"=>$slug,"id_user"=>$user->id])->one();
-
-        if(!isset($dislike_user)){
-            return 0;
-        } else {
-            return 1;
-        }
     }
   
 }

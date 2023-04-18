@@ -1037,6 +1037,25 @@ a.btn.form-modal__footer-btn{
                 a{
                     text-decoration: none;
                 }
+                &_avatar{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    p{
+                        margin: 0px;
+                    }
+                    &_img{
+                        width: 50px;
+                        height: 50px;
+                        background-size: cover !important;
+                        background-position: center !important;
+                        background-repeat: no-repeat !important;
+                        border: none !important;
+                        border-radius: 50px;
+                        box-shadow: none !important;
+                    }
+                }
                 &_money{
                     display: flex;
                     flex-wrap: wrap;
@@ -1105,6 +1124,106 @@ content{
         .main_section__right{
             flex: 1 1;
         min-height: 100%;
+        }
+    }
+}
+
+.profile_list{
+    padding: 3em;
+    background: #fff;
+    form{
+        line-height: 60px;
+    }
+    label.username{
+        font-size: 20px;
+        span{
+            font-size: 22px;
+            font-weight: 500;
+        }
+    }
+    label.useremail{
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        span{
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .control-label{
+            display: none;
+        }
+    }
+    label.imguser{
+        .preview-image{
+            margin: 0px !important;
+        }
+        span{
+            font-size: 22px;
+            font-weight: 500;
+        }
+        .field-user-imagefile input[type="file"]{
+            line-height: normal;
+        }
+        button.btn{
+            color: #fff;
+            padding: 15px 25px;
+            background: #3f3fd9;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all .5s ease-in-out;
+            border: none !important;
+            &:hover{
+                background: #3f3fd9d4;
+            }
+        }
+    }
+}
+
+.form_img{
+    position: fixed;
+    width: 100vw;
+    overflow: hidden;
+    height: 0vh;
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    &_back{
+        position: absolute;
+        z-index: -1;
+        top: 0px;
+        width: 100vw;
+        background: rgba(0,0,0,.631372549);
+        height: 100vh;
+        transition: all .5s ease-in-out;
+    }
+    .modal-content{
+        background: #fff;
+        padding: 2em 5em;
+        width: 50%;
+    }
+    .modal-title{
+        margin-bottom: 10px !important;
+        text-align: center;
+        width: 100%;
+    }
+    .form-modal [class*=col-]{
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: unset !important;
+        width: 100%;
+        justify-content: center;
+    }
+    button[type="submit"]{
+        color: #fff;
+        padding: 15px 25px;
+        background: #3f3fd9;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all .5s ease-in-out;
+        &:hover{
+            background: #3f3fd9c3;
         }
     }
 }

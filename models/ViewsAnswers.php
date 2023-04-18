@@ -22,7 +22,7 @@ class ViewsAnswers extends \yii\db\ActiveRecord
     {
         return [
             [['id_answer'], 'required',],
-            [['id_questions','data','type_user','id_answer'],'integer'],
+            [['data','type_user','id_answer'],'integer'],
             [['id_user'],'safe']
         ];
     }

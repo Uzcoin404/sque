@@ -13,6 +13,13 @@
             <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
             <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
             <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+            <?php if($question->status >= 5){ ?>
+                <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+            <?php } ?>
+            <?php if($question->status >= 4){ ?>
+                <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
+            <?php } ?>
         </div>
     </div>
         <div class="questions__list_element_btn">

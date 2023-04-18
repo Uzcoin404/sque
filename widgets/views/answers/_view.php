@@ -1,0 +1,48 @@
+<?PHP 
+use yii\helpers\Html;
+use app\models\LikeAnswers;
+use app\models\User;
+use app\models\DislikeAnswer;
+?>
+<div class='answers_post__list_element' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+    <p class='title' >
+        <?=$answer->GetUserName();?>
+    </p>
+    <p class='text'>
+        <?=$answer->GetText();?>
+    </p>
+    <div class='answers_post__list_element_text_price_full'>
+        <?php
+            $class_like = '';
+            $class_dislike = '';
+
+            $user=User::find()->all();
+
+            
+            foreach($user as $info){
+                $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
+
+                $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
+
+                if(isset($like_user)){
+                    $class_like = 'active';
+                }
+    
+                if(isset($dislike_user)){
+                    $class_dislike = 'active';
+                }
+            }
+
+        ?>
+        <p class="like_answer">
+            <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button><?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
+        </p>
+        <p class="dislike_answer">
+            <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
+        </p>
+        <p class="views">
+            <?=Html::encode($answer->getView()).' '.\Yii::t('app','Views');?>
+        </p>
+    </div>
+    
+</div>

@@ -103,11 +103,13 @@ class UserController extends Controller
                     $model->imageFile="";
                 }
               
-                return ['success' =>  $model->save()]; 
+                if($model->save()){
+                    $this->redirect('/');
+                }
             }
         
         
-        return ['success' => 0];
+        return $this->redirect('/');
     
     }
   

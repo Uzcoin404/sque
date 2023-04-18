@@ -88,11 +88,12 @@ $config = [
                 '/questions/myquestions'=>'question/myquestions',
                 /* Вопросы */
                 /* Лайки/Дизлайки */
-                '/like/<slug:\w+>'=>'like/index',
-                '/like/<slug:\w+>/dislike'=>'dislike/index',
+                '/like'=>'like/index',
+                '/dislike'=>'dislike/index',
                 /* Лайки/Дизлайки */
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
+                '/viewanswer'=>'view/index',
                 /* Ответы */
             ],
         ],
