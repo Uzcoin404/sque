@@ -25,7 +25,10 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         "/js/like.js",
-        "/js/user.js"
+        "/js/user.js",
+        "/js/favourites.js",
+        "/js/menu.js",
+        "/js/moderation.js",
     ];
 
     public $depends = [

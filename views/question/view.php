@@ -1,4 +1,9 @@
 
+<?php 
+
+    $user=Yii::$app->user->identity;
+
+?>
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>
@@ -13,6 +18,11 @@
                 <div class="questions__list_element_text_price">
                         <div class="questions__list_element_text_price_full">
                             <?php
+                             if($user){
+                             echo \app\widgets\Favouritesblock::widget(['question_id' => $question->id]);
+                            }
+                            ?>
+                            <?php
                                 if($question->grand){
                             ?>
                             <p class="grand"><?=$question->grand?></p>
@@ -20,14 +30,21 @@
                                 }
                             ?>
                             <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
-                            <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                            <?php
+                                if($question->status > 7 || $question->status < 7){
+                            ?>
+                                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                            <?php
+                                }
+                            ?>
                             <?= \app\widgets\Viewspost::widget(['question_id' => $question->id,"addView"=>1]) ?>
-                            <?php if($question->status == 5){ ?>
+                            <?php if($question->status >= 5){ ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                            <?php } ?>
-                            <?php if($question->status >= 4){ ?>
                                 <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
+                            <?php } ?>
+                            <?php if($question->status == 4){ ?>
+                                <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                             <?php } ?>
                         </div>
                         <?php

@@ -27,7 +27,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 255],
             [['name','second_name','email'], 'string', 'max' => 255],
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg','wrongExtension'=>"Выбран не верный формат"],
+            [['imageFile'], 'file', 'maxSize' => 1572864, 'maxFiles'=> 1, 'skipOnEmpty' => true, 'extensions' => 'png, jpg','wrongExtension'=>"Выбран не верный формат"],
         ];
     }
 

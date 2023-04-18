@@ -1,4 +1,4 @@
-<?PHP 
+<?php
 use yii\helpers\Html;
 use app\models\LikeAnswers;
 use app\models\User;
@@ -14,9 +14,10 @@ $user_img = User::find()->where(["id"=>$answer->id_user])->one();
 
 $users=Yii::$app->user->identity;
 
-if($answer->id_user != $status_questions->winner_id){
+if($answer->id_user == $status_questions->winner_id){
 ?>
-<div class='answers_post__list_element' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+
+<div class='answers_post__list_element winner' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
     <div class="title_info">
         <?php
         if($status_questions->status <= 5){
@@ -94,4 +95,5 @@ if($answer->id_user != $status_questions->winner_id){
 </div>
 <?php
 }
+
 ?>

@@ -1,0 +1,35 @@
+.questions{
+    &__list{
+        &_element{
+            &_text{
+                &_moderation{
+                    margin-top: 40px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 15px;
+                    align-items: center;
+                    button{
+                        color: #fff;
+                        padding: 15px 25px;
+                        border-radius: 10px;
+                        text-decoration: none;
+                        border: none;
+                        transition: all .5s ease-in-out;
+                        &:nth-child(2){
+                            background: #3f3fd9;
+                            &:hover{
+                                background: #5151cd;
+                            }
+                        }
+                        &:nth-child(1){
+                            background: rgb(193, 32, 32);
+                            &:hover{
+                                background: rgb(214, 68, 68);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

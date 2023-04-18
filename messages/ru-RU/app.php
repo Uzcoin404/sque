@@ -42,7 +42,21 @@
         "Answers"=>"Ответы",
         "Username"=>"Имя пользователя",
         "Email User"=>"Почта пользователя",
-        "Images user"=>"Фото пользователя"
+        "Images user"=>"Фото пользователя",
+        "Full text"=>"Показать весь текст",
+        "Close text"=>"Скрыть весь текст",
+        "My favourites"=>"Избранное",
+        "Privacy policy"=>"Политика конфиденциальности",
+        "My voting"=>"Мои ответы",
+        "You dont have a favorite"=>"У Вас нет избранного",
+        "You dont have any active questions, or you have answered them"=>"У Вас нет активных вопрос, либо Вы ответили на них",
+        "Close questions"=>"Закрытые вопросы",
+        "Voting questions"=>"Голосование",
+        "Closed question no"=>"Закрытых вопрос нет",
+        "Moderation"=>"Модерация",
+        "Chat"=>"Чат",
+        "To write text"=>"Написать",
+        "Send"=>"Отправить",
     ];
 
 ?>

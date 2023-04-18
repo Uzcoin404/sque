@@ -1,5 +1,6 @@
 
 <?php
+
     $user=Yii::$app->user->identity;    
     if($user){
 ?>
@@ -28,11 +29,10 @@
             <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
             <?php if($question->status >= 5){ ?>
                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+            <?php } ?>
+            <?php if($question->status >= 4){ ?>
                 <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
-            <?php } ?>
-            <?php if($question->status == 4){ ?>
-                <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
             <?php } ?>
             <div class="questions__list_element_btn">
                 <div class="status_time">
@@ -41,13 +41,12 @@
                 <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
             </div>
         </div>
-
     </div>
 
 </div>
 <?php
     } else {
-    if($question->status == 7 || $question->status == 6){
+    if($question->status == 7){
 ?>
 
 <div class="questions__list__element">
@@ -71,14 +70,14 @@
                 <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
             <?php } ?>
-            <div class="questions__list_element_btn">
-                <div class="status_time">
-                    <?=$question->getDate()?>
-                </div>
-                <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-            </div>
         </div>
     </div>
+        <div class="questions__list_element_btn">
+            <div class="status_time">
+                <?=$question->getDate()?>
+            </div>
+            <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+        </div>
 </div>
 <?php
     }

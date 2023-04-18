@@ -84,8 +84,13 @@ $config = [
                 /* Пользователь */
                 /* Вопросы */
                 '/questions/create'=>"question/create",
+                '/questions/voting'=>"question/voting",
+                '/questions/close'=>"question/close",
                 '/questions/view/<slug:\w+>'=>'question/view',
                 '/questions/myquestions'=>'question/myquestions',
+                '/favourit'=>'favourites/index',
+                '/favourit/create'=>'favourites/create',
+                '/favourit/delete'=>'favourites/delete',
                 /* Вопросы */
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
@@ -94,7 +99,16 @@ $config = [
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
+                '/answer/myanswers'=>'answers/myanswers',
                 /* Ответы */
+                /* Модерация */
+                '/questions/moderation'=>"question/moderation",
+                '/questions/updatestatus'=>"question/updatestatus",
+                '/questions/timestatus'=>"question/time",
+                /* Модерация */
+                /* Чат */
+                '/chat'=>"chat/index",
+                /* Чат */
             ],
         ],
     ],

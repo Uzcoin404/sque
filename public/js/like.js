@@ -79,3 +79,17 @@ function SubmitDislikeStatus(element){
         $('.btn_questions').css('pointer-events', 'auto');
     }, 1000);
 }
+
+function OpenFullText(element){
+    $id = $(element).attr('data-answer-id');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'none');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'block');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .text').css('height', 'auto');
+}
+
+function CloseFullText(element){
+    $id = $(element).attr('data-answer-id');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'block');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'none');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .text').css('height', '50px');
+}

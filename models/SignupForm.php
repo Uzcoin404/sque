@@ -19,6 +19,7 @@ class SignupForm extends Model
     public $password;
     public $repassword;
     public $grand;
+    public $image;
  
     /**
      * @inheritdoc
@@ -39,6 +40,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
             ['repassword', 'string', 'min'=>6],
             ['grand', 'string'],
+            ['image', 'string'],
         ];
     }
     public function attributeLabels()
@@ -49,7 +51,8 @@ class SignupForm extends Model
             'username'=>'Введите Логин',
             'password'=>'Введите пароль',
             'repassword'=>'Подтвердите пароль',
-            'grand'=>'Гражданство'
+            'grand'=>'Гражданство',
+            'image'=>'Фото'
         ];
     }
     /**
@@ -87,6 +90,7 @@ class SignupForm extends Model
         $user->create_at=strtotime('now');
         $user->accessToken=MD5($user->create_at."".$user->username."".$user->email);
         $user->grand=$this->grand;
+        $user->image= 'user.png';
         if( $this->SendMail(
             $user->email,
             "<h3>Добро пожаловать!</h3><br>Ваш аккаунт на сайте SQ был создан.<br>Чтобы подтвердить адрес электронной почты и войти в аккаунт, пожалуйста, перейдите по этой ссылке: <br> <a href='https://que.mrtruman.ru/activate/".$user->accessToken."'>https://que.mrtruman.ru/activate/".$user->accessToken."</a><br><br><h3>Ваш пароль для входа в аккаунт: ".$password."</h3><br>Если у Вас возникли трудности или есть вопросы, связанные с использованием сервиса SQ, пожалуйста, свяжитесь с нами по адресу <a href='mailto:support@mrtruman.ru'>support@mrtruman.ru</a><br>",

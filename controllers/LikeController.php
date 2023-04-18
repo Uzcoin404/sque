@@ -82,8 +82,7 @@ class LikeController extends Controller
                 $like_answer->data = strtotime('now');
                 
                 $like_answer->save(0);
-
-                //unset($like_answer);
+                
             }
         }
 

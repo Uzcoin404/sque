@@ -25,6 +25,19 @@
                 flex-wrap: wrap;
                 gap: 15px;
                 align-items: center;
+                &_favourites{
+                    button{
+                        width: 50px;
+                        height: 50px;
+                        background-size: contain !important;
+                        background-position: center !important;
+                        background-repeat: no-repeat !important;
+                        border: none !important;
+                        box-shadow: none !important;
+                        border-radius: 0px !important;
+                        transition: all 0.5s ease-in-out;
+                    }
+                }
                 .avatar_owner{
                     background-size: cover !important;
                     background-repeat: no-repeat !important;
@@ -221,6 +234,7 @@
             .questions__list_element_btn{
                 text-align: center;
                 line-height: 45px;
+                margin-left: auto;
                 a.btn_questions{
                     color: #fff;
                     padding: 15px 25px;

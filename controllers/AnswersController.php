@@ -20,17 +20,18 @@ use yii\widgets\ActiveForm;
 
 class AnswersController extends Controller
 {
+    public $postans = '';
     //Настройка прав доступа
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create','update'],
+                'only' => ['index','create','update','myanswers'],
                 'rules' => [
 
                     [ 
-                        'actions' => ['index','create','update'],
+                        'actions' => ['index','create','update','myanswers'],
                         'allow' => true,
                         'roles' => ['@'], 
                     ],
@@ -80,6 +81,21 @@ class AnswersController extends Controller
         }
     }
 
+    public function actionMyanswers()
+    {
+        $user=Yii::$app->user->identity;
+
+        $answer = Answers::find()->where(['id_user'=>$user->id])->all();
+        
+        return $this->render(
+            '_myanswers',
+            [
+                'answer'=>$answer,
+            ]
+        );
+        
+
+    }
 
     
     protected function findModel($id)

@@ -1101,16 +1101,17 @@ content{
         display:flex;
         height:100%;
         .main_section__left{
-            background: #fff !important;
+            background: #fff;
             flex: 0 0 160px;
             .menu_left__list{
-                padding: 2em 0em;
+                padding: 2em 1em;
                 .menu_left__list_element{
                     ul{
                         list-style: none;
                         padding: 0px;
                         li{
                             text-align: center;
+                            margin-bottom: 5px;
                             a{
                                 color: #000;
                                 font-size: 20px;

@@ -1,9 +1,17 @@
-<?php $this->title = \Yii::t('app', 'Questions list'); ?>
+<?php 
+    use app\models\Questions;
+    $this->title = \Yii::t('app', 'My questions'); 
+?>
 <div class="questions">
     <div class="questions__list">
+        <?php 
+            foreach($answer as $value){ 
+                $questions = Questions::find()->where(['id'=>$value->id_questions])->all();
+        ?>
         <?PHP FOREACH($questions as $question):?>
             <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
+        <?php } ?>
     </div>
     <div class="questions_menu" style="display:none">
         <div class="questions_menu__buttons">

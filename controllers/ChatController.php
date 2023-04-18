@@ -1,0 +1,95 @@
+<?php
+
+namespace app\controllers;
+
+use Yii;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\Response;
+use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+
+use app\models\User;
+use app\models\Chat;
+use app\models\ChangeEmail;
+
+
+// AJAX
+use yii\widgets\ActiveForm;
+
+
+class ChatController extends Controller
+{
+    public $info = [];
+    //Настройка прав доступа
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+
+                    [ 
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'], 
+                    ],
+
+                ],
+            ],
+            
+        ];
+    }
+
+    public function actionIndex()
+    {
+
+        $user=Yii::$app->user->identity;
+
+        $admins = User::find()->where(['moderation'=>1])->all();
+
+        $id = $this->SendAdmin($admins);
+
+        $model = new Chat();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->sender_id=$user->id;
+            $model->recipient_id=$id;
+            $model->data=strtotime('now');
+            $model->status=0;
+            if($model->save()){
+                return $this->redirect('/chat');
+            }
+        }
+     
+        return $this->render(
+            'index',
+            [
+                "chats" => Chat::find()->where(['sender_id'=>$user->id])->all(),
+                "admin" => $id,
+                "model" => $model,
+            ]
+        );
+
+
+
+    }
+
+    public function SendAdmin($admins){
+
+        $id_admins = [];
+
+        foreach($admins as $admin){
+            array_push($id_admins, $admin->id);
+        }
+
+        $leight = count($id_admins) - 1;
+
+        $id_send = rand(0, $leight);
+
+        return $id_admins[$id_send];
+
+    }
+  
+}

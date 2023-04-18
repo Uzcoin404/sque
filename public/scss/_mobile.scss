@@ -1,0 +1,144 @@
+.menu_mobile{
+    display: none;
+    &__list{
+        &_element{
+            &_control{
+                position: fixed;
+                left: -55px;
+                height: 200px;
+                width: 100px;
+                top: 35%;
+                background: #3f3fd9;
+                border-radius: 221px;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                z-index: 999;
+                transition: all 0.5s ease-in-out;
+                &_burger, &_close{
+                    background-size: contain !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center !important;
+                    width: 50px;
+                    height: 50px;
+                }
+                &_burger{
+                    background: url(/icons/burger-bar.png);
+                }
+                &_close{
+                    background: url(/icons/close_menu_white_new.png);
+                    display: none;
+                    height: 40px !important;
+                }
+            }
+            &_user{
+                display: flex;
+                gap: 40px;
+                justify-content: center;
+                padding: 20px;
+                align-items: center;
+                position: fixed;
+                bottom: 0px;
+                background: #fff;
+                width: 100%;
+                z-index: 999;
+                a{
+                    text-decoration: none;
+                }        
+                &_avatar{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 10px;
+                    p{
+                        margin: 0px;
+                    }
+                    &_img{
+                        width: 50px;
+                        height: 50px;
+                        background-size: cover !important;
+                        background-position: center !important;
+                        background-repeat: no-repeat !important;
+                        border: none !important;
+                        border-radius: 50px;
+                        box-shadow: none !important;
+                    }
+                }
+                &_money{
+                    text-align: center;
+                    &_logo{
+                        background: url(/icons/t.png);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        width: 30px;
+                        height: 30px;
+                        margin: auto;
+                    }
+                }
+                &_logout{
+                    a{
+                        border: 1px solid #025BC8;
+                        padding: 15px 25px;
+                        border-radius: 5px;
+                        color: #025BC8;
+                        transition: all 0.3s ease-in-out;
+                        &:hover{
+                            background: #025BC8;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media (max-width:1100px){
+    .questions .questions__list .questions__list__element .questions__list_element_btn{
+        margin-left: 0px;
+    }
+}
+@media (max-width:900px){
+    .menu{
+        &__list{
+            display:none;
+        }
+    }
+    .menu_mobile{
+        display:block;
+    }
+    .main_section__left{
+        position: fixed;
+        height: 100vh;
+        z-index: 999;
+        width: 0px;
+        overflow: hidden;
+        top:0px;
+        transition: all 0.5s ease-in-out;
+        background: #3f3fd9 !important;
+        .menu_left__list{
+            &_element{
+                ul{
+                    li{
+                        a{
+                            color: #fff !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .main_section__right{
+        .questions{
+            padding: 0px !important;
+            &__list{
+                padding: 2em 2em 5em 2em;
+                &_element{
+                    &_btn{
+                        line-height: 70px !important;
+                    }
+                }
+            }
+        }
+    }
+}
