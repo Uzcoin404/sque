@@ -1,6 +1,6 @@
 <?php 
     use app\models\Questions;
-    $this->title = \Yii::t('app', 'My questions'); 
+    $this->title = \Yii::t('app', 'My voting'); 
 ?>
 <div class="questions">
     <div class="questions__list">

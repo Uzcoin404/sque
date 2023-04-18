@@ -13,7 +13,7 @@ use mihaildev\ckeditor\CKEditor;
             'enableClientValidation' => true
         ]
     ); ?>
-    <?= $form->field($model, 'title')->textInput(['minlength' => 30,'maxlength' => 80]) ?>
+    <?= $form->field($model, 'title')->textInput(['minlength' => 5,'maxlength' => 50]) ?>
     <?= $form->field($model, 'text')->textArea(['minlength'=>200,'maxlength' => 2000]) ?>
     <?= $form->field($model, 'coast')->textInput(['maxlength' => true]) ?>
     <div class="form-group">

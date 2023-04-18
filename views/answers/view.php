@@ -70,9 +70,7 @@
                 </div>
         </div>
         <?PHP ENDFOREACH;?>
-        <?PHP IF($question->statusMoreCloseNoPay()):?>
-            <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
-        <?PHP ENDIF;?>
+            <?= \app\widgets\Answersblock::widget(['question_id' => $question->id,'show_my'=>$user]) ?>
        
     </div>
 </div>

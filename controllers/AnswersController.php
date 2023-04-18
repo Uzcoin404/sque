@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 use app\models\Answers;
+use app\models\Questions;
 use app\models\User;
 use app\models\ChangeEmail;
 
@@ -27,11 +28,11 @@ class AnswersController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create','update','myanswers'],
+                'only' => ['index','create','update','myanswers','myanswersview'],
                 'rules' => [
 
                     [ 
-                        'actions' => ['index','create','update','myanswers'],
+                        'actions' => ['index','create','update','myanswers','myanswersview'],
                         'allow' => true,
                         'roles' => ['@'], 
                     ],
@@ -52,11 +53,11 @@ class AnswersController extends Controller
             $model->id_user=$user->id;
             $model->id_questions=$slug;
             $model->data=strtotime('now');
-            if($this->CheckUser($slug)){
+            /*if($this->CheckUser($slug)){
                 return $this->redirect('/questions/view/'.$slug.'');
-            }
+            }*/
             if($model->save()){
-                return $this->redirect('/questions/view/'.$slug.'');
+                return $this->redirect('/');
             }
         }
 
@@ -95,6 +96,16 @@ class AnswersController extends Controller
         );
         
 
+    }
+
+    public function actionMyanswersview($slug){
+        $questions = Questions::find()->where(["id"=>$slug])->all();
+        return $this->render(
+            'view',
+            [
+                "questions"=>$questions,
+            ]
+        );
     }
 
     

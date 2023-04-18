@@ -4,6 +4,7 @@ namespace app\widgets;
 
 use Yii;
 use app\models\Views;
+use app\models\Questions;
 use yii\helpers\Html;
 class Viewspost extends \yii\bootstrap5\Widget
 {
@@ -31,7 +32,9 @@ class Viewspost extends \yii\bootstrap5\Widget
 
     private function AddUserView(){
         if(!$this->addView) return 0;
-       
+        $Question=Questions::find()->where(["id"=>$this->question_id,"owner_id"=>$this->user_id])->one();
+        if(isset($Question->id)) return 0;
+        
         $Views=Views::find()->where(["id_questions"=>$this->question_id,"type_user"=>$this->type_user_id,"id_user"=>$this->user_id])->one();
       
         if(!isset($Views->id)){

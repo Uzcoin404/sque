@@ -1124,7 +1124,9 @@ content{
         }
         .main_section__right{
             flex: 1 1;
-        min-height: 100%;
+            min-height: 100%;
+            position: relative;
+            margin-top: 2em;
         }
     }
 }

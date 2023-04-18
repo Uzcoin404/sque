@@ -99,7 +99,9 @@ $config = [
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
+                '/answer/myanswers/view/<slug:\w+>'=>'answers/myanswersview',
                 '/answer/myanswers'=>'answers/myanswers',
+                
                 /* Ответы */
                 /* Модерация */
                 '/questions/moderation'=>"question/moderation",

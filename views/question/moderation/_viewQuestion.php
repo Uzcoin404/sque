@@ -7,8 +7,8 @@
 
 <div class="questions__list__element">
     <div class="questions__list_element_text">
-        <p class="title"><?=$question->title;?></p>
-        <p class="text"><?=$question->text;?></p>
+        <p class="title"><?=$question->getTitle(1);?></p>
+        <p class="text"><?=$question->getText(1);?></p>
         <div class="questions__list_element_text_price">
             <?= \app\widgets\Favouritesblock::widget(['question_id' => $question->id]) ?>
             <?php
@@ -36,10 +36,11 @@
                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
             <?php } ?>
             <div class="questions__list_element_btn">
+              
+                <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                 <div class="status_time">
                     <?=$question->getDate()?>
                 </div>
-                <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
             </div>
         </div>
         <div class="questions__list_element_text_moderation">

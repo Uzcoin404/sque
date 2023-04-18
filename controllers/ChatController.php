@@ -47,9 +47,7 @@ class ChatController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $admins = User::find()->where(['moderation'=>1])->all();
 
-        $id = $this->SendAdmin($admins);
 
         $model = new Chat();
 
@@ -76,20 +74,6 @@ class ChatController extends Controller
 
     }
 
-    public function SendAdmin($admins){
 
-        $id_admins = [];
-
-        foreach($admins as $admin){
-            array_push($id_admins, $admin->id);
-        }
-
-        $leight = count($id_admins) - 1;
-
-        $id_send = rand(0, $leight);
-
-        return $id_admins[$id_send];
-
-    }
   
 }

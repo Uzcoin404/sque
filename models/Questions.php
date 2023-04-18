@@ -88,7 +88,11 @@ class Questions extends \yii\db\ActiveRecord
     public function getStatusName()
     {
         $data = $this->getStatusList();
-        
+
+        if($this->statusIsOpen()){
+            // TODO: Тут надо фиксировать сколько дней он открыт
+            return $data[$this->status]." : ".$this->getDate();
+        }
         return $data[$this->status];
     }
 
@@ -121,5 +125,62 @@ class Questions extends \yii\db\ActiveRecord
         if($this->status == 8) return 0;
         return 1;    
     }
+
+    public function getTitle($show=0){
+        return $this->title;
+    }
+
+    public function getText($show=0){
+        if(!$show) return "";
+        return $this->text;
+    }
+    public function showPrice(){
+        if(isset($this->coast) && strlen($this->coast)>0) return 1;
+        return 0;
+    }
+    public function getPrice(){
+        return number_format($this->coast, 0, ' ', ' ');
+    }
+
+    public function showGrand(){
+        if(isset($this->grand) && strlen($this->grand)>0) return 1;
+        return 0;
+    }
+    public function getGrand(){
+        return $this->grand;
+    }
+
+    public function statusIsClosePay(){
+        if($this->status == 7) return 1;
+        return 0;
+    }
+    public function statusIsCloseNoPay(){
+        if($this->status == 6) return 1;
+        return 0;
+    }
+    public function statusIsOpen(){
+        if($this->status == 4 || $this->status == 5) return 1;
+        return 0;
+    }
+    public function statusMoreCloseNoPay(){
+        if($this->status >= 6) return 1;
+        return 0;
+    }
+
+    public function statusMoreOpenBlock(){
+        if($this->status >= 5) return 1;
+        return 0;
+    }
+
+    public function statusNotClosePay(){
+        if($this->status != 7) return 1;
+        return 0;
+    }
+
+    public function statusMoreOpen(){
+        if($this->status >= 4) return 1;
+        return 0;
+    }
+    
 
 }

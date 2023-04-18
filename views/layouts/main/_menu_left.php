@@ -12,7 +12,7 @@
           </a>
         </li>
         <li>
-          <a href="/">
+          <a href="/chat">
             <?=\Yii::t('app', 'Go to the chat');?>
           </a>
         </li>
