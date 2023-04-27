@@ -21,7 +21,7 @@ class Likepost extends \yii\bootstrap5\Widget
     public function run()
     {
         $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM likepost WHERE id_questions=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
-        return '<p class="like"><button class="btn_like" onclick="VoteSave()"></button>'.Html::encode($sql['count']).' '.\Yii::t('app','Like').'</p>';
+        return '<p class="like"><button class="btn_like" onclick="VoteSave('.$this->question_id.')"></button>'.Html::encode($sql['count']).' '.\Yii::t('app','Like').'</p>';
     }
     
 }

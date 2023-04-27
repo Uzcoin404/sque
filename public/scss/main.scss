@@ -6,3 +6,11 @@
 @import 'mobile';
 @import 'moderation';
 @import 'chat';
+@import 'privacy';
+@import 'read';
+@import 'filter';
+
+.menu__list_element_search{
+    max-width: 1100px;
+    
+}

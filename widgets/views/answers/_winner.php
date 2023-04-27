@@ -19,6 +19,9 @@ if($answer->id_user == $status_questions->winner_id){
 
 <div class='answers_post__list_element winner' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
     <div class="title_info">
+        <?PHP IF($orderWinner):?>
+            <span class="answer_number__level">№<?=$answer->number;?></span>
+        <?PHP ENDIF;?>
         <?php
         if($status_questions->status <= 5){
         ?>

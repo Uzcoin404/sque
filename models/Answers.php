@@ -23,7 +23,7 @@ class Answers extends \yii\db\ActiveRecord
         return [
             [['id_questions','id_user','text'], 'required'],
             [['text'],'string'],
-            [['id_questions','data'],'integer'],
+            [['id_questions','data','number'],'integer'],
             [['id_user'], 'safe'],
         ];
     }
@@ -41,7 +41,8 @@ class Answers extends \yii\db\ActiveRecord
     }
 
     public function GetText(){
-        return $this->text;
+        $text = mb_strimwidth($this->text, 0, 30, "...");
+        return $text;
     }
 
     public function getLiks(){

@@ -122,6 +122,5 @@ class AnswersController extends Controller
     {
         
     }
-  
     
 }

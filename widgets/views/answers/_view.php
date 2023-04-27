@@ -18,6 +18,9 @@ if($answer->id_user != $status_questions->winner_id){
 ?>
 <div class='answers_post__list_element' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
     <div class="title_info">
+        <?PHP IF($orderWinner):?>
+            <span class="answer_number__level">№<?=$answer->number;?></span>
+        <?PHP ENDIF;?>
         <?php
         if($status_questions->status <= 5){
         ?>
@@ -59,9 +62,16 @@ if($answer->id_user != $status_questions->winner_id){
                     $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$user->id])->one();
 
                 }
+                if($users){
+                    if($users->moderation==1 || !isset($users)){
+                        $class_like = 'active';
+                        $class_dislike = 'active';
+                    }
+                }
+
 
                 if($status_questions->status == 6 || !isset($users)){
-
+                    
                     $class_like = 'active';
                     $class_dislike = 'active';
 
@@ -80,7 +90,11 @@ if($answer->id_user != $status_questions->winner_id){
 
         ?>
                 <p class="like_answer">
-                    <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button><?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
+                    <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button>
+                    <?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
+                    <?php if($status_questions->status == 6){ ?>
+                        <button class="btn_like_view" onclick="UserBlockLike(this)" data-id="<?=$answer->id;?>"><?=Yii::t('app','Watch')?></button>
+                    <?php } ?>
                 </p>
                 <p class="dislike_answer">
                     <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
@@ -90,7 +104,8 @@ if($answer->id_user != $status_questions->winner_id){
                 </p>
         <?php } ?>
     </div>
-    
+    <div class="user_block_like">
+    </div>
 </div>
 <?php
 }

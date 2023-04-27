@@ -33,7 +33,7 @@ class Questions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title','text','coast','status','data','owner_id','grand'], 'required',],
+            [['title','text','coast','status','data','owner_id','grand','data_status'], 'required',],
             [['title'],'string'],
             [['text'],'string'],
             [['coast'], 'double', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]*\s*$/'],
@@ -89,11 +89,8 @@ class Questions extends \yii\db\ActiveRecord
     {
         $data = $this->getStatusList();
 
-        if($this->statusIsOpen()){
-            // TODO: Тут надо фиксировать сколько дней он открыт
-            return $data[$this->status]." : ".$this->getDate();
-        }
-        return $data[$this->status];
+        return $data[$this->status]." : ".$this->getDate();
+        
     }
 
     public function getStatusClassName()
@@ -103,19 +100,55 @@ class Questions extends \yii\db\ActiveRecord
         return $class[$this->status];
     }
 
-    public function getDate()
-    {
+    public function getDate(){
+        
         $result = "";
         if($this->isReturnDate()){
+                $first_date = new \DateTime("now");
+                $second_date = new \DateTime("@".$this->data);
+                $interval = $second_date->diff($first_date);
+                if($interval->days <= 0){
+                    $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
+                } else {
+                    $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                }
+        }
+     
+        return $result;
+    }
+
+    public function getDateStatus()
+    {
+        
+        $result = "";
+
+        if($this->status < 6 && $this->status > 3){
             $first_date = new \DateTime("now");
-            $second_date = new \DateTime("@".$this->data);
-            $interval = $second_date->diff($first_date);
+            $second_date = new \DateTime("@".$this->data_status);
+            
+            $second_date = $second_date->modify('+1 day');
+
+            if($second_date < $first_date){
+
+                $questions = Questions::find()->where(['id'=>$this->id])->one();
+
+                if($questions->status < 6 && $questions->status > 3){
+                    $questions->status = $this->status + 1;
+                }
+
+               // return $questions->update(0);
+
+            }
+
+            $interval = $first_date->diff($second_date);
+
             if($interval->days <= 0){
-                $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
+                $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
             } else {
-                $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                $result= \Yii::t('app', '{h} hours {d} days',['h'=>$interval->h,'d'=>$interval->s]);
             }
         }
+
         return $result;
     }
 

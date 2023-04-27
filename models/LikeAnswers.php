@@ -21,7 +21,7 @@ class LikeAnswers extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_answer'], 'required',],
+            [['id_answer','id_questions'], 'required',],
             [['data','id_answer'],'integer'],
             [['id_user'],'safe']
         ];

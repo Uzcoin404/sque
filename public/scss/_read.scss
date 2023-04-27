@@ -1,0 +1,33 @@
+.read{
+    padding: 0px 40px;
+    &__list{
+        background: #fff;
+        padding: 40px;
+        &_button{
+            button.accept{
+                border: 1px solid #025bc8;
+                padding: 15px 25px;
+                border-radius: 5px;
+                background: #025bc8;
+                color: #fff;
+                transition: all .3s ease-in-out;
+                &:hover{
+                    border: 1px solid #2d74c9;
+                    background: #2d74c9;  
+                }
+            }
+            button.close{
+                border: 1px solid #c12020;
+                padding: 15px 25px;
+                border-radius: 5px;
+                background: #c12020;
+                color: #fff;
+                transition: all .3s ease-in-out;
+                &:hover{
+                    background: #df3e3e;
+                    border: 1px solid #df3e3e;
+                }
+            }
+        }
+    }
+}

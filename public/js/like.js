@@ -1,15 +1,14 @@
-
-
 $(function(){
     $('.answers_post .answers_post__list .answers_post__list_element').each(function(i,element){
         $( element).on("mousemove",function() {
             $(element).attr("data-status",1);
-            
           });
     });
 });
 
-function VoteSave(){
+
+
+function VoteSave(question_id){
 
     var status=[];
     var like=[];
@@ -23,7 +22,12 @@ function VoteSave(){
         id_question.push($(element).attr("data-id-question"));
     });
     $('.answers_post .answers_post__list .answers_post__list_element .btn_like_answer[data-like-status="1"]').each(function(i,element){
-        like.push($(element).attr("data-id"));
+        like.push(
+            {
+                answer:$(element).attr("data-id"),
+                question:question_id,
+            }
+        );
     });
     $('.answers_post .answers_post__list .answers_post__list_element .btn_dislike_answer[data-dislike-status="1"]').each(function(i,element){
         dislike.push($(element).attr("data-id"));
@@ -35,8 +39,11 @@ function VoteSave(){
         dataType: 'html',
         data: {id_answer_like: like},
         success: function(data){
+            console.log(data);
         }
     })
+
+
 
     $.ajax({
         url: '/dislike/',
@@ -81,15 +88,52 @@ function SubmitDislikeStatus(element){
 }
 
 function OpenFullText(element){
+    $st = 1;
     $id = $(element).attr('data-answer-id');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').empty();
+    $.ajax({
+        url: '/text',
+        method: 'get',
+        dataType: 'html',
+        data: {id: $id, status: $st},
+        success: function(data){
+            $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').append(data);
+        }
+    })
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'none');
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'block');
-    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .text').css('height', 'auto');
 }
 
 function CloseFullText(element){
+    $st = 0;
     $id = $(element).attr('data-answer-id');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').empty();
+    $.ajax({
+        url: '/text',
+        method: 'get',
+        dataType: 'html',
+        data: {id: $id, status: $st},
+        success: function(data){3
+            $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').append(data);
+        }
+    })
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'block');
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'none');
-    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .text').css('height', '50px');
+}
+
+
+function UserBlockLike(element){
+    $id = $(element).attr('data-id')
+    $.ajax({
+        url: '/like_block',
+        method: 'get',
+        dataType: 'json',
+        data: {id_block: $id},
+        success: function(data){
+            $('.user_block_like').empty();
+            $.each(data , function(index, val) { 
+                $('.user_block_like').append('<p>'+val['user']+'</p>')
+            });
+        }
+    })
 }

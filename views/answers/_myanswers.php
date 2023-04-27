@@ -3,6 +3,7 @@
     $this->title = \Yii::t('app', 'My voting'); 
 ?>
 <div class="questions">
+
     <div class="questions__list">
         <?php 
             foreach($answer as $value){ 
@@ -11,6 +12,7 @@
         <?PHP FOREACH($questions as $question):?>
             <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
+       
         <?php } ?>
     </div>
     <div class="questions_menu" style="display:none">

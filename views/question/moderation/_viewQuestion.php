@@ -1,6 +1,5 @@
 
 <?php
-
     $user=Yii::$app->user->identity;    
     if($user){
 ?>

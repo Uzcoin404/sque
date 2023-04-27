@@ -29,6 +29,9 @@ class AppAsset extends AssetBundle
         "/js/favourites.js",
         "/js/menu.js",
         "/js/moderation.js",
+        "/js/read.js",
+        "/js/validregister.js",
+        "/js/search.js",
     ];
 
     public $depends = [

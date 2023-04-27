@@ -8,6 +8,7 @@
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>
+            <?php \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
             <div class="questions__list__element full">
                 <div class="questions__list_element_text">
                     <p class="title"><?=$question->getTitle(1)?></p>
@@ -38,6 +39,14 @@
                             <?php
                                 }
                             ?>
+                            <?php 
+                                if($question->status == 6){ 
+                            ?>
+                                <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
+                                <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
+                            <?php
+                                }
+                            ?>
                             <?= \app\widgets\Viewspost::widget(['question_id' => $question->id,"addView"=>1]) ?>
                             <?php if($question->status >= 5){ ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
@@ -50,7 +59,7 @@
                         </div>
                         <?php
                             $user = Yii::$app->user->identity;
-                            if($user){
+                            if($user && $user->moderation==0){
                         ?>
                             <div class="questions__list_element_btn">
                                 <?php
@@ -61,7 +70,7 @@
                                     }
                                 ?>
                                 <?php if($question->status == 5){ ?>
-                                    <a OnClick="VoteSave()" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
+                                    <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
                                 <?php } ?>
                             </div>
                         <?php
@@ -70,9 +79,11 @@
                 </div>
         </div>
         <?PHP ENDFOREACH;?>
-        <?PHP IF($question->statusMoreCloseNoPay()):?>
+        <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
+        
+        <!-- <?PHP IF($question->statusMoreCloseNoPay()):?>
             <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
-        <?PHP ENDIF;?>
+        <?PHP ENDIF;?> -->
        
     </div>
 </div>

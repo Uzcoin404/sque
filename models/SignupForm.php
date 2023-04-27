@@ -20,6 +20,8 @@ class SignupForm extends Model
     public $repassword;
     public $grand;
     public $image;
+    public $verifyCode;
+    
  
     /**
      * @inheritdoc
@@ -41,6 +43,8 @@ class SignupForm extends Model
             ['repassword', 'string', 'min'=>6],
             ['grand', 'string'],
             ['image', 'string'],
+            ['verifyCode', 'required'],
+            ['verifyCode', 'captcha','captchaAction'=>'/registration/captcha'],
         ];
     }
     public function attributeLabels()
@@ -52,7 +56,8 @@ class SignupForm extends Model
             'password'=>'Введите пароль',
             'repassword'=>'Подтвердите пароль',
             'grand'=>'Гражданство',
-            'image'=>'Фото'
+            'image'=>'Фото',
+            'verifyCode'=>'Капча'
         ];
     }
     /**

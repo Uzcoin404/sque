@@ -12,15 +12,18 @@ class Viewspost extends \yii\bootstrap5\Widget
     public $addView=0;
     public $user_id=0;
     public $type_user_id=1;
+    public $admin = 0;
     public function init()
     {
         parent::init();
         if(isset(\Yii::$app->user->identity->id)){
             $this->user_id=\Yii::$app->user->identity->id;
             $this->type_user_id=1;
+            $this->admin = \Yii::$app->user->identity->moderation;
         }else{
             $this->user_id=Yii::$app->session->getId();
             $this->type_user_id=0;
+            $this->admin = 0;
         }
     }
     public function run()
@@ -31,10 +34,15 @@ class Viewspost extends \yii\bootstrap5\Widget
     }
 
     private function AddUserView(){
-        if(!$this->addView) return 0;
-        $Question=Questions::find()->where(["id"=>$this->question_id,"owner_id"=>$this->user_id])->one();
-        if(isset($Question->id)) return 0;
         
+        if(!$this->addView) return 0;
+     
+        $Question=Questions::find()->where(["id"=>$this->question_id,"owner_id"=>$this->user_id])->one();
+        
+        if($this->admin == 1) return 0;
+
+        if(isset($Question->id)) return 0;
+    
         $Views=Views::find()->where(["id_questions"=>$this->question_id,"type_user"=>$this->type_user_id,"id_user"=>$this->user_id])->one();
       
         if(!isset($Views->id)){

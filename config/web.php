@@ -85,23 +85,28 @@ $config = [
                 /* Вопросы */
                 '/questions/create'=>"question/create",
                 '/questions/voting'=>"question/voting",
+                '/questions/voting/<slug:\w+>'=>"question/votingview",
                 '/questions/close'=>"question/close",
+                '/questions/close/<slug:\w+>'=>"question/closeview",
                 '/questions/view/<slug:\w+>'=>'question/view',
+                '/questions/change/<slug:\w+>'=>'question/change',
                 '/questions/myquestions'=>'question/myquestions',
+                '/questions/myquestions/<slug:\w+>'=>'question/myquestionview',
                 '/favourit'=>'favourites/index',
                 '/favourit/create'=>'favourites/create',
                 '/favourit/delete'=>'favourites/delete',
                 /* Вопросы */
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
+                '/like_block'=>'like/block',
                 '/dislike'=>'dislike/index',
                 /* Лайки/Дизлайки */
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
+                '/text'=>'question/text',
                 '/answer/myanswers/view/<slug:\w+>'=>'answers/myanswersview',
                 '/answer/myanswers'=>'answers/myanswers',
-                
                 /* Ответы */
                 /* Модерация */
                 '/questions/moderation'=>"question/moderation",
@@ -110,7 +115,19 @@ $config = [
                 /* Модерация */
                 /* Чат */
                 '/chat'=>"chat/index",
+                '/list_chat'=>"chat/list",
+                '/chatadmin/<slug:\w+>'=>"chat/admin",
                 /* Чат */
+                /* Политика */
+                '/privacy'=>"privacy/index",
+                /* Политика */
+                /* Правила */
+                '/read'=>"user/read",
+                '/readstatus'=>"user/status",
+                /* Правила */
+                /* Поиск */
+                '/questions/filter'=>"question/filter",
+                /* Поиск */
             ],
         ],
     ],

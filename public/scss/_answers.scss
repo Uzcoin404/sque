@@ -47,9 +47,11 @@
                 margin-bottom: 1rem;
             }
             p.text{
+                max-width: 1400px;
+                width: 100%;
                 font-size: 18px;
-                height: 50px;
                 overflow: hidden;
+                word-wrap: break-word;
             }
             a.opentext{
                 color: rgb(105, 111, 218);
@@ -89,10 +91,10 @@
                     position: relative;
                     padding-left: 25px;
                     button.active{
-                        background: url(/icons/like_before.png);
+                        background: url(/icons/like_before.png) !important;
                         pointer-events: none !important;
                     }
-                    button{
+                    button.btn_like_answer{
                         position: absolute;
                         background: url(/icons/like.png);
                         background-size: contain !important;
@@ -105,6 +107,13 @@
                         border-radius: 0px !important;
                         box-shadow: 0px 0px 0px !important;
                         transition: all 0.2s ease-in-out;
+                    }
+                    .btn_like_view{
+                        background: none;
+                        border: none !important;
+                        border-radius: 0px !important;
+                        box-shadow: 0px 0px 0px !important;
+                        font-weight: 300;
                     }
                 }
                 p.dislike_answer{

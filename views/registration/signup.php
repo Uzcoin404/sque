@@ -44,7 +44,12 @@ $this->title = 'Регистрация';
                   </div>
                   <?= $form->field($model, 'repassword')->textInput(['autofocus' => true,'placeholder' => 'Пароль'])->passwordInput() ?>
                   <?= $form->field($model, 'grand')->dropdownList($model->getListGrand())?>
-                  <label class="col-sm-2 col-form-label recaptc_valid">Введите капчу</label>
+                  <?= $form->field($model, 'verifyCode')->widget(yii\captcha\Captcha::className(),
+                      [
+                          'captchaAction' => '/registration/captcha',
+                          'template' => '<div class="row"><div class="col-xs-3">{image}</div><div class="col-xs-4">{input}</div></div>'
+
+                      ]) ?>
                   <div class="form-group">
                   <button type="submit" class="btn form-modal__footer-btn">
                     <i class="bi bi-arrow-right-square"></i>Зарегистрироваться
@@ -63,5 +68,3 @@ $this->title = 'Регистрация';
                 </div>
 </div>
 </div>
-
-<script src="js/validregister.js"> </script>

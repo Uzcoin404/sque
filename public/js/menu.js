@@ -1,3 +1,29 @@
+
+$(document).ready(function(){
+    
+    let url = window.location.pathname;
+    
+    $menu = $('.menu_left__list .menu_left__list_element a').removeClass("active");
+    if (url.toLowerCase().indexOf("/questions/close") >= 0){
+        url="/questions/close";
+    }
+    if (url.toLowerCase().indexOf("/questions/view") >= 0){
+        url="/";
+    }
+    if (url.toLowerCase().indexOf("/answer/myanswers") >= 0){
+        url="/answer/myanswers";
+    }
+    if (url.toLowerCase().indexOf("/questions/voting") >= 0){
+        url="/questions/voting";
+    }
+    
+    if (url.toLowerCase().indexOf("/questions/myquestions") >= 0){
+        url="/questions/myquestions";
+    }
+     $('.menu_left__list .menu_left__list_element a[href="'+url+'"]').addClass("active");
+
+});
+
 function OpenMobileMenu(element){
     var left = 220;
     var z = 999;

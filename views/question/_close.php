@@ -1,8 +1,15 @@
-<?php $this->title = \Yii::t('app', 'Close questions'); ?>
-<div class="questions">
+
+<?php 
+        $this->title = \Yii::t('app', 'Close questions'); 
+    
+?>
+
+<div class="questions close">
+    <?=Yii::$app->controller->renderPartial("_filter");?>
     <div class="questions__list">
+      
         <?PHP FOREACH($questions as $question):?>
-            <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
+            <?=Yii::$app->controller->renderPartial("_viewQuestionClose",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
     </div>
     <div class="questions_menu" style="display:none">

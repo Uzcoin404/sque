@@ -17,17 +17,18 @@ use app\models\ChangeEmail;
 use yii\widgets\ActiveForm;
 class UserController extends Controller
 {
+    public $info = [];
     //Настройка прав доступа
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','get','update','download'],
+                'only' => ['index','get','update','download','status'],
                 'rules' => [
 
                     [
-                        'actions' => ['index','get','update','download'],
+                        'actions' => ['index','get','update','download','status'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -111,6 +112,28 @@ class UserController extends Controller
         
         return $this->redirect('/');
     
+    }
+
+    public function actionRead(){
+        return $this->render(
+            'read',
+        );
+    }
+
+    public function actionStatus(){
+
+        $user = Yii::$app->user->identity;
+
+        $request = Yii::$app->request;
+
+        $this->info = [
+            $request->get('status'),
+        ];
+
+        $user->read = $this->info[0];
+
+        return $user->update(0);
+        
     }
   
     public function actionGet(){

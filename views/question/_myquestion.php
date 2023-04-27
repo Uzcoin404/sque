@@ -7,16 +7,11 @@
     <div class="questions__list">
             <?PHP 
                 FOREACH($questions as $question):
-                    $answer=Answers::find()->where(['id_questions'=>$question->id, 'id_user'=>$user->id])->all();
-                    if(!$answer){
-                        ?>
+            ?>
 
-                        <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
+                        <?=Yii::$app->controller->renderPartial("_viewQuestionMy",["question"=>$question]);?>
 
-                        <?PHP 
-                    } else {
-                                                
-                    }
+            <?PHP 
                 ENDFOREACH;
             ?>
     </div>

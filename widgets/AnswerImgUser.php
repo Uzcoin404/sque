@@ -16,6 +16,7 @@ class AnswerImgUser extends \yii\bootstrap5\Widget
         $questions = Questions::find()->where(["id"=>$this->question_id])->all();
         foreach($questions as $question){
             $user = User::find()->where(["id"=>$question->owner_id])->one();
+            
             return $user->image;
         }
        

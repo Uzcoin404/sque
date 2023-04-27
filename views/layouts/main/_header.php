@@ -12,7 +12,7 @@
       <div class="menu__list_element">
             <div class="menu__list_element_logo"></div>
             <div class="menu__list_element_search">
-              <input type="text" name="" id="" placeholder="<?=\Yii::t('app', 'Search');?>">
+             
             </div>
             <?php
               if($user){

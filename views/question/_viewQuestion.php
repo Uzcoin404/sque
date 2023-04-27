@@ -2,7 +2,7 @@
 <?php
     $user=Yii::$app->user->identity;    
 ?>
-<?PHP IF($user):?>
+<?PHP IF($user && $user->read == 1):?>
     <div class="questions__list__element">
         <div class="questions__list_element_text">
             <p class="title"><?=$question->getTitle();?></p>
@@ -24,6 +24,14 @@
                 <?php
                     }
                 ?>
+                <?php 
+                    if($question->status == 6){ 
+                ?>
+                    <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
+                    <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
+                <?php
+                    }
+                ?>
                 <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
                 <?php if($question->status >= 5){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
@@ -34,10 +42,18 @@
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                 <?php } ?>
                 <div class="questions__list_element_btn">
-                 
-                    <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?php if($question->status == 2){?>
+                        <a href="/questions/change/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','Change')?></a>
+                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?php
+                        } else{
+                    ?>
+                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?php
+                        }
+                    ?>
                     <div class="status_time">
-                        <?=$question->getDate()?>
+                        <?=$question->getDateStatus()?>
                     </div>
                 </div>
             </div>
@@ -46,7 +62,6 @@
 
     </div>
 <?PHP ELSE:?>
-    <?PHP IF($question->statusIsClosePay() || $question->statusIsCloseNoPay() ):?>
         <div class="questions__list__element">
             <div class="questions__list_element_text">
                 <p class="title"><?=$question->getTitle();?></p>
@@ -60,11 +75,16 @@
                         }
                     ?>
                     <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                    <?php if($question->status == 6){?>
+                        <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
+                        <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
+                    <?php } ?>
                     <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
                     <?php if($question->status >= 5){ ?>
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?php } ?>
-                    <?php if($question->status >= 4){ ?>
+                    <?php if($question->status >= 6){ ?>
                         <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                         <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                     <?php } ?>
@@ -72,11 +92,10 @@
                         
                         <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                         <div class="status_time">
-                            <?=$question->getDate()?>
+                            <?=$question->getDateStatus()?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    <?PHP ENDIF;?>
 <?PHP ENDIF;?>

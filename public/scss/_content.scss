@@ -1017,17 +1017,7 @@ a.btn.form-modal__footer-btn{
                         outline: none;
                     }
                 }
-                &::before{
-                    content: '';
-                    position: absolute;
-                    right: 10px;
-                    background: url(/icons/search-interface-symbol.png); 
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    width: 20px;
-                    height: 100%;
-                 }
+               
             }
             &_user{
                 display: flex;
@@ -1116,6 +1106,10 @@ content{
                                 color: #000;
                                 font-size: 20px;
                                 text-decoration: none;
+                            }
+                            a.active{
+                                color: #12121270;
+                                border-bottom: 1px solid #12121270;
                             }
                         }
                     }

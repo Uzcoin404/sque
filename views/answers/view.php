@@ -56,12 +56,11 @@
                                 <?php
                                     if($question->status > 3 && $question->status < 6){
                                 ?>
-                                    <a href="/answer/create/<?=$question->id?>" class="btn_answers"><?=\Yii::t('app', 'Answer the question');?></a>
                                 <?php
                                     }
                                 ?>
                                 <?php if($question->status == 5){ ?>
-                                    <a OnClick="VoteSave()" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
+                                    <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
                                 <?php } ?>
                             </div>
                         <?php
@@ -70,6 +69,7 @@
                 </div>
         </div>
         <?PHP ENDFOREACH;?>
+     
             <?= \app\widgets\Answersblock::widget(['question_id' => $question->id,'show_my'=>$user]) ?>
        
     </div>

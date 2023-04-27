@@ -21,3 +21,14 @@
         }
     }
 }
+.form-modal{
+    .field-signupform-verifycode{
+        img{
+            width: 250px;
+            border-radius: 20px;
+        }
+    }
+}
+.was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"]{
+    background-repeat: no-repeat !important;
+}

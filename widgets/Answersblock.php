@@ -11,16 +11,25 @@ class Answersblock extends \yii\bootstrap5\Widget
 {
     public $question_id=0;
     public $show_my=0;
+    public $orderWinner=0;
     public function run()
     {
         $user=Yii::$app->user->identity;
-        $answers = Answers::find()->where(["id_questions"=>$this->question_id])->andWhere(['<>','id_user', $user->id])->all();
+
+        if(!$user){
+            $user = User::find()->one();
+        }
+
+        $answers = Answers::find()->where(["id_questions"=>$this->question_id])->andWhere(['<>','id_user', $user->id]);
 
         if($this->show_my){
-            $answers = Answers::find()->where(["id_questions"=>$this->question_id,"id_user"=>$user->id])->all();
+            $answers = Answers::find()->where(["id_questions"=>$this->question_id,"id_user"=>$user->id]);
+        }
+        if($this->orderWinner){
+            $answers->orderBy(["number"=>SORT_ASC]);
         }
         if($answers){
-            return $this->render("answers/index",["answers"=>$answers,"id_questions"=>$this->question_id]);
+            return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner]);
         }
        
     }

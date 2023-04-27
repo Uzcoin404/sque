@@ -1,15 +1,13 @@
-
 <?php
-
     $user=Yii::$app->user->identity;    
-
 ?>
-<?PHP IF($user):?>
+<?PHP IF($user && $user->read == 1):?>  
     <div class="questions__list__element">
         <div class="questions__list_element_text">
             <p class="title"><?=$question->getTitle();?></p>
             <p class="text"><?=$question->getText();?></p>
             <div class="questions__list_element_text_price">
+       
                 <?= \app\widgets\Favouritesblock::widget(['question_id' => $question->id]) ?>
 
                 <?PHP IF($question->showGrand()):?>
@@ -31,15 +29,16 @@
                 <?PHP ENDIF;?>
 
                 <?PHP IF($question->statusMoreOpen()):?>
-                    <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
-                    <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
+                    <!-- <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                    <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p> -->
                 <?PHP ENDIF;?>
 
+                
+
                 <div class="questions__list_element_btn">
-                    
                     <a href="/answer/myanswers/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                     <div class="status_time">
-                        <?=$question->getDate()?>
+                        <?=$question->getDateStatus()?>
                     </div>
                 </div>
             </div>
@@ -60,11 +59,9 @@
                         <p class="price"><?= $question->getPrice();?></p>
                     <?PHP ENDIF;?>
                     <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
-
-                    <?PHP IF($question->statusMoreOpenBlock()):?>
+                    <?PHP IF($question->statusMoreOpenBlock()):?>                        
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?PHP ENDIF;?>
-
                     <?PHP IF($question->statusMoreOpen()):?>
                         <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                         <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
@@ -72,12 +69,12 @@
                 </div>
             </div>
                 <div class="questions__list_element_btn">
-                   
                     <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                     <div class="status_time">
-                        <?=$question->getDate()?>
+                        <?=$question->getDateStatus()?>
                     </div>
                 </div>
         </div>
     <?PHP ENDIF;?>
 <?PHP ENDIF;?>
+
