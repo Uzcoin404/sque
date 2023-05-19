@@ -11,6 +11,7 @@ $this->title = \Yii::t('app', 'Create answer');
 
     <?= $this->render('_form', [
         'model' => $model,
+        "question"=>$question,
     ]) ?>
 
 </div>

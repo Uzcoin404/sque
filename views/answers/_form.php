@@ -7,7 +7,8 @@ use mihaildev\ckeditor\CKEditor;
 ?>
 
 <div class="create-form">
-
+    <h2><?=$question->title;?></h2>
+    <p><?=$question->text;?></p>
     <?php $form = ActiveForm::begin(
         [
             'enableClientValidation' => true

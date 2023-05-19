@@ -42,7 +42,13 @@
                 <?php } ?>
                 <div class="questions__list_element_btn">
                 
-                <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                <?PHP IF($question->status==4):?>
+                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==5):?>
+                        <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==6):?>
+                        <a href="/questions/close/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ENDIF;?>
 
                 </div>
             </div>
@@ -80,9 +86,13 @@
                 </div>
             </div>
                 <div class="questions__list_element_btn">
-                    
-                    <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-
+                    <?PHP IF($question->status==4):?>
+                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==5):?>
+                        <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==6):?>
+                        <a href="/questions/close/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ENDIF;?>
                 </div>
         </div>
     <?PHP ENDIF;?>

@@ -69,7 +69,7 @@ $config = [
 
                 //Открытые 
                 "/"=>"open/index",
-                '/questions/create'=>"open/create",
+                '/question/create'=>"open/create",
                 '/questions/view/<slug:\w+>'=>'open/view',
                 '/questions/change/<slug:\w+>'=>'open/change',
                 /* Поиск */
@@ -138,7 +138,7 @@ $config = [
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
-                '/text'=>'question/text',
+                '/text'=>'open/text',
                 
                 /* Ответы */
           

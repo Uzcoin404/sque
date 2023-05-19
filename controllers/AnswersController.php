@@ -60,12 +60,15 @@ class AnswersController extends Controller
             if($model->save()){
                 return $this->redirect('/');
             }
-        }
 
+        }
+        $question=Questions::find()->where(['id'=>$slug])->one();
+        if(!$question)  return $this->redirect('/questions/view/'.$slug.'');
         return $this->render(
             'create',
             [
                 "model"=>$model,
+                "question"=>$question,
             ]
         );
     }
