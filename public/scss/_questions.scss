@@ -1,14 +1,13 @@
 .question_back__btn{
-    color: #fff;
-    padding: 15px 25px;
-    background: #3f3fd9;
+    color: #f00;
+    padding: 5px 0px 0px 0px;
     border-radius: 10px;
     text-decoration: none;
     transition: all .5s ease-in-out;
     position: absolute;
     left: 4em;
     a{
-        color:#fff;
+        color: #f00;
     }
 }
 @media(max-width:900px){
@@ -19,7 +18,7 @@
 
 }
 .questions{
-    padding: 2em;
+    padding: 0px 2em !important;
     .questions__list{
         padding: 2em;
         .questions__list__element{
@@ -51,8 +50,8 @@
                 align-items: center;
                 &_favourites{
                     button{
-                        width: 50px;
-                        height: 50px;
+                        width: 27px;
+                        height: 27px;
                         background-size: contain !important;
                         background-position: center !important;
                         background-repeat: no-repeat !important;
@@ -144,6 +143,22 @@
                         position: absolute;
                         content: '';
                         background: url(/icons/time_voiting.png);
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        width: 20px;
+                        height: 20px;
+                        left: 0px;
+                    }
+                }
+                p.status_time{
+                    color: #3995b6;
+                    position: relative;
+                    padding-left: 25px;
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        background: url(/icons/deadline.png);
                         background-size: contain;
                         background-repeat: no-repeat;
                         background-position: center;
@@ -320,6 +335,9 @@
                     font-size: 20px;
                     color: rgb(0 0 0 / 32%);
                     font-weight: 500;
+                }
+                a{
+                    cursor: pointer;
                 }
             }
         }

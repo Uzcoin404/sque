@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 use app\models\User;
 use app\models\Chat;
@@ -105,7 +106,13 @@ class ChatController extends Controller
 
         $admin = User::find()->where(["moderation"=>1])->one();
 
-        $chat_list = Chat::find()->where(["recipient_id"=>$admin->id])->all();
+        $chat_list = Chat::find()->where(["recipient_id"=>$admin->id]);
+
+        $pages = new Pagination(['totalCount' => $chat_list->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
+        $chat_list = $chat_list->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
 
         foreach($chat_list as $value){
             array_push($this->id_user,$value->sender_id);
@@ -116,6 +123,7 @@ class ChatController extends Controller
             '_list',
             [
                 "chats" => $result,
+                "pages"=>$pages,
             ]
         );
 

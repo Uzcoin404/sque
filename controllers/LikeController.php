@@ -11,6 +11,7 @@ use yii\web\UploadedFile;
 
 use app\models\User;
 use app\models\Like;
+use app\models\Answers;
 use app\models\LikeAnswers;
 use app\models\ChangeEmail;
 
@@ -86,15 +87,24 @@ class LikeController extends Controller
         foreach($this->info as $post){
           
             foreach($post as $like){
-                $like_answer = new LikeAnswers();
-
-                $like_answer->id_answer = $like['answer'];
-                $like_answer->id_questions = $like['question'];
-                $like_answer->id_user = $user->id;
-                $like_answer->data = strtotime('now');
-                
-                $like_answer->save(0);
-                
+                $id_answer=$like['answer'];
+                if($like['status'] == 1){
+                    $answer=LikeAnswers::find()->where(["id_answer"=>$id_answer,"id_user"=>$user->id])->one();
+                    $answer->delete();
+                } else {
+                   
+                    $answer=Answers::find()->where(["id"=>$id_answer])->one();
+                    if(isset($answer->id_user)){
+                        if($answer->id_user!=$user->id){
+                            $like_answer = new LikeAnswers();                    
+                            $like_answer->id_answer = $id_answer;
+                            $like_answer->id_questions = $like['question'][0];
+                            $like_answer->id_user = $user->id;
+                            $like_answer->data = strtotime('now');
+                            $like_answer->save(0);
+                        }
+                    }
+                }
             }
         }
 

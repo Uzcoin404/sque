@@ -1017,7 +1017,21 @@ a.btn.form-modal__footer-btn{
                         outline: none;
                     }
                 }
-               
+                button{
+                    content: "";
+                    width: 50px;
+                    height: 25px;
+                    top: 5px;
+                    right: 0px;
+                    background: url(/icons/search-interface-symbol.png);
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    position: absolute;
+                    border: none !important;
+                    box-shadow: none !important;
+                    border-radius: 0px !important;
+                }
             }
             &_user{
                 display: flex;
@@ -1093,6 +1107,7 @@ content{
         .main_section__left{
             background: #fff;
             flex: 0 0 160px;
+            height: 110%;
             .menu_left__list{
                 padding: 2em 1em;
                 .menu_left__list_element{

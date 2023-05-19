@@ -32,14 +32,20 @@
                             ?>
                             <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
                             <?php
-                                if($question->status > 7 || $question->status < 7){
+                                if($question->status < 6){
+                            ?>
+                                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                            <?php
+                                } elseif($question->status == 6) {
                             ?>
                                 <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
                             <?php
                                 }
                             ?>
-                            <?= \app\widgets\Viewspost::widget(['question_id' => $question->id,"addView"=>1]) ?>
-                            <?php if($question->status >= 5){ ?>
+                            <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                                <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                            <?PHP } ?> 
+                            <?php if($question->status > 5){ ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                                 <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
@@ -59,9 +65,9 @@
                                 <?php
                                     }
                                 ?>
-                                <?php if($question->status == 5){ ?>
+                                <!-- <?php if($question->status == 5){ ?>
                                     <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
-                                <?php } ?>
+                                <?php } ?> -->
                             </div>
                         <?php
                             }

@@ -32,3 +32,28 @@
 .was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"]{
     background-repeat: no-repeat !important;
 }
+
+.form-modal{
+    .field-signupform-polit{
+        div{
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            .form-check-label{
+                width: 80%;
+            }
+        }
+        input{
+            background: #fff;
+        }
+        .invalid-feedback{
+            display: none;
+        }
+    }
+}
+.read{
+    text-align: center;
+    a{
+        text-decoration: none;
+    }
+}

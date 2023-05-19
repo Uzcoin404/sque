@@ -1,0 +1,128 @@
+.user{
+    padding: 2em;
+    &__list{
+        &_element{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2em;
+            border-radius: 10px;
+            background: #fff;
+            margin-bottom: 30px;
+            &_img{
+                width: 100%;
+                display: flex;
+                gap: 20px;
+                align-items: center;
+                margin-bottom: 30px;
+                .avatar_owner{
+                    background-size: cover !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center !important;
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50px;
+                }
+                p.title{
+                    font-size: 28px;
+                    font-weight: 400;
+                    margin: 0px;
+                }
+            }
+            &_text{
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                align-items: center;
+                p{
+                    position: relative;
+                    padding-left: 25px;
+                    margin: 0px;
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                        width: 20px;
+                        height: 20px;
+                        left: 0px;
+                    }
+                }
+                a.email{
+                    position: relative;
+                    padding-left: 30px;
+                    text-decoration: none;
+                    &::before{
+                        position: absolute;
+                        content: '';
+                        background: url(/icons/mail.png);
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                        width: 25px;
+                        height: 25px;
+                        left: 0px;
+                        top: -1px;
+                    }
+                }
+                p.balance{
+                    &::before{
+                        background: url(/icons/t.png);
+                    }
+                }
+                p.date{
+                    &::before{
+                        background: url(/icons/clock.png);
+                    }
+                }
+                p.ready{
+                    &::before{
+                        background: url(/icons/open-email.png);
+                    }
+                }
+                p.grand{
+                    &::before{
+                        background: url(/icons/confirmation.png);
+                    }
+                }
+                p.id{
+                    &::before{
+                        background: url(/icons/id-card.png);
+                    }
+                }
+                p.admin{
+                    &::before{
+                        background: url(/icons/moderation.png);
+                    }
+                }
+            }
+        }
+    }
+    ul.pagination {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    ul.pagination li.prev, li.next {
+        display: none;
+    }
+    ul.pagination li.active a {
+        background: #3f3fd9 !important;
+        color: #fff;
+    }
+    ul.pagination li a {
+        padding: 10px 15px;
+        background: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all .3s ease-in-out;
+        &:hover{
+            background: #3f3fd9;
+            color: #fff;
+        }
+    }
+}

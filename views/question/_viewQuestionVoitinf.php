@@ -20,7 +20,7 @@
                 <?php
                     if($question->status > 7 || $question->status < 7){
                 ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
                 <?php
                     }
                 ?>
@@ -32,9 +32,13 @@
                 <?php
                     }
                 ?>
-                <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                    <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                <?PHP } ?>
                 <?php if($question->status >= 5){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+                <?php } ?>
+                <?php if($question->status > 5){ ?>
                     <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                     <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                 <?php } ?>
@@ -52,9 +56,9 @@
                     <?php
                         }
                     ?>
-                    <div class="status_time">
-                        <?=$question->getDateStatus()?>
-                    </div>
+                    <?php if($user->moderation == 1){ ?>
+                        <a href="/questions/dateupdate/<?=$question->id?>" class="btn_questions"><?=Yii::t("app","Date update")?></a>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -75,12 +79,16 @@
                         }
                     ?>
                     <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                    <?PHP if($question->status < 6){ ?>
+                        <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <?PHP } ?>
                     <?php if($question->status == 6){?>
                         <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
                         <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
                     <?php } ?>
-                    <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                        <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP } ?>
                     <?php if($question->status >= 5){ ?>
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?php } ?>
@@ -91,9 +99,7 @@
                     <div class="questions__list_element_btn">
                         
                         <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-                        <div class="status_time">
-                            <?=$question->getDateStatus()?>
-                        </div>
+
                     </div>
                 </div>
             </div>

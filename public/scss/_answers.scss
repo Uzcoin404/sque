@@ -1,8 +1,28 @@
+a.seacrh_answers{
+    margin-bottom: 20px;
+    display: block;
+    text-decoration: 0px;
+    color: #004eff;
+}
 .answers_post{
-    &__list{
-        background: #fff;
-        padding: 2em;
+    height: 550px;
+    overflow: auto;
+    padding-right: 15px;
+    &::-webkit-scrollbar {
+        width: 10px;
+      }
+      
+      &::-webkit-scrollbar-track {
+        background-color: #f9f9fd;
         border-radius: 10px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: linear-gradient(180deg, #00c6fb, #005bea);
+      }
+    &__list{
+
         .winner{
             p.title{
                 text-align: center;
@@ -25,7 +45,13 @@
                 }
             }
         }
+        .my_answers{
+            background: #c2caff !important;
+        }
         &_element{
+            background: #fff;
+            padding: 2em;
+            border-radius: 10px;
             margin-bottom: 30px;
             p.title{
                 font-size: 22px;
@@ -40,9 +66,8 @@
                 img{
                     width: 50px;
                     height: 50px;
-                    object-fit: contain;
+                    object-fit: cover;
                     border-radius: 50px;
-                    background: rgba(90, 87, 87, 0.858);
                 }
                 margin-bottom: 1rem;
             }
@@ -60,12 +85,21 @@
                 margin-bottom: 15px;
                 display: block;
             }
+            a.color_view{
+                color: #E63244 !important;
+            }
             a.closetext{
                 display: none;
                 color: rgb(105, 111, 218);
                 text-decoration: underline;
                 cursor: pointer;
                 margin-bottom: 15px;
+            }
+            .user_block_like{
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+                align-items: center;
             }
             .answers_post__list_element_text_price_full{
                 display: flex;
@@ -92,7 +126,6 @@
                     padding-left: 25px;
                     button.active{
                         background: url(/icons/like_before.png) !important;
-                        pointer-events: none !important;
                     }
                     button.btn_like_answer{
                         position: absolute;
@@ -121,7 +154,6 @@
                     padding-left: 25px;
                     button.active{
                         background: url(/icons/dislike_before.png);
-                        pointer-events: none !important;
                     }
                     button{
                         position: absolute;
@@ -136,6 +168,15 @@
                         border-radius: 0px !important;
                         box-shadow: 0px 0px 0px !important;
                         transition: all 0.2s ease-in-out;
+                    }
+                }
+                p.complaints{
+                    a{
+                        text-decoration: none;
+                        transition: all 0.3s ease-in-out;
+                        &:hover{
+                            color: rgba(238, 61, 61, 0.96);
+                        }
                     }
                 }
             }

@@ -1,5 +1,6 @@
 <?php 
     use app\models\Answers;
+    use yii\widgets\LinkPager;
     $this->title = \Yii::t('app', 'Moderation'); 
 ?>
 <div class="questions">
@@ -12,4 +13,7 @@
                 ENDFOREACH;
             ?>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

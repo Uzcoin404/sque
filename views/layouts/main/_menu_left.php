@@ -38,8 +38,23 @@
                 </a>
               </li>
               <li>
+                <a href="/complaints/moderation">
+                  <?=\Yii::t('app', 'Complaint');?>
+                </a>
+              </li>
+              <li>
                 <a href="/list_chat">
                   <?=\Yii::t('app', 'Go to the chat');?>
+                </a>
+              </li>
+              <li>
+                <a href="/user">
+                  <?=\Yii::t('app', 'List users');?>
+                </a>
+              </li>
+              <li>
+                <a href="/price">
+                  <?=\Yii::t('app', 'Price change');?>
                 </a>
               </li>
             <?php
@@ -61,6 +76,11 @@
             <li>
               <a href="/answer/myanswers">
                 <?=\Yii::t('app', 'My voting');?>
+              </a>
+            </li>
+            <li>
+              <a href="/questions/myvoiting">
+                <?=\Yii::t('app', 'My voiting');?>
               </a>
             </li>
             <li>

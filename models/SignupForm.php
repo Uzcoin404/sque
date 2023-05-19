@@ -21,6 +21,7 @@ class SignupForm extends Model
     public $grand;
     public $image;
     public $verifyCode;
+    public $polit;
     
  
     /**
@@ -42,11 +43,14 @@ class SignupForm extends Model
             ['password', 'string', 'min' => 6],
             ['repassword', 'string', 'min'=>6],
             ['grand', 'string'],
+            [['polit'], 'required', 'requiredValue' => 1],
             ['image', 'string'],
             ['verifyCode', 'required'],
             ['verifyCode', 'captcha','captchaAction'=>'/registration/captcha'],
         ];
     }
+
+
     public function attributeLabels()
     {
         return [
@@ -57,7 +61,8 @@ class SignupForm extends Model
             'repassword'=>'Подтвердите пароль',
             'grand'=>'Гражданство',
             'image'=>'Фото',
-            'verifyCode'=>'Капча'
+            'verifyCode'=>'Капча',
+            'polit'=>'Я принимаю условия пользовательского соглашения и политики конфиденциальности'
         ];
     }
     /**
@@ -95,6 +100,7 @@ class SignupForm extends Model
         $user->create_at=strtotime('now');
         $user->accessToken=MD5($user->create_at."".$user->username."".$user->email);
         $user->grand=$this->grand;
+        $user->read = 1;
         $user->image= 'user.png';
         if( $this->SendMail(
             $user->email,

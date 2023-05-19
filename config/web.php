@@ -91,10 +91,14 @@ $config = [
                 '/questions/view/<slug:\w+>'=>'question/view',
                 '/questions/change/<slug:\w+>'=>'question/change',
                 '/questions/myquestions'=>'question/myquestions',
+                '/questions/myquestionsfilter/<slug:\w+>'=>'question/myquestionsfilter',
                 '/questions/myquestions/<slug:\w+>'=>'question/myquestionview',
+                '/questions/myvoiting'=>'question/myvoiting',
+                '/questions/myvoiting/<slug:\w+>'=>'question/myvoitingview',
                 '/favourit'=>'favourites/index',
                 '/favourit/create'=>'favourites/create',
                 '/favourit/delete'=>'favourites/delete',
+                '/questions/myquestions/<page:\d+>' => 'question/myquestions',
                 /* Вопросы */
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
@@ -112,6 +116,7 @@ $config = [
                 '/questions/moderation'=>"question/moderation",
                 '/questions/updatestatus'=>"question/updatestatus",
                 '/questions/timestatus'=>"question/time",
+                '/questions/return/<slug:\w+>'=>"question/return",
                 /* Модерация */
                 /* Чат */
                 '/chat'=>"chat/index",
@@ -126,8 +131,22 @@ $config = [
                 '/readstatus'=>"user/status",
                 /* Правила */
                 /* Поиск */
+                '/questions/search'=>"question/search",
                 '/questions/filter'=>"question/filter",
                 /* Поиск */
+                /* Список пользователей */
+                '/user'=>"user/userlist",
+                /* Список  пользователей */
+                /* Изменение минимального платежа */
+                '/price'=>"price/index",
+                /* Изменение минимального платежа */
+                /* Изменение времени */
+                '/questions/dateupdate/<slug:\w+>'=>"question/dateupdate",
+                /* Изменение времени */
+                /* Жалобы */
+                '/complaints/'=>'complaints/index',
+                '/complaints/delete/<slug:\w+>'=>'complaints/delete',
+                /* Жалобы */
             ],
         ],
     ],

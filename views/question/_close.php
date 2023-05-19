@@ -1,7 +1,7 @@
 
 <?php 
         $this->title = \Yii::t('app', 'Close questions'); 
-    
+        use yii\widgets\LinkPager;
 ?>
 
 <div class="questions close">
@@ -21,4 +21,7 @@
             <?PHP ENDIF;?>
         </div>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

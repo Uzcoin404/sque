@@ -1,0 +1,42 @@
+.questions{
+    ul.pagination{
+        gap:10px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        li.prev{
+            display: none;
+        }
+        li.next{
+            display: none;
+        }
+        li{
+            a{
+                padding: 10px 15px;
+                background: #fff;
+                border-radius: 20px;
+                cursor: pointer;
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+                &:hover{
+                    background: #3f3fd9;
+                    color: #fff;
+                }
+            }
+        }
+        li.active{
+            a{
+                background: #3f3fd9 !important;
+                color: #fff;
+            }
+        }
+    }
+    .grid-view{
+        .summary{
+            display: none;
+        }
+        .table{
+            display: none;
+        }
+    }
+}

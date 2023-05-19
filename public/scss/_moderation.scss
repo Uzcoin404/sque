@@ -28,6 +28,19 @@
                             }
                         }
                     }
+                    a{
+                        color: #fff;
+                        padding: 15px 25px;
+                        border-radius: 10px;
+                        text-decoration: none;
+                        border: none;
+                        transition: all .5s ease-in-out; 
+                        background: rgb(193, 32, 32);
+                        font-weight: 400;
+                        &:hover{
+                            background: rgb(214, 68, 68);
+                        }
+                    }
                 }
             }
         }

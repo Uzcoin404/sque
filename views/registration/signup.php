@@ -50,11 +50,16 @@ $this->title = 'Регистрация';
                           'template' => '<div class="row"><div class="col-xs-3">{image}</div><div class="col-xs-4">{input}</div></div>'
 
                       ]) ?>
+                      <?= $form->field($model, 'polit')->checkbox([
+                          'template' => "<div>{input} {label}</div>\n<div>{error}</div>",
+                      ]) ?>
+                  <div class="read">
+                    <a href="/read">Прочитать правила</a>
+                  </div>
                   <div class="form-group">
                   <button type="submit" class="btn form-modal__footer-btn">
                     <i class="bi bi-arrow-right-square"></i>Зарегистрироваться
                   </button>
-                  <small>Нажимая на кнопку регистрации, Вы принимаете <a class="politics" href="">Условия использования</a> и <a class="politics" href="">Политику конфиденциальности</a></small>
                   </div>
 
 

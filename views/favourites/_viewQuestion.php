@@ -27,20 +27,23 @@
                 <?php
                     }
                 ?>
-                <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                <?PHP if($question->status < 6){ ?>
+                    <p class="status_time"><?=$question->getDateStatus()?></p>
+                <?PHP } ?>
+                <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                    <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                <?PHP } ?>
                 <?php if($question->status >= 5){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                 <?php } ?>
-                <?php if($question->status >= 4){ ?>
+                <?php if($question->status == 6){ ?>
                     <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                     <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                 <?php } ?>
                 <div class="questions__list_element_btn">
                 
                 <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-                <div class="status_time">
-                    <?=$question->getDate()?>
-                </div>
+
                 </div>
             </div>
         </div>
@@ -61,11 +64,16 @@
                         }
                     ?>
                     <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
-                    <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                        <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP } ?>
+                    <?PHP if($question->status == 6){?>
+                        <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP } ?>
                     <?php if($question->status >= 5){ ?>
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?php } ?>
-                    <?php if($question->status >= 4){ ?>
+                    <?php if($question->status == 6){ ?>
                         <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                         <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                     <?php } ?>
@@ -74,9 +82,7 @@
                 <div class="questions__list_element_btn">
                     
                     <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-                    <div class="status_time">
-                        <?=$question->getDate()?>
-                    </div>
+
                 </div>
         </div>
     <?PHP ENDIF;?>

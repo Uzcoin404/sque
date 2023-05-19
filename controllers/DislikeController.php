@@ -72,18 +72,29 @@ class DislikeController extends Controller
             $request->get('id_answer_dislike'),
         ];
         foreach($this->info as $post){
+
             foreach($post as $id_answers){
-                
-                $dislike_answer = new DislikeAnswer();
+                if($id_answers['status'] == 1){
+                    $id_an=$id_answers['answer'];
+                    $dislike_answer=DislikeAnswer::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
+                    $dislike_answer->delete();
+                } else {
 
-                $dislike_answer->id_answer = $id_answers;
-                $dislike_answer->id_user = $user->id;
-                $dislike_answer->data = strtotime('now');
-                
-                $dislike_answer->save(0);
+                    $id_an=$id_answers['answer'];
+                    $dislike_answer = new DislikeAnswer();
+                    $dislike_answer->id_answer = $id_an;
+                    $dislike_answer->id_user = $user->id;
+                    $dislike_answer->id_questions = $id_answers['question'][0];
+                    $dislike_answer->data = strtotime('now');
+                    
+                    $dislike_answer->save(0);
+    
+                    //unset($like_answer);
 
-                //unset($like_answer);
+                }
+
             }
+
         }
 
     }

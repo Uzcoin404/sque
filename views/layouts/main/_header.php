@@ -12,7 +12,11 @@
       <div class="menu__list_element">
             <div class="menu__list_element_logo"></div>
             <div class="menu__list_element_search">
-             
+              <form action="/questions/search" method="get">
+                <input type="text" name="text" id="search-text" placeholder="Поиск">
+                <button></button>
+              </form>
+
             </div>
             <?php
               if($user){

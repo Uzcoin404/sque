@@ -21,12 +21,14 @@
             <?php
                 if($question->status > 7 || $question->status < 7){
             ?>
-                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
             <?php
                 }
             ?>
-            <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
-            <?php if($question->status >= 5){ ?>
+            <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+            <?PHP } ?>
+            <?php if($question->status > 5){ ?>
                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                 <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
@@ -37,15 +39,13 @@
             <div class="questions__list_element_btn">
               
                 <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
-                <div class="status_time">
-                    <?=$question->getDate()?>
-                </div>
+                
             </div>
         </div>
         <div class="questions__list_element_text_moderation">
-            <button onclick="ModerationStatusPublic(this)" data-id-question="<?=$question->id?>" data-status="0">Вернуть</button>
+                <a href="/questions/return/<?=$question->id?>"><?=Yii::t("app","Return")?></a>
             <?php if($question->status < 4){ ?>
-                <button onclick="ModerationStatusPublic(this)" data-id-question="<?=$question->id?>" data-status="1">Опубликовать</button>
+                <button onclick="ModerationStatusPublic(this)" data-id-question="<?=$question->id?>" data-status="1"><?=Yii::t("app","Public")?></button>
             <?php } ?>
         </div>
     </div>

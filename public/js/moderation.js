@@ -14,3 +14,11 @@ function ModerationStatusPublic(element){
         }
     })
 }
+
+function BlockReturn(id){
+    $('.block_return.'+id+'').css('height','100vh');
+}
+
+function BlockReturnClose(id){
+    $('.block_return.'+id+'').css('height','0vh');
+}

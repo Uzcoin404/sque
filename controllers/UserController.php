@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 use app\models\Queue;
 use app\models\User;
@@ -24,11 +25,11 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','get','update','download','status'],
+                'only' => ['index','get','update','download','status','userlist'],
                 'rules' => [
 
                     [
-                        'actions' => ['index','get','update','download','status'],
+                        'actions' => ['index','get','update','download','status','userlist'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -64,6 +65,31 @@ class UserController extends Controller
                 'model'=>$model,
             ]
         );
+    }
+
+    //Страница всех пользователей для админа
+    public function actionUserlist(){
+        $user= Yii::$app->user->identity;
+        if($user->moderation == 1){
+            
+            $users = User::find();
+
+            $pages = new Pagination(['totalCount' => $users->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+    
+            $users = $users->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+            return $this->render(
+                'user_list',
+                [
+                    'model'=>$users,
+                    "pages"=>$pages,
+                ]
+                );
+        }else{
+            $this->redirect("/");
+        }
     }
     
     protected function findModel($id)

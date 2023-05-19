@@ -19,7 +19,7 @@ class Statusdatepost extends \yii\bootstrap5\Widget
     public function run()
     {   
         $sql = Yii::$app->getDb()->createCommand("SELECT * FROM questions WHERE id=:ID",["ID"=>$this->question_id])->queryOne();
-        return '<p class="open_text">'.Html::encode($this->DateStatus($sql['data'],$sql['data_open'])).'</p>';
+        return '<p class="open_text">'.Yii::t('app','Was opened').' : ' .Html::encode($this->DateStatus($sql['data'],$sql['data_open'])).'</p>';
     }
 
     private function DateStatus($date,$date_status){

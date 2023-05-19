@@ -89,9 +89,11 @@ if($answer->id_user == $status_questions->winner_id){
                 <p class="dislike_answer">
                     <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
                 </p>
-                <p class="views">
-                    <?=Html::encode($answer->getView()).' '.\Yii::t('app','Views');?>
-                </p>
+                <?php if($status_questions->status == 6) {?>
+                    <p class="views">
+                        <?=Html::encode($answer->getView()).' '.\Yii::t('app','Views');?>
+                    </p>
+                <?php } ?>
         <?php } ?>
     </div>
     

@@ -1,10 +1,13 @@
 <?php 
     use app\models\Answers;
+    use yii\widgets\LinkPager;
     $user=Yii::$app->user->identity;
     $this->title = \Yii::t('app', 'My questions'); 
 ?>
 <div class="questions">
     <div class="questions__list">
+
+            
             <?PHP 
                 FOREACH($questions as $question):
             ?>
@@ -24,4 +27,7 @@
             <?PHP ENDIF;?>
         </div>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

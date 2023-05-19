@@ -9,8 +9,39 @@
 @import 'privacy';
 @import 'read';
 @import 'filter';
+@import 'pagination';
+@import 'user_list';
+@import 'block_return';
+@import 'complaints';
 
 .menu__list_element_search{
     max-width: 1100px;
-    
+}
+
+.sroll_top{
+    a{
+        background: url(/icons/up-arrow.png);
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #5343e7;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        bottom: 5px;
+        border-radius: 50px;
+        right: 5px;
+        z-index: 999;
+    }
+}
+
+
+@media (max-width:640px){
+    .sroll_top{
+        a{
+            bottom: 100px !important;
+        }
+    }
 }

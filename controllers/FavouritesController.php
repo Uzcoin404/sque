@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 use app\models\User;
 use app\models\Favourites;
@@ -51,11 +52,19 @@ class FavouritesController extends Controller
     {
         $user=Yii::$app->user->identity;
 
-        $favourites = Favourites::find()->where(['id_user'=>$user->id])->all();
+        $favourites = Favourites::find()->where(['id_user'=>$user->id]);
+
+        $pages = new Pagination(['totalCount' => $favourites->count(), 'pageSize' => 6, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
+        $favourites = $favourites->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+
         return $this->render(
             'index',
             [
                 "model"=>$favourites,
+                "pages"=>$pages,
             ]
         );
 

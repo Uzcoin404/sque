@@ -1,5 +1,6 @@
 <?php 
     use app\models\User; 
+    use yii\widgets\LinkPager;
 ?>
 <div class="chat_list">
     <div class="chat_list__list">
@@ -11,4 +12,7 @@
             </div>
         <?PHP ENDFOREACH;?>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 use app\models\Answers;
 use app\models\Questions;
@@ -53,9 +54,9 @@ class AnswersController extends Controller
             $model->id_user=$user->id;
             $model->id_questions=$slug;
             $model->data=strtotime('now');
-            /*if($this->CheckUser($slug)){
+            if($this->CheckUser($slug)){
                 return $this->redirect('/questions/view/'.$slug.'');
-            }*/
+            }
             if($model->save()){
                 return $this->redirect('/');
             }
@@ -84,14 +85,22 @@ class AnswersController extends Controller
 
     public function actionMyanswers()
     {
+
         $user=Yii::$app->user->identity;
 
-        $answer = Answers::find()->where(['id_user'=>$user->id])->all();
+        $answer = Answers::find()->where(['id_user'=>$user->id]);
+
+        $pages = new Pagination(['totalCount' => $answer->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
+        $answer = $answer->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
         
         return $this->render(
             '_myanswers',
             [
                 'answer'=>$answer,
+                "pages"=>$pages,
             ]
         );
         

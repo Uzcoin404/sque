@@ -2,7 +2,7 @@
 <?php 
 
     $this->title = \Yii::t('app', 'Voting questions'); 
- 
+    use yii\widgets\LinkPager;
 ?>
 
 <div class="questions">
@@ -20,4 +20,7 @@
             <?PHP ENDIF;?>
         </div>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

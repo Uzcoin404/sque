@@ -10,6 +10,7 @@ use yii\web\IdentityInterface;
 use app\modules\books\models\Books;
 use app\models\NoteGroups;
 use yii\helpers\ArrayHelper;
+use app\models\Price;
 
 /* 
 СТАТУСЫ
@@ -32,11 +33,15 @@ class Questions extends \yii\db\ActiveRecord
     }
     public function rules()
     {
+        
+        $price = Price::find()->where(["id"=>1])->one();
+
         return [
-            [['title','text','coast','status','data','owner_id','grand','data_status'], 'required',],
+            [['title','text','coast','status','data','owner_id','grand','data_status','data_start'], 'required',],
             [['title'],'string'],
             [['text'],'string'],
-            [['coast'], 'double', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]*\s*$/'],
+            [['text_return'],'string'],
+            [['coast'], 'double', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]*\s*$/', 'min'=>$price->money],
             [['status','data','owner_id'],'integer'],
             [['grand'], 'string'],
         ];
@@ -52,6 +57,8 @@ class Questions extends \yii\db\ActiveRecord
             'data' => \Yii::t('app', 'Data created of question'),
             'owner_id' => \Yii::t('app', 'Owner of question'),
             'grand'=> \Yii::t('app','Country'),
+            'data'=> \Yii::t('app','Date update'),
+            'text_return'=> \Yii::t('app','Reason for return'),
         ];
     }
 
@@ -89,7 +96,19 @@ class Questions extends \yii\db\ActiveRecord
     {
         $data = $this->getStatusList();
 
-        return $data[$this->status]." : ".$this->getDate();
+        if($this->status == 6){
+            return $data[$this->status]." : ".$this->getDate();
+        } elseif($this->status == 4) {
+            return Yii::t('app','Open')." ".Yii::t('app','Passed')." : ".$this->getDate();
+        } elseif($this->status == 5){
+            return Yii::t('app','Voting')." ".Yii::t('app','Passed')." : ".$this->getDate();
+        } elseif($this->status == 1){
+            return Yii::t('app','Moderation')." : ".$this->getDate();
+        } elseif($this->status == 2){
+            return Yii::t('app','Moderation')." : ".$this->getDate();
+        }
+
+        
         
     }
 
@@ -105,12 +124,16 @@ class Questions extends \yii\db\ActiveRecord
         $result = "";
         if($this->isReturnDate()){
                 $first_date = new \DateTime("now");
-                $second_date = new \DateTime("@".$this->data);
+                $second_date = new \DateTime("@".$this->data_status);
                 $interval = $second_date->diff($first_date);
                 if($interval->days <= 0){
                     $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
                 } else {
-                    $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                    if($this->status == 6){
+                        $result= date("d.m.y", $this->data_status);
+                    } else {
+                        $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                    }
                 }
         }
      
@@ -143,9 +166,9 @@ class Questions extends \yii\db\ActiveRecord
             $interval = $first_date->diff($second_date);
 
             if($interval->days <= 0){
-                $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
             } else {
-                $result= \Yii::t('app', '{h} hours {d} days',['h'=>$interval->h,'d'=>$interval->s]);
+                $result= \Yii::t('app', 'Remained {d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
             }
         }
 

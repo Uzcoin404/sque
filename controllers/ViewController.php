@@ -11,6 +11,7 @@ use yii\web\UploadedFile;
 
 use app\models\ViewsAnswers;
 use app\models\User;
+use app\models\Questions;
 use app\models\ChangeEmail;
 
 
@@ -23,6 +24,7 @@ class ViewController extends Controller
     //Настройка прав доступа
     public $info = [];
     public $type_user_id = 0;
+    public $id_question = [];
     public function behaviors()
     {
         return [
@@ -50,8 +52,20 @@ class ViewController extends Controller
 
         $user=Yii::$app->user->identity;
 
+        $moderation = '';
+
+        if($user){
+            $moderation = $user->moderation;
+        }
+
+        
+
         $this->info = [
             $request->get('status_view'),
+        ];
+
+        $this->id_question = [
+            $request->get('id_question'),
         ];
 
         if(isset(\Yii::$app->user->identity->id)){
@@ -62,25 +76,32 @@ class ViewController extends Controller
             $this->type_user_id=0;
         }
 
-            foreach($this->info as $post){
-               
-                foreach($post as $view){
-                    $Views=ViewsAnswers::find()->where(["id_answer"=>$view,"id_user"=>$user->id])->one();
-                   
-                    if(!isset($Views->id)){
 
-                        $Views = new ViewsAnswers();
-                        
-                        $Views->id_answer=$view;
-                        $Views->type_user=$this->type_user_id;
-                        $Views->id_user=$user->id;
-                        $Views->data=strtotime("now");
-                        $Views->isNewRecord=1;
-                        $Views->save(0);
-    
-                        //unset($like_answer);
+
+            foreach($this->info as $post){
+                
+                    if(!$moderation){
+
+                        $questions = Questions::find()->where(['id'=>$this->id_question[0][0]])->one();
+                        $Views=ViewsAnswers::find()->where(["id_answer"=>$post,"id_user"=>$user->id])->one();
+
+                        if($questions->status < 6){
+                            if(!isset($Views->id)){
+                            
+                                $Views = new ViewsAnswers();
+                                
+                                $Views->id_answer=$post;
+                                $Views->type_user=$this->type_user_id;
+                                $Views->id_user=$user->id;
+                                $Views->data=strtotime("now");
+                                $Views->isNewRecord=1;
+                                $Views->save(0);
+                               
+                                //unset($like_answer);
+                            }
+                        }                   
                     }
-                }
+
             }
 
     }

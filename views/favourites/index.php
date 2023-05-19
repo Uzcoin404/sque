@@ -1,6 +1,7 @@
 <?php 
 
 $this->title = \Yii::t('app', 'My favourites');
+use yii\widgets\LinkPager;
 use app\models\Questions;
 
 ?>
@@ -26,4 +27,7 @@ use app\models\Questions;
             <?PHP ENDIF;?>
         </div>
     </div>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

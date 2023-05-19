@@ -1,0 +1,28 @@
+.block_return{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 0vh;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+    &_back{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: #00000054;
+        z-index: -1;
+    }
+    &__list{
+        background: #fff;
+        padding: 2em;
+        p.title{
+            font-size: 28px;
+            font-weight: 400;
+        }
+    }
+}
