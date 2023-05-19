@@ -66,7 +66,44 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                "/"=>"question/index",
+
+                //Открытые 
+                "/"=>"open/index",
+                '/questions/create'=>"open/create",
+                '/questions/view/<slug:\w+>'=>'open/view',
+                '/questions/change/<slug:\w+>'=>'open/change',
+                /* Поиск */
+                '/questions/search'=>"open/search",
+                /* Поиск */
+                /* Модерация */
+                '/questions/moderation'=>"open/moderation",
+                '/questions/updatestatus'=>"open/updatestatus",
+                '/questions/timestatus'=>"open/time",
+                '/questions/return/<slug:\w+>'=>"open/return",
+                /* Модерация */
+                //Закрытые 
+                '/questions/close'=>"close/index",
+                '/questions/close/<slug:\w+>'=>"close/view",
+                '/question/filter'=>"close/filter",
+                //Голосование
+                '/questions/voting'=>"voiting/voting",
+                '/questions/voting/<slug:\w+>'=>"voiting/votingview",
+                //МОИ ВОПРОСЫ
+                '/questions/myquestions'=>'my/index',
+                '/questions/myquestionsfilter/<slug:\w+>'=>'my/filter',
+                '/questions/myquestions/<slug:\w+>'=>'my/view',
+                '/questions/myquestions/<page:\d+>' => 'my/index',
+                //МОИ ОТВЕТЫ
+                '/answer/myanswers/view/<slug:\w+>'=>'answers/myanswersview',
+                '/answer/myanswers'=>'answers/myanswers',
+                //МОИ ГОЛОСОВАНИЯ
+                '/questions/myvoiting'=>'myvoiting/index',
+                '/questions/myvoiting/<slug:\w+>'=>'myvoiting/view',
+                //Избранные
+                '/favourit'=>'favourites/index',
+                '/favourit/create'=>'favourites/create',
+                '/favourit/delete'=>'favourites/delete',
+
                 "/login"=>'registration/login',
                 '/main'=>'registration/main',
                 '/logout'=>'registration/logout',
@@ -83,22 +120,15 @@ $config = [
                 "/profile/ajx/update"=>'user/update',
                 /* Пользователь */
                 /* Вопросы */
-                '/questions/create'=>"question/create",
-                '/questions/voting'=>"question/voting",
-                '/questions/voting/<slug:\w+>'=>"question/votingview",
-                '/questions/close'=>"question/close",
-                '/questions/close/<slug:\w+>'=>"question/closeview",
-                '/questions/view/<slug:\w+>'=>'question/view',
-                '/questions/change/<slug:\w+>'=>'question/change',
-                '/questions/myquestions'=>'question/myquestions',
-                '/questions/myquestionsfilter/<slug:\w+>'=>'question/myquestionsfilter',
-                '/questions/myquestions/<slug:\w+>'=>'question/myquestionview',
-                '/questions/myvoiting'=>'question/myvoiting',
-                '/questions/myvoiting/<slug:\w+>'=>'question/myvoitingview',
-                '/favourit'=>'favourites/index',
-                '/favourit/create'=>'favourites/create',
-                '/favourit/delete'=>'favourites/delete',
-                '/questions/myquestions/<page:\d+>' => 'question/myquestions',
+              
+               
+                
+                
+                
+             
+                
+                
+               
                 /* Вопросы */
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
@@ -109,15 +139,9 @@ $config = [
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
                 '/text'=>'question/text',
-                '/answer/myanswers/view/<slug:\w+>'=>'answers/myanswersview',
-                '/answer/myanswers'=>'answers/myanswers',
+                
                 /* Ответы */
-                /* Модерация */
-                '/questions/moderation'=>"question/moderation",
-                '/questions/updatestatus'=>"question/updatestatus",
-                '/questions/timestatus'=>"question/time",
-                '/questions/return/<slug:\w+>'=>"question/return",
-                /* Модерация */
+          
                 /* Чат */
                 '/chat'=>"chat/index",
                 '/list_chat'=>"chat/list",
@@ -130,10 +154,7 @@ $config = [
                 '/read'=>"user/read",
                 '/readstatus'=>"user/status",
                 /* Правила */
-                /* Поиск */
-                '/questions/search'=>"question/search",
-                '/questions/filter'=>"question/filter",
-                /* Поиск */
+               
                 /* Список пользователей */
                 '/user'=>"user/userlist",
                 /* Список  пользователей */
@@ -141,7 +162,7 @@ $config = [
                 '/price'=>"price/index",
                 /* Изменение минимального платежа */
                 /* Изменение времени */
-                '/questions/dateupdate/<slug:\w+>'=>"question/dateupdate",
+                '/questions/dateupdate/<slug:\w+>'=>"open/dateupdate",
                 /* Изменение времени */
                 /* Жалобы */
                 '/complaints/'=>'complaints/index',

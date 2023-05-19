@@ -1,17 +1,16 @@
 <?php 
     use app\models\Answers;
     $user=Yii::$app->user->identity;
-    $this->title = \Yii::t('app', 'My questions'); 
+    $this->title = \Yii::t('app', 'My voiting'); 
 ?>
 <div class="questions">
     <div class="questions__list">
-
             
-            <?PHP 
+            <?PHP
                 FOREACH($questions as $question):
             ?>
 
-                        <?=Yii::$app->controller->renderPartial("_viewQuestionMy",["question"=>$question]);?>
+                        <?=Yii::$app->controller->renderPartial("_view",["question"=>$question]);?>
 
             <?PHP 
                 ENDFOREACH;
@@ -26,4 +25,9 @@
             <?PHP ENDIF;?>
         </div>
     </div>
+    <?=
+    yii\grid\GridView::widget([
+        'dataProvider' => $provider,
+    ]);
+    ?>
 </div>

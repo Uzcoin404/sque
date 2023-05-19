@@ -1,14 +1,15 @@
 
 <?php 
-
-    $this->title = \Yii::t('app', 'Voting questions'); 
-    use yii\widgets\LinkPager;
+        $this->title = \Yii::t('app', 'Close questions'); 
+        use yii\widgets\LinkPager;
 ?>
 
-<div class="questions">
+<div class="questions close">
+    <?=Yii::$app->controller->renderPartial("_filter");?>
     <div class="questions__list">
+      
         <?PHP FOREACH($questions as $question):?>
-            <?=Yii::$app->controller->renderPartial("_viewQuestionVoitinf",["question"=>$question]);?>
+            <?=Yii::$app->controller->renderPartial("_view",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
     </div>
     <div class="questions_menu" style="display:none">

@@ -12,7 +12,7 @@
                 FOREACH($questions as $question):
             ?>
 
-                        <?=Yii::$app->controller->renderPartial("_viewQuestionMy",["question"=>$question]);?>
+                        <?=Yii::$app->controller->renderPartial("_view",["question"=>$question]);?>
 
             <?PHP 
                 ENDFOREACH;
