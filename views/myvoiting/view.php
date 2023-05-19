@@ -60,29 +60,7 @@
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                             <?php } ?>
                         </div>
-                        <?php
-                            $user = Yii::$app->user->identity;
-                            if($user && $user->moderation==0){
-                        ?>
-                            <div class="questions__list_element_btn">
-                                <?php
-                                    if($question->status > 3 && $question->status < 6){
-                                        $answers = Answers::find()->where(['id_user'=>$user->id, 'id_questions'=>$question->id])->one();
-                                        if(!$answers){
-                                ?>
-
-                                    <a href="/answer/create/<?=$question->id?>" class="btn_answers"><?=\Yii::t('app', 'Answer the question');?></a>
-                                <?php
-                                        }
-                                    }
-                                ?>
-                                <!-- <?php if($question->status == 5){ ?>
-                                    <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
-                                <?php } ?> -->
-                            </div>
-                        <?php
-                            }
-                        ?>
+                      
                 </div>
         </div>
         <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>

@@ -65,14 +65,12 @@
                         ?>
                             <div class="questions__list_element_btn">
                                 <?php
-                                    if($question->status > 3 && $question->status < 6){
-                                        $answers = Answers::find()->where(['id_user'=>$user->id, 'id_questions'=>$question->id])->one();
-                                        if(!$answers){
+                                    $answers = Answers::find()->where(['id_user'=>$user->id, 'id_questions'=>$question->id])->one();
+                                    if(!$answers){
                                 ?>
 
                                     <a href="/answer/create/<?=$question->id?>" class="btn_answers"><?=\Yii::t('app', 'Answer the question');?></a>
                                 <?php
-                                        }
                                     }
                                 ?>
                                 <!-- <?php if($question->status == 5){ ?>

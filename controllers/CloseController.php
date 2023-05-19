@@ -78,7 +78,6 @@ class CloseController extends Controller
 
     public function actionView($slug){
 
-        $this->ViewCreate($slug);
 
         $questions = Questions::find()->where(["id"=>$slug])->one();
         return $this->render(
@@ -158,39 +157,5 @@ class CloseController extends Controller
 
     }
 
-    public function ViewCreate($slug){
-        $users = Yii::$app->user->identity;
-
-        $id_user = '';
-        $type = '';
-        $moderation = '';
-
-        if($users){
-            $id_user = $users->id;
-            $type = 1;
-            $moderation = $users->moderation;
-        } else {
-            $id_user = 1;
-            $type = 0;
-        }
-        if(!$users->moderation){
-
-            $view = Views::find()->where(['id_questions'=>$slug,'id_user'=>$id_user])->one();
-
-            $questions = Questions::find()->where(['id'=>$slug])->one();
-
-            if($questions->status < 6){
-                if(!$view){
-                    $views = new Views();
-                    $views->id_questions = $slug;
-                    $views->data = strtotime("now");
-                    $views->id_user = $id_user;
-                    $views->type_user = $type;
-            
-                    $views->save();
-                }
-            }
-        }
-    }
-
+   
 }
