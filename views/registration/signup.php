@@ -54,7 +54,7 @@ $this->title = 'Регистрация';
                           'template' => "<div>{input} {label}</div>\n<div>{error}</div>",
                       ]) ?>
                   <div class="read">
-                    <a href="/read">Прочитать правила</a>
+                    <a href="/read" target="_blank">Прочитать правила</a>
                   </div>
                   <div class="form-group">
                   <button type="submit" class="btn form-modal__footer-btn">

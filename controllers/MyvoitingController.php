@@ -59,58 +59,31 @@ class MyvoitingController extends Controller
     
     public function actionIndex()
     {
-        $user=Yii::$app->user->identity;
-        
-        $answer_like = LikeAnswers::find()->where(['id_user'=>$user->id])->all();
 
-        $answer_dislike = DislikeAnswer::find()->where(['id_user'=>$user->id])->all();
+        $user=Yii::$app->user->identity;
 
         $id_questions = [];
         
         $questions = [];
 
-        if($answer_like){
-            
-            foreach($answer_like as $value){
-               array_push($id_questions, $value->id_questions);
-            }
+        $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
+        $queryLike = LikeAnswers::find();
+        $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $result = $questions;
 
-        }
-        if($answer_dislike){
-            foreach($answer_dislike as $value){
-                array_push($id_questions, $value->id_questions);
-            }
-        }
+        $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
+        $result = $result->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
         
-        $id_question = array_unique($id_questions, SORT_REGULAR);
-        
-        foreach($id_question as $value){
-
-            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["coast"=>SORT_DESC])->one();
-            array_push($questions, $question);
-            
-        }
-
-        $count = count($questions);
-
-        $provider = new ArrayDataProvider([
-            'allModels' => $questions,
-            'pagination' => [
-                'pageSize' => 5,
-            ],
-        ]);
-
-     
-
-        $files = $provider->getModels();    
-
         return $this->render(
             'index',
             [
-                "questions"=>$files,
-                "provider"=>$provider,
+                'questions'=>$result,
+                "pages"=>$pages,
             ]
-        );
+        );  
     }
 
     public function actionView($slug){

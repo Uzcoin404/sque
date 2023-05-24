@@ -21,7 +21,7 @@
             <?php
                 if($question->status > 7 || $question->status < 7){
             ?>
-                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
             <?php
                 }
             ?>

@@ -7,11 +7,6 @@
     <div class="menu_left__list_element">
       <ul>
         <li>
-          <a href="/read">
-            <?=\Yii::t('app', 'Read rules');?>
-          </a>
-        </li>
-        <li>
           <a href="/">
             <?=\Yii::t('app', 'Questions list');?>
           </a>
@@ -96,11 +91,6 @@
         <?php
           }
         ?>
-        <li>
-          <a href="/privacy">
-            <?=\Yii::t('app', 'Privacy policy');?>
-          </a>
-        </li>
       </ul>
     </div>
   </div>

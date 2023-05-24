@@ -3,7 +3,7 @@ $(function(){
         $(this).on( "click", function() {
             if(!$(this).hasClass("active")){
                 $(this).parent().find('a.sort').each(function(){
-                    $(this).removeClass("active");
+                    $('.questions__filter_form__list_element .questions__filter_form__list_element_to a.sort').removeClass("active");
                 });
             }
             $(this).toggleClass("active");

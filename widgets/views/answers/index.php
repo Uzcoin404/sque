@@ -1,7 +1,5 @@
 <?php $users=Yii::$app->user->identity; ?>
-<?php if($users){ ?>
-    <a href="#<?=$users->id?>" class="seacrh_answers"><?=Yii::t('app','Seacrh my answers')?></a>
-<?php } ?>
+<?=Yii::$app->controller->renderPartial("//../widgets/views/answers/_search_answers",["id_questions"=>$id_questions]);?>
 <div class='answers_post'>
     <div class='answers_post__list'>
         <?PHP 

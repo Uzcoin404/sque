@@ -4,7 +4,7 @@
     $user=Yii::$app->user->identity;
 
 ?>
-<div class="question_back__btn"><a  href="javascript:history.back()"><?=\Yii::t('app','Back')?></a></div>
+<?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $question->id]);?>
 <div class="questions">
     <div class="questions__list">
             <?php \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>

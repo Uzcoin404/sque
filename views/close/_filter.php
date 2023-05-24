@@ -14,8 +14,8 @@
                     <?=\Yii::t('app', 'Interested users');?>
                   </label>
                   <div class="questions__filter_form__list_element_to">
-                    <a class="sort" data-sort="view-ASC"><img src="/img/icons/az.png"></a>
-                    <a class="sort" data-sort="view-DESC"><img src="/img/icons/za.png"></a>
+                    <a class="sort" data-sort="view-DESC"><img src="/img/icons/az.png"></a>
+                    <a class="sort" data-sort="view-ASC"><img src="/img/icons/za.png"></a>
                   </div>
                 </div>
                 <div class="questions__filter_form__list_element">
@@ -23,8 +23,8 @@
                     <?=\Yii::t('app', 'Count answers');?>
                   </label>
                   <div class="questions__filter_form__list_element_to">
-                    <a class="sort" data-sort="answers-ASC"><img src="/img/icons/az.png"></a>
-                    <a class="sort" data-sort="answers-DESC"><img src="/img/icons/za.png"></a>
+                    <a class="sort" data-sort="answers-DESC"><img src="/img/icons/az.png"></a>
+                    <a class="sort" data-sort="answers-ASC"><img src="/img/icons/za.png"></a>
                   </div>
                 </div>
                 <div class="questions__filter_form__list_element">
@@ -32,8 +32,8 @@
                     <?=\Yii::t('app', 'Number of participants');?>
                   </label>
                   <div class="questions__filter_form__list_element_to">
-                    <a class="sort" data-sort="likes_answer-ASC"><img src="/img/icons/az.png"></a>
-                    <a class="sort" data-sort="likes_answer-DESC"><img src="/img/icons/za.png"></a>
+                    <a class="sort" data-sort="likes_answer-DESC"><img src="/img/icons/az.png"></a>
+                    <a class="sort" data-sort="likes_answer-ASC"><img src="/img/icons/za.png"></a>
                   </div>  
                 </div>
                 <div class="questions__filter_form__list_element">

@@ -20,7 +20,7 @@
                 <?php
                     if($question->status > 7 || $question->status < 7){
                 ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                 <?php
                     }
                 ?>
@@ -77,7 +77,7 @@
                         }
                     ?>
                     <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                     <?php if($question->status == 6){?>
                         <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
                         <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>

@@ -52,18 +52,21 @@ class FavouritesController extends Controller
     {
         $user=Yii::$app->user->identity;
 
-        $favourites = Favourites::find()->where(['id_user'=>$user->id]);
+        $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
+        $queryLike = Favourites::find();
+        $questions->leftJoin(['favourites'=>$queryLike], 'favourites.id_question = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $result = $questions;
 
-        $pages = new Pagination(['totalCount' => $favourites->count(), 'pageSize' => 6, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 6, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
-        $favourites = $favourites->offset($pages->offset)
+        $result = $result->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
 
         return $this->render(
             'index',
             [
-                "model"=>$favourites,
+                "model"=>$result,
                 "pages"=>$pages,
             ]
         );

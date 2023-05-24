@@ -37,11 +37,32 @@
     }
 }
 
+footer{
+    .menu_left__list_element{
+        text-align: center;
+        margin-top: 40px;
+        ul{
+            list-style: none;
+            li{
+                a{
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
 
 @media (max-width:640px){
     .sroll_top{
         a{
             bottom: 100px !important;
+        }
+    }
+    footer{
+        .menu_left__list_element{
+            text-align: left;
+            margin-top: 40px;
+            margin-bottom: 120px;
         }
     }
 }

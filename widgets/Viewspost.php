@@ -37,23 +37,24 @@ class Viewspost extends \yii\bootstrap5\Widget
         
         if(!$this->addView) return 0;
      
-        $Question=Questions::find()->where(["id"=>$this->question_id,"owner_id"=>$this->user_id])->one();
+        $Question = Questions::find()->where(["id"=>$this->question_id])->one();
         
         if($this->admin == 1) return 0;
+
+        if($Question->status == 6) return 0;
 
         if(isset($Question->id)) return 0;
     
         $Views=Views::find()->where(["id_questions"=>$this->question_id,"type_user"=>$this->type_user_id,"id_user"=>$this->user_id])->one();
-      
-        if(!isset($Views->id)){
-            $Views=new Views();
-            $Views->id_questions=$this->question_id;
-            $Views->type_user=$this->type_user_id;
-            $Views->id_user=$this->user_id;
-            $Views->data=strtotime("now");
-            $Views->isNewRecord=1;
-            $Views->save();
-        }
+            if(!isset($Views->id)){
+                $Views=new Views();
+                $Views->id_questions=$this->question_id;
+                $Views->type_user=$this->type_user_id;
+                $Views->id_user=$this->user_id;
+                $Views->data=strtotime("now");
+                $Views->isNewRecord=1;
+                $Views->save();
+            }
     }
 
     

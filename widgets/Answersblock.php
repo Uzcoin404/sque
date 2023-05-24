@@ -17,9 +17,18 @@ class Answersblock extends \yii\bootstrap5\Widget
     {
         $user=Yii::$app->user->identity;
 
-
         $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
         $question_status = Questions::find()->where(["id"=>$this->question_id])->one();
+
+        if($question_status->status == 5){
+            $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
+            $answers->orderBy('views_answer.views_answercount ASC');
+            $answerlike = ViewsAnswers::find()
+            ->select('id_answer,count(id_user) as views_answercount')
+            ->groupBy('id_answer');
+            $answers->leftJoin(['views_answer'=>$answerlike], 'views_answer.id_answer = answers.id');
+            
+        }
        
         if($question_status->status == 4){
             if($user){

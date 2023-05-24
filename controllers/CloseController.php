@@ -59,26 +59,17 @@ class CloseController extends Controller
     
     public function actionIndex()
     {
-        $questions = Questions::find()->where(['in', 'status', [6,7]]);
-
-        $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
-
-        $questions = $questions->offset($pages->offset)
-        ->limit($pages->limit)
-        ->all();
+        $questions = Questions::find()->where(['in', 'status', [6,7]])->orderBy(["coast"=>SORT_DESC])->all();
 
         return $this->render(
             'index',
             [
                 "questions"=>$questions,
-                "pages"=>$pages,
             ]
         );
     }
 
     public function actionView($slug){
-
-
         $questions = Questions::find()->where(["id"=>$slug])->one();
         return $this->render(
             'view',

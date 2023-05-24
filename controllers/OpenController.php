@@ -117,7 +117,7 @@ class OpenController extends Controller
             $id_user = 1;
             $type = 0;
         }
-        if(!$users->moderation){
+        if(!$moderation){
 
             $view = Views::find()->where(['id_questions'=>$slug,'id_user'=>$id_user])->one();
 
@@ -145,6 +145,8 @@ class OpenController extends Controller
 
         $id_question = [];
 
+        $search = 1;
+
         $questions = [];
 
         $questions = Questions::find()->where(["status"=>[4,5,6]])->andWhere(
@@ -153,7 +155,7 @@ class OpenController extends Controller
                 ['like','text',$text],
                 ['like','title',$text]
             ]
-        )->all();
+        )->orderBy(["coast"=>SORT_DESC])->all();
   
         return $this->render(
             '_search',
@@ -176,6 +178,13 @@ class OpenController extends Controller
 
                 $model->data = strtotime($model->data);
                 $model->data_status = $model->data;
+                $model->date_changes = 1;
+
+                if($model->status == 4){
+                    $model->data_open = $model->data;
+                } elseif ($model->status == 5){
+                    $model->data_voiting = $model->data;
+                }
 
                 $date = date("d.m.y", $model->data_status);
     
@@ -226,7 +235,9 @@ class OpenController extends Controller
                         }
                         $users->update(0);
                     } 
-                    $value->data_voiting = strtotime("now");
+                    if(!$value->date_changes){
+                        $value->data_voiting = strtotime("now");
+                    }
                     $value->data = strtotime("now");
                     $value->status = 6;
                     $value->update(0);
@@ -236,10 +247,11 @@ class OpenController extends Controller
                 if($value->status == 4){
                     
                     $value->status = 5;
-                    $value->data_open = strtotime("now");
+                    if(!$value->date_changes){
+                        $value->data_open = strtotime("now");
+                    }
                     $value->data_status = strtotime("now");
                     $value->data = strtotime("now");
-                    $value->data_start = strtotime("now");
                     $value->update(0);
 
                 }
@@ -263,22 +275,15 @@ class OpenController extends Controller
 
             $like = LikeAnswers::find()->where(['id_answer'=>$value->id])->one();
 
-            $dislike = DislikeAnswer::find()->where(['id_answer'=>$value->id])->one();
-
             $slit_like = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM like_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$value->id])->queryOne();
-
-            $slit_dislike = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislike_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$value->id])->queryOne();
             
             $this->winner_procent = $slit_like['count'];
-
-            $this->winner_procent = $this->winner_procent - $slit_dislike['count'];
 
             if($this->winner_procent < 0){
                 $this->winner_procent = 0;
             }
 
             $this->winner_procent = $this->winner_procent/100;
-
 
             if($value->id_user){
                 $win[$value->id_user]=$this->winner_procent;

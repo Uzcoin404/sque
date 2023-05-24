@@ -99,13 +99,13 @@ class Questions extends \yii\db\ActiveRecord
         if($this->status == 6){
             return $data[$this->status]." : ".$this->getDate();
         } elseif($this->status == 4) {
-            return Yii::t('app','Open')." ".Yii::t('app','Passed')." : ".$this->getDate();
+            return Yii::t('app','Passed')." : ".$this->getDate();
         } elseif($this->status == 5){
-            return Yii::t('app','Voting')." ".Yii::t('app','Passed')." : ".$this->getDate();
+            return Yii::t('app','Passed')." : ".$this->getDate();
         } elseif($this->status == 1){
-            return Yii::t('app','Moderation')." : ".$this->getDate();
+            return $this->getDate();
         } elseif($this->status == 2){
-            return Yii::t('app','Moderation')." : ".$this->getDate();
+            return $this->getDate();
         }
 
         
@@ -128,11 +128,22 @@ class Questions extends \yii\db\ActiveRecord
                 $interval = $second_date->diff($first_date);
                 if($interval->days <= 0){
                     $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
+                    if($this->status == 2){
+                        $result = Yii::t('app','Reviewed')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                    } elseif($this->status == 1){
+                        $result = Yii::t('app','Moderation')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                    }
                 } else {
                     if($this->status == 6){
                         $result= date("d.m.y", $this->data_status);
                     } else {
-                        $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                        $hours = $interval->d * 24 + $interval->h;
+                        $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                        if($this->status == 2){
+                            $result = Yii::t('app','Reviewed')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                        } elseif($this->status == 1){
+                            $result = Yii::t('app','Moderation')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                        }
                     }
                 }
         }
@@ -145,7 +156,7 @@ class Questions extends \yii\db\ActiveRecord
         
         $result = "";
 
-        if($this->status < 6 && $this->status > 3){
+        if($this->status > 0){
             $first_date = new \DateTime("now");
             $second_date = new \DateTime("@".$this->data_status);
             
@@ -167,8 +178,19 @@ class Questions extends \yii\db\ActiveRecord
 
             if($interval->days <= 0){
                 $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                if($this->status == 4) {
+                    $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                } elseif($this->status == 5){
+                    $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+                }
             } else {
-                $result= \Yii::t('app', 'Remained {d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+                $hours = $interval->d * 24 + $interval->h;
+                $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                if($this->status == 4) {
+                    $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                } elseif($this->status == 5){
+                    $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+                }
             }
         }
 
@@ -177,7 +199,6 @@ class Questions extends \yii\db\ActiveRecord
 
     public function isReturnDate()
     {
-        if($this->status <=2) return 0;
         if($this->status == 8) return 0;
         return 1;    
     }

@@ -1239,3 +1239,12 @@ content{
         }
     }
 }
+
+@media (max-width:900px){
+    .form_img .modal-content{
+        width: 100% !important;
+    }
+    .form_img .form-modal [class*=col-]{
+        display: block;
+    }
+}

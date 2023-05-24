@@ -11,6 +11,7 @@ use yii\web\UploadedFile;
 use yii\data\Pagination;
 
 use app\models\Answers;
+use app\models\Complaints;
 use app\models\Questions;
 use app\models\User;
 use app\models\ChangeEmail;
@@ -29,11 +30,11 @@ class AnswersController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','create','update','myanswers','myanswersview'],
+                'only' => ['index','create','update','myanswers','myanswersview','delete'],
                 'rules' => [
 
                     [ 
-                        'actions' => ['index','create','update','myanswers','myanswersview'],
+                        'actions' => ['index','create','update','myanswers','myanswersview','delete'],
                         'allow' => true,
                         'roles' => ['@'], 
                     ],
@@ -42,6 +43,19 @@ class AnswersController extends Controller
             ],
             
         ];
+    }
+
+    public function actionDelete(){
+        $user=Yii::$app->user->identity;
+        $id_answers = $_GET['answer'];
+        $id_complaints = $_GET['complaints'];
+        if($user->moderation == 1){
+            Answers::find()->where(["id"=>$id_answers])->one()->delete();
+            Complaints::find()->where(["id"=>$id_complaints])->one()->delete();
+            return $this->redirect('/');
+        } else {
+            return $this->redirect('/');
+        }
     }
 
     public function actionCreate($slug)
@@ -91,18 +105,21 @@ class AnswersController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $answer = Answers::find()->where(['id_user'=>$user->id]);
+        $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
+        $queryLike = Answers::find();
+        $questions->leftJoin(['answers'=>$queryLike], 'answers.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $result = $questions;
+        
+        $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
-        $pages = new Pagination(['totalCount' => $answer->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
-
-        $answer = $answer->offset($pages->offset)
+        $result = $result->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
         
         return $this->render(
             '_myanswers',
             [
-                'answer'=>$answer,
+                'questions'=>$result,
                 "pages"=>$pages,
             ]
         );

@@ -100,15 +100,16 @@ class MyController extends Controller
         );
     }
 	
-	    public function actionFilter($slug){
+	public function actionFilter($slug){
 
         $questions = Questions::find()->where(["id"=>$slug])->orderBy(["coast"=>SORT_DESC])->all();
 
         return $this->render(
-            '_myquestionfilter',
+            'filter',
             [
                 "questions"=>$questions,
             ]
         );
+
     }
 }

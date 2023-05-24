@@ -21,7 +21,4 @@
             <?PHP ENDIF;?>
         </div>
     </div>
-    <?= LinkPager::widget([
-        'pagination' => $pages,
-    ]); ?>
 </div>

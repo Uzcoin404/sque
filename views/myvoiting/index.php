@@ -1,5 +1,6 @@
 <?php 
     use app\models\Answers;
+    use yii\widgets\LinkPager;
     $user=Yii::$app->user->identity;
     $this->title = \Yii::t('app', 'My voiting'); 
 ?>
@@ -8,11 +9,11 @@
             
             <?PHP
                 FOREACH($questions as $question):
+                    if($question){
             ?>
-
                         <?=Yii::$app->controller->renderPartial("_view",["question"=>$question]);?>
-
             <?PHP 
+                    }
                 ENDFOREACH;
             ?>
     </div>
@@ -25,9 +26,7 @@
             <?PHP ENDIF;?>
         </div>
     </div>
-    <?=
-    yii\grid\GridView::widget([
-        'dataProvider' => $provider,
-    ]);
-    ?>
+    <?= LinkPager::widget([
+        'pagination' => $pages,
+    ]); ?>
 </div>

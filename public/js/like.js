@@ -6,7 +6,58 @@ $(function(){
     });
 });
 
+function FilterLike(element){
+    $id = $(element).attr('data-id');
+    $sorts = $(element).attr('data-sort');
+    $(element).addClass('active');
+    $('.seacrh_answers.dislike').removeClass('active');
+    $('.seacrh_answers.dislike').attr('data-sort','ALL');
+    $sorts_true="ALL";
+   
+    if($sorts){
+        if($sorts=="DESC"){
+            $(element).attr('data-sort','ALL');
+            $(element).removeClass('active');
+            $sorts_true="ALL";
+        }
+        if($sorts=="ASC"){
+            $(element).attr('data-sort','DESC');
+            $sorts_true="DESC";
+        }
+        if($sorts=="ALL"){
+            $(element).attr('data-sort','ASC');
+            $sorts_true="ASC";
+        }
+    }
+    console.log($sorts_true);
+    AjxFilterLike($id, $sorts_true);
+}
 
+function FilterDislike(element){
+    $id = $(element).attr('data-id');
+    $sorts = $(element).attr('data-sort');
+    $sorts_true="ALL";
+    $(element).addClass('active');
+    $('.seacrh_answers.like').removeClass('active');
+    $('.seacrh_answers.like').attr('data-sort','ALL');
+    if($sorts){
+        if($sorts=="DESC"){
+            $(element).attr('data-sort','ALL');
+            $(element).removeClass('active');
+            $sorts_true="ALL";
+        }
+        if($sorts=="ASC"){
+            $(element).attr('data-sort','DESC');
+            $sorts_true="DESC";
+        }
+        if($sorts=="ALL"){
+            $(element).attr('data-sort','ASC');
+            $sorts_true="ASC";
+        }
+    }
+    console.log($sorts_true);
+    AjxFilterDislike($id, $sorts_true);
+}
 
 function VoteSave(question_id){
 
@@ -76,6 +127,8 @@ function SubmitLikeStatus(element){
     var like=[];
     var id_question=[];
     var like=[];
+
+    $id = $(element).attr('data-id');
     
     // Удаление лайков
     if($(element).hasClass( "active" )){
@@ -116,6 +169,10 @@ function SubmitLikeStatus(element){
 
     } else {
         $(element).attr('data-like-status', 0);
+    }
+
+    if($('.answers_post .answers_post__list .answers_post__list_element .btn_dislike_answer.block'+$id+'').hasClass('active')){
+        return 0;
     }
 
     // Добавление лайков
@@ -168,6 +225,8 @@ function SubmitDislikeStatus(element){
     var dislike=[];
     var id_question=[];
 
+    $id = $(element).attr('data-id');
+   
     if($(element).hasClass('active')){
         $(element).attr('data-dislike-status', 1);
 
@@ -180,7 +239,7 @@ function SubmitDislikeStatus(element){
                 {
                     answer:$(element).attr("data-id"),
                     question:id_question,
-                    status: $(element).attr("data-dislike-status"),
+                    status: 1,
                 }
             );
         });
@@ -202,8 +261,13 @@ function SubmitDislikeStatus(element){
             $('.btn_questions').css('pointer-events', 'auto');
             $(element).removeClass('active');
         }, 1000);
+        
     } else {
         $(element).attr('data-dislike-status', 0);
+    }
+
+    if($('.answers_post .answers_post__list .answers_post__list_element .btn_like_answer.block'+$id+'').hasClass('active')){
+        return 0;
     }
 
     if($(element).attr('data-dislike-status') == 0){
@@ -221,7 +285,7 @@ function SubmitDislikeStatus(element){
                 }
             );
         });
-    
+        
         $.ajax({
             url: '/dislike/',
             method: 'get',
@@ -320,9 +384,47 @@ function UserBlockLike(element){
                 $(element).parent().parent().parent().find('.user_block_like').append('<p>'+val['user']+'</p>')
             });
         }
-    })
+    });
+    $(element).css('display','none');
+    $('.btn_like_view.block'+$id+'.close').css('display','inline');
+    $('.user_block_like').css('display','flex');
+    $('.btn_dislike_view.block'+$id+'.close').css('display','none');
+    $('.btn_dislike_view.block'+$id+'.open').css('display','inline');
 }
 
+
+function UserBlockLikeClose(element){
+    $('.user_block_like').css('display','none');
+    $('.btn_like_view.block'+$id+'.open').css('display','inline');
+    $(element).css('display','none');
+}
+
+function UserBlockDislike(element){
+    $id = $(element).attr('data-id')
+    $.ajax({
+        url: '/dislike_block',
+        method: 'get',
+        dataType: 'json',
+        data: {id_block: $id},
+        success: function(data){
+            $('.user_block_like').empty();
+            $.each(data , function(index, val) { 
+                $(element).parent().parent().parent().find('.user_block_like').append('<p>'+val['user']+'</p>')
+            });
+        }
+    })
+    $(element).css('display','none');
+    $('.btn_dislike_view.block'+$id+'.close').css('display','inline');
+    $('.user_block_like').css('display','flex');
+    $('.btn_like_view.block'+$id+'.close').css('display','none');
+    $('.btn_like_view.block'+$id+'.open').css('display','inline');
+}
+
+function UserBlockDislikeClose(element){
+    $('.user_block_like').css('display','none');
+    $('.btn_dislike_view.block'+$id+'.open').css('display','inline');
+    $(element).css('display','none');
+}
 
 
 $(window).on( "scroll", function() {

@@ -81,25 +81,28 @@ class ViewController extends Controller
             foreach($this->info as $post){
                 
                     if(!$moderation){
+                        if($questions->status != 6){
+                            $questions = Questions::find()->where(['id'=>$this->id_question[0][0]])->one();
+                            $Views=ViewsAnswers::find()->where(["id_answer"=>$post,"id_user"=>$user->id])->one();
 
-                        $questions = Questions::find()->where(['id'=>$this->id_question[0][0]])->one();
-                        $Views=ViewsAnswers::find()->where(["id_answer"=>$post,"id_user"=>$user->id])->one();
-
-                        if($questions->status < 6){
-                            if(!isset($Views->id)){
-                            
-                                $Views = new ViewsAnswers();
+                            if($questions->status < 6 && $questions->status > 4){
                                 
-                                $Views->id_answer=$post;
-                                $Views->type_user=$this->type_user_id;
-                                $Views->id_user=$user->id;
-                                $Views->data=strtotime("now");
-                                $Views->isNewRecord=1;
-                                $Views->save(0);
-                               
-                                //unset($like_answer);
-                            }
-                        }                   
+                                    if(!isset($Views->id)){
+                                
+                                        $Views = new ViewsAnswers();
+                                        
+                                        $Views->id_answer=$post;
+                                        $Views->type_user=$this->type_user_id;
+                                        $Views->id_user=$user->id;
+                                        $Views->data=strtotime("now");
+                                        $Views->isNewRecord=1;
+                                        $Views->save(0);
+                                    
+                                        //unset($like_answer);
+                                    }
+                
+                            }    
+                        }               
                     }
 
             }

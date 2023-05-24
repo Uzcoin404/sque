@@ -5,6 +5,7 @@
   ?>
 <?PHP 
   $user=Yii::$app->user->identity;
+
 ?>
 <header>
   <div class="menu">
@@ -13,7 +14,11 @@
             <div class="menu__list_element_logo"></div>
             <div class="menu__list_element_search">
               <form action="/questions/search" method="get">
-                <input type="text" name="text" id="search-text" placeholder="Поиск">
+                <?php if(!empty($_GET['text'])){ ?>
+                  <input type="text" name="text" id="search-text" placeholder="Поиск" value="<?=$_GET['text']?>">
+                <?php } else { ?>
+                  <input type="text" name="text" id="search-text" placeholder="Поиск">
+                <?php } ?>
                 <button></button>
               </form>
 

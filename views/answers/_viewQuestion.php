@@ -21,7 +21,7 @@
                 <?php
                     if($question->status < 6){
                 ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                 <?php
                     } elseif($question->status == 6) {
                 ?>
@@ -34,7 +34,7 @@
                     <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
                 <?PHP } ?>
 
-                <?PHP IF($question->statusMoreOpenBlock()):?>
+                <?PHP IF($question->status == 4):?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                 <?PHP ENDIF;?>
 
@@ -43,10 +43,14 @@
                     <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                 <?PHP ENDIF;?>
 
-                
-
                 <div class="questions__list_element_btn">
-                    <a href="/answer/myanswers/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP IF($question->status==4):?>
+                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==5):?>
+                        <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ELSEIF($question->status==6):?>
+                        <a href="/questions/close/<?=$question->id?>#<?=$user->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                    <?PHP ENDIF;?>
                 </div>
                 
             </div>

@@ -20,8 +20,14 @@ class Likeanwsers extends \yii\bootstrap5\Widget
     }
     public function run()
     {
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM like_answer WHERE id_questions=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
-        return '<p class="like_answer">'.Html::encode($sql['count']).'</p>';
+        $id_user = [];
+        $sql = LikeAnswers::find()->where(['id_questions'=>$this->question_id])->all();
+        foreach($sql as $value){
+            array_push($id_user, $value->id_user);
+        }
+        $result = array_unique($id_user);
+        $count = count($result);
+        return '<p class="like_answer">'.Html::encode($count).'</p>';
     }
     
 }

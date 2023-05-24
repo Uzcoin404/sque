@@ -1,8 +1,57 @@
-a.seacrh_answers{
-    margin-bottom: 20px;
-    display: block;
-    text-decoration: 0px;
-    color: #004eff;
+.seacrh{
+    &__list{
+        display: flex;
+        gap: 35px;
+        align-items: center;
+        flex-wrap: wrap;
+        &_filterlike{
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            justify-content: center;
+        }
+        a{
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: 0px;
+            color: #000000;
+            text-decoration: underline;
+        }
+        a.seacrh_answers{
+            position: relative;
+            text-decoration: underline;
+            &::before{
+                content: '';
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                right: -25px;
+            }
+            &.active{
+                &[data-sort="ASC"]{ 
+                    color: #3995b6;
+                    &::before{
+                    background: url(/img/icons/za.png) !important;
+                    background-size: contain !important;
+                    background-repeat: no-repeat !important;
+                    background-position: center !important;
+                    }
+                }
+                &[data-sort="DESC"]{
+                    color: #3995b6;
+                    &::before{
+                        background: url(/img/icons/az.png) !important;
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                    } 
+                }
+            }
+            
+        }
+        
+
+    }
 }
 .answers_post{
     height: 550px;
@@ -52,7 +101,7 @@ a.seacrh_answers{
             background: #fff;
             padding: 2em;
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             p.title{
                 font-size: 22px;
                 font-weight: 400;
@@ -71,9 +120,14 @@ a.seacrh_answers{
                 }
                 margin-bottom: 1rem;
             }
+            .answers_post__list_element_text_info{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                align-items: center;
+            }
             p.text{
                 max-width: 1400px;
-                width: 100%;
                 font-size: 18px;
                 overflow: hidden;
                 word-wrap: break-word;
@@ -148,14 +202,17 @@ a.seacrh_answers{
                         box-shadow: 0px 0px 0px !important;
                         font-weight: 300;
                     }
+                    button.true{
+                        pointer-events: none !important;
+                    }
                 }
                 p.dislike_answer{
                     position: relative;
                     padding-left: 25px;
                     button.active{
-                        background: url(/icons/dislike_before.png);
+                        background: url(/icons/dislike_before.png) !important;
                     }
-                    button{
+                    button.btn_dislike_answer{
                         position: absolute;
                         background: url(/icons/dislike.png);
                         background-size: contain !important;
@@ -168,6 +225,16 @@ a.seacrh_answers{
                         border-radius: 0px !important;
                         box-shadow: 0px 0px 0px !important;
                         transition: all 0.2s ease-in-out;
+                    }
+                    button.btn_dislike_view{
+                        background: none;
+                        border: none !important;
+                        border-radius: 0px !important;
+                        box-shadow: 0px 0px 0px !important;
+                        font-weight: 300;
+                    }
+                    button.true{
+                        pointer-events: none !important;
                     }
                 }
                 p.complaints{

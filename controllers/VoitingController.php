@@ -174,24 +174,27 @@ class VoitingController extends Controller
             $id_user = 1;
             $type = 0;
         }
-        if(!$users->moderation){
+        if($users){
+            if(!$users->moderation){
 
-            $view = Views::find()->where(['id_questions'=>$slug,'id_user'=>$id_user])->one();
-
-            $questions = Questions::find()->where(['id'=>$slug])->one();
-
-            if($questions->status < 6){
-                if(!$view){
-                    $views = new Views();
-                    $views->id_questions = $slug;
-                    $views->data = strtotime("now");
-                    $views->id_user = $id_user;
-                    $views->type_user = $type;
-            
-                    $views->save();
+                $view = Views::find()->where(['id_questions'=>$slug,'id_user'=>$id_user])->one();
+    
+                $questions = Questions::find()->where(['id'=>$slug])->one();
+    
+                if($questions->status < 6){
+                    if(!$view){
+                        $views = new Views();
+                        $views->id_questions = $slug;
+                        $views->data = strtotime("now");
+                        $views->id_user = $id_user;
+                        $views->type_user = $type;
+                
+                        $views->save();
+                    }
                 }
             }
         }
+
     }
 
     

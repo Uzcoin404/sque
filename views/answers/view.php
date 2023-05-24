@@ -4,7 +4,7 @@
     $user=Yii::$app->user->identity;
 
 ?>
-<div class="question_back__btn"><a  href="javascript:history.back()"><?=\Yii::t('app','Back')?></a></div>
+<?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $question->id]);?>
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>
@@ -34,7 +34,7 @@
                             <?php
                                 if($question->status < 6){
                             ?>
-                                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                             <?php
                                 } elseif($question->status == 6) {
                             ?>

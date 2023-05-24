@@ -133,15 +133,14 @@ $config = [
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
                 '/like_block'=>'like/block',
+                '/dislike_block'=>'dislike/block',
                 '/dislike'=>'dislike/index',
                 /* Лайки/Дизлайки */
                 /* Ответы */
                 '/answer/create/<slug:\w+>'=>"answers/create",
                 '/viewanswer'=>'view/index',
                 '/text'=>'open/text',
-                
                 /* Ответы */
-          
                 /* Чат */
                 '/chat'=>"chat/index",
                 '/list_chat'=>"chat/list",
@@ -154,7 +153,6 @@ $config = [
                 '/read'=>"user/read",
                 '/readstatus'=>"user/status",
                 /* Правила */
-               
                 /* Список пользователей */
                 '/user'=>"user/userlist",
                 /* Список  пользователей */
@@ -167,7 +165,10 @@ $config = [
                 /* Жалобы */
                 '/complaints/'=>'complaints/index',
                 '/complaints/delete/<slug:\w+>'=>'complaints/delete',
+                '/answers/delete'=>'answers/delete',
                 /* Жалобы */
+                '/like/filterlike'=>'like/filterlike',
+                '/dislike/filterdislike'=>'dislike/filterdislike',
             ],
         ],
     ],

@@ -1,0 +1,1 @@
+<div class="question_back__btn"><a onclick="BackUrl(this)" data-id="<?=$question_id?>"><?=\Yii::t('app','Back')?></a></div>

@@ -19,23 +19,19 @@ class Statusdatepost extends \yii\bootstrap5\Widget
     public function run()
     {   
         $sql = Yii::$app->getDb()->createCommand("SELECT * FROM questions WHERE id=:ID",["ID"=>$this->question_id])->queryOne();
-        return '<p class="open_text">'.Yii::t('app','Was opened').' : ' .Html::encode($this->DateStatus($sql['data'],$sql['data_open'])).'</p>';
+        return '<p class="open_text">'.Yii::t('app','Was opened').' : ' .Html::encode($this->DateStatus($sql['data_start'],$sql['data_open'])).'</p>';
     }
 
-    private function DateStatus($date,$date_status){
-        $first_date = new \DateTime("@".$date);
-        $second_date = new \DateTime("@".$date_status);
+    private function DateStatus($data,$date_open){
+        
+        $first_date = new \DateTime("@".$data);
+        $second_date = new \DateTime("@".$date_open);
         $interval = $first_date->diff($second_date);
         if($interval->days <= 0){
-            $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
+            return \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
         } else {
-            $result= \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
-        }
-
-        if($interval->days <= 0){
-            return \Yii::t('app','{h} hours',['h'=>$interval->h]);
-        } else {
-            return \Yii::t('app', '{d} days {h} hours',['d'=>$interval->d,'h'=>$interval->h]);
+            $hours = $interval->d * 24 + $interval->h;
+            return \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
         }
     }
 }

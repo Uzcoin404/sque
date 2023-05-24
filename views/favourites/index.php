@@ -12,10 +12,9 @@ use app\models\Questions;
                 echo "<p>".\Yii::t('app', 'You dont have a favorite')."</p>";
             }
             FOREACH($model as $question):
-                $questions = Questions::find()->where(["id"=>$question->id_question])->one();
         ?>
                 
-            <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$questions]);?>
+                <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>
     </div>
     <div class="questions_menu" style="display:none">

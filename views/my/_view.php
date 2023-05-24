@@ -18,11 +18,15 @@
                 ?>
                 <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
                 <?php
-                    if($question->status < 6){
+                    if($question->status < 6 && $question->status > 2){
                 ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                 <?php
                     } elseif($question->status == 6) {
+                ?>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                <?php
+                    } elseif ($question->status == 1 || $question->status == 2){
                 ?>
                     <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
                 <?php
@@ -43,11 +47,23 @@
                     <?php if($question->status == 2){?>
                         <a onclick="BlockReturn(<?=$question->id?>)" class="btn_questions"><?=\Yii::t('app','Reason for return')?></a>
                         <a href="/questions/change/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','Change')?></a>
-                        <a href="/questions/myquestions/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP IF($question->status==4):?>
+                            <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==5):?>
+                            <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==6):?>
+                            <a href="/questions/close/<?=$question->id?>#<?=$user->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ENDIF;?>
                     <?php
                         } else{
                     ?>
-                        <a href="/questions/myquestions/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP IF($question->status==4):?>
+                            <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==5):?>
+                            <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==6):?>
+                            <a href="/questions/close/<?=$question->id?>#<?=$user->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ENDIF;?>
                     <?php
                         }
                     ?>
@@ -82,7 +98,7 @@
                         }
                     ?>
                     <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?> / <?=$question->getDateStatus()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                     <?php if($question->status == 6){?>
                         <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>
                         <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
@@ -99,7 +115,13 @@
                     <?php } ?>
                     <div class="questions__list_element_btn">
                         
-                        <a href="/questions/myquestions/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP IF($question->status==4):?>
+                            <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==5):?>
+                            <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ELSEIF($question->status==6):?>
+                            <a href="/questions/close/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <?PHP ENDIF;?>
 
                     </div>
                 </div>

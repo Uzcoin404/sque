@@ -21,5 +21,6 @@
     <div class="complaints__list_element_btn">
         <a href="/questions/voting/<?=$answers->id_questions?>" class="question_btn"><?=Yii::t('app','Go questions')?></a>
         <a href="/complaints/delete/<?=$complaints->id?>" class="delete_complain"><?=Yii::t('app','Delete complain')?></a>
+        <a href="/answers/delete/?answer=<?=$answers->id?>&&complaints=<?=$complaints->id?>" class="delete_complain"><?=Yii::t('app','Delete answers')?></a>
     </div>
 </div>

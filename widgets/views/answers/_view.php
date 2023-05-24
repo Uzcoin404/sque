@@ -6,12 +6,10 @@ use app\models\DislikeAnswer;
 use app\models\Questions;
 use app\models\ViewsAnswers;
 
-$class_like = '';
-$class_dislike = '';
-
 $user_class = "";
 
 $moderation = '';
+
 
 $status_questions = Questions::find()->where(["id"=>$answer->id_questions])->one();
 
@@ -67,9 +65,6 @@ if($status_questions->status >= 4){
     <?php if($users){ ?>
         <a name="<?=$answer->id_user?>"></a>
     <?php } ?>
-    <p class='text'>
-        <?=$answer->GetText();?>
-    </p>
     <?php
         $text_view = Yii::t('app','Full text');
         $class_view = ''; 
@@ -85,101 +80,21 @@ if($status_questions->status >= 4){
         }
 
     ?>
-    <a onclick="OpenFullText(this)" data-answer-id="<?=$answer->id;?>" data-status-user="<?=$status_user?>" class="opentext <?=$class_view?>"><?=$text_view?></a>
-    <a onclick="CloseFullText(this)" data-answer-id="<?=$answer->id;?>" class="closetext <?=$class_view?>"><?=\Yii::t('app','Close text')?></a>
+
+    <div class="answers_post__list_element_text_info">
+        <p class='text'>
+            <?=$answer->GetText();?>
+        </p>
+        <div class="answers_post__list_element_text_info_btn">
+            <a onclick="OpenFullText(this)" data-answer-id="<?=$answer->id;?>" data-status-user="<?=$status_user?>" class="opentext <?=$class_view?>"><?=$text_view?></a>
+            <a onclick="CloseFullText(this)" data-answer-id="<?=$answer->id;?>" class="closetext <?=$class_view?>"><?=\Yii::t('app','Close text')?></a>
+        </div>
+    </div>
+
+
     <div class='answers_post__list_element_text_price_full'>
-        <?php
-           
-                
-                if(!isset($user)){
 
-                    $user=User::find()->all();
-                
-                    foreach($user as $info){
-                        $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
-        
-                        $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
-
-                        if($like_user){
-                            if($users){
-                                if($status_questions->status == 5 && $info->id = $users->id){
-                                    if($info->id == $like_user->id_user){
-                                        $class_like = 'active';
-                                    }
-                                }
-                            }
-
-                        }
-
-                        if($dislike_user){
-                            if($users){
-                                if($status_questions->status == 5 && $info->id = $users->id){
-                                    if($info->id == $dislike_user->id_user){
-                                        $class_dislike = 'active';
-                                    }
-                                }
-                            }
-                        }
-                        
-
-                    }
-                    
-                } else {
-
-                    $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"id_user"=>$user->id])->one();
-        
-                    $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$user->id])->one();
-                    
-
-                }
-                if($users){
-                    if($users->moderation==1 || !isset($users)){
-                        $class_like = 'active';
-                        $class_dislike = 'active';
-                    }
-                }
-                
-
-
-
-                if($status_questions->status == 6 || !isset($users)){
-                    
-                    $class_like = 'active';
-                    $class_dislike = 'active';
-
-                } else {
-
-                    if($like_user){
-                        $class_like = 'active';
-                    }
-
-                    if($dislike_user){
-                        $class_dislike = 'active';
-                    }
-
-                }
-            
-
-        ?>
-                
-
-                    <?php if($status_questions->status == 6){ ?>
-                        <p class="like_answer"> 
-                            <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" style="pointer-events: none !important;" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button>
-                            <?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
-                            <button class="btn_like_view" onclick="UserBlockLike(this)" data-id="<?=$answer->id;?>"><?=Yii::t('app','Watch')?></button>
-                        </p>
-                        <p class="dislike_answer">
-                            <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" style="pointer-events: none !important;" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
-                        </p>
-                    <?php } elseif ($status_questions->status > 4 && $status_questions->status < 6) { ?>
-                        <p class="like_answer" style="padding-left:0">
-                            <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" style="position:unset" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button>
-                        </p>
-                        <p class="dislike_answer" style="padding-left:0">
-                            <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" style="position:unset" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button>
-                        </p>
-                    <?php } ?>
+                <?=Yii::$app->controller->renderPartial("//../widgets/views/answers/_like",["answer"=>$answer]);?>
              
                 <?php if($status_questions->status == 6 || $moderation) {?>
                     <p class="views">
