@@ -68,7 +68,11 @@ class MyvoitingController extends Controller
 
         $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
         $queryLike = LikeAnswers::find();
-        $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id');
+        if(isset($user->id)){
+            $questions->where(['id_user'=>$user->id]);
+        }
+        $questions->orderBy(["coast"=>SORT_DESC]);
         $result = $questions;
 
         $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);

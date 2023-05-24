@@ -1,5 +1,5 @@
 <footer>
-    <content>
+
         <div class="menu_left__list">
             <div class="menu_left__list_element">
                 <ul>
@@ -16,7 +16,7 @@
                 </ul>
             </div>
         </div>
-    </content>
+
 
 </footer>
 <script>
