@@ -37,8 +37,8 @@
                   </div>  
                 </div>
                 <div class="questions__filter_form__list_element">
-                  <a class="btn_filter" OnClick="ApplyFilter();"><?=\Yii::t('app', 'Apply');?></a>
-                  <a class="btn_filter reset" OnClick="ResetFilter();"><?=\Yii::t('app', 'Reset');?></a>
+                  <a class="btn_filter" data-filter="1" OnClick="ApplyFilter(this);"><?=\Yii::t('app', 'Apply');?></a>
+                  <a class="btn_filter reset" href="/questions/close" OnClick="ResetFilter();"><?=\Yii::t('app', 'Reset');?></a>
                 </div>
         </div>
 </div>

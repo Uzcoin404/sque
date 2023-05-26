@@ -25,8 +25,8 @@ function FilterLike(element){
             $sorts_true="DESC";
         }
         if($sorts=="ALL"){
-            $(element).attr('data-sort','ASC');
-            $sorts_true="ASC";
+            $(element).attr('data-sort','DESC');
+            $sorts_true="DESC";
         }
     }
     console.log($sorts_true);
@@ -51,8 +51,8 @@ function FilterDislike(element){
             $sorts_true="DESC";
         }
         if($sorts=="ALL"){
-            $(element).attr('data-sort','ASC');
-            $sorts_true="ASC";
+            $(element).attr('data-sort','DESC');
+            $sorts_true="DESC";
         }
     }
     console.log($sorts_true);
@@ -311,6 +311,50 @@ function SubmitDislikeStatus(element){
 
 }
 
+function OpenFullTextClose(element){
+
+    var status=[];
+    var id_question=[];
+    $st = 1;
+    $id = $(element).attr('data-answer-id');
+
+    if($(element).attr('data-status-user') == 1){
+
+        $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
+            status.push($(element).attr("data-answer-id"));
+            id_question.push($(element).attr("data-id-question"));
+        });
+    
+        $.ajax({
+            url: '/viewan',
+            method: 'get',
+            dataType: 'html',
+            data: {status_view: $(element).attr('data-answer-id'), id_question: id_question},
+            success: function(data){
+                console.log(data);
+            }
+        })
+        
+    }
+
+    $.ajax({
+        url: '/text',
+        method: 'get',
+        dataType: 'html',
+        data: {id: $id, status: $st},
+        success: function(data){
+            $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').append(data);
+        }
+    })
+
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').empty();
+    
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'none');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'block');
+}
+
+
+
 function OpenFullText(element){
 
     var status=[];
@@ -366,6 +410,10 @@ function CloseFullText(element){
             $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] p.text').append(data);
         }
     })
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').addClass('color_view');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').addClass('color_view');
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').text();
+    $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').text('Показать весь ответ ещё раз');
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .opentext').css('display', 'block');
     $('.answers_post .answers_post__list .answers_post__list_element[data-answer-id="'+$id+'"] .closetext').css('display', 'none');
 }

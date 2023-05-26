@@ -20,6 +20,7 @@
         a.seacrh_answers{
             position: relative;
             text-decoration: underline;
+            cursor:pointer;
             &::before{
                 content: '';
                 position: absolute;
@@ -30,21 +31,11 @@
             &.active{
                 &[data-sort="ASC"]{ 
                     color: #3995b6;
-                    &::before{
-                    background: url(/img/icons/za.png) !important;
-                    background-size: contain !important;
-                    background-repeat: no-repeat !important;
-                    background-position: center !important;
-                    }
+                   
                 }
                 &[data-sort="DESC"]{
                     color: #3995b6;
-                    &::before{
-                        background: url(/img/icons/az.png) !important;
-                        background-size: contain !important;
-                        background-repeat: no-repeat !important;
-                        background-position: center !important;
-                    } 
+                   
                 }
             }
             

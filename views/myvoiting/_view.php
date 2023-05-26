@@ -34,6 +34,7 @@
                     <?PHP } ?>
                 <?php if($question->status >= 5){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+                    
                 <?php } ?>
                 <?php if($question->status == 4){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>

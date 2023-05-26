@@ -118,12 +118,17 @@ class VoitingController extends Controller
         $this->ViewCreate($slug);
 
         $questions = Questions::find()->where(["id"=>$slug])->one();
-        return $this->render(
-            'view',
-            [
-                "question"=>$questions,
-            ]
-        );
+        if($questions->status == 5){
+            return $this->render(
+                'view',
+                [
+                    "question"=>$questions,
+                ]
+            );
+        } else {
+            $this->redirect("/");
+        }
+
     }
 
     public function actionVoting(){

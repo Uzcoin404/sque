@@ -17,26 +17,32 @@
                 <?PHP IF($question->showPrice()):?>
                     <p class="price"><?= $question->getPrice();?></p>
                 <?PHP ENDIF;?>
-
                 <?php
-                    if($question->status < 6){
-                ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
-                <?php
-                    } elseif($question->status == 6) {
-                ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
-                <?php
-                    }
-                ?>
-
-                <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
-                    <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
-                <?PHP } ?>
-
-                <?PHP IF($question->status == 4):?>
-                    <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                <?PHP ENDIF;?>
+                        if($question->status < 6 && $question->status > 2){
+                    ?>
+                        <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
+                    <?php
+                        } elseif($question->status == 6) {
+                    ?>
+                        <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                        <?= \app\widgets\Likeanwsers::widget(['question_id' => $question->id]) ?>
+                    <?php
+                        } elseif ($question->status == 1 || $question->status == 2){
+                    ?>
+                        <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                    <?php
+                        }
+                    ?>
+                    <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
+                        <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                    <?PHP } ?>
+                    <?php if($question->status > 5){ ?>
+                        <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+                       
+                    <?php } ?>
+                    <?php if($question->status == 4){ ?>
+                        <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
+                    <?php } ?>
 
                 <?PHP IF($question->statusMoreOpen() && $question->status == 6):?>
                     <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>

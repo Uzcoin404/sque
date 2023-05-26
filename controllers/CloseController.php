@@ -12,6 +12,7 @@ use yii\data\Pagination;
 use yii\data\ArrayDataProvider;
 
 use app\models\Views;
+use app\models\CloseAnswer;
 use app\models\Dislike;
 use app\models\Like;
 use app\models\Questions;
@@ -29,23 +30,24 @@ use yii\widgets\ActiveForm;
 
 class CloseController extends Controller
 {
-
+    public $info = [];
+    public $id_question = [];
     //Настройка прав доступа
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view','filter'],
+                'only' => ['index','view','filter','viewan'],
                 'rules' => [
 
                     [ 
-                        'actions' => ['index','view','filter'],
+                        'actions' => ['index','view','filter','viewan'],
                         'allow' => true,
                         'roles' => ['@'], 
                     ],
                     [ 
-                        'actions' => ['index','view','filter'],
+                        'actions' => ['index','view','filter','viewan'],
                         'allow' => true,
                         'roles' => ['?'], 
                     ],
@@ -71,24 +73,70 @@ class CloseController extends Controller
 
     public function actionView($slug){
         $questions = Questions::find()->where(["id"=>$slug])->one();
-        return $this->render(
-            'view',
-            [
-                "question"=>$questions,
-            ]
-        );
+        if($questions->status == 6){
+            return $this->render(
+                'view',
+                [
+                    "question"=>$questions,
+                ]
+            );
+        } else {
+            $this->redirect("/");
+        }
+    }
+
+    public function actionViewan(){
+
+        $request = Yii::$app->request;
+
+        $user=Yii::$app->user->identity;
+
+        $moderation = 0;
+
+        if($user){
+            $moderation = $user->moderation;
+        }
+        
+        $this->info = [
+            $request->get('status_view'),
+        ];
+
+        $this->id_question = [
+            $request->get('id_question'),
+        ];
+
+        foreach($this->info as $post){
+      
+            if(!$moderation){
+
+                $questions = Questions::find()->where(['id'=>$this->id_question[0][0]])->one();
+                $Views=CloseAnswer::find()->where(["id_answer"=>$post,"id_user"=>$user->id])->one();
+            
+                                
+                if(!isset($Views->id)){
+                            
+                        $Views = new CloseAnswer();
+                        $Views->id_user=$user->id;
+                        $Views->id_answer=$post;
+                        $Views->id_question=$this->id_question[0][0];
+                        $Views->save(0);
+
+                }
+          
+            }
+
+        }
+        print_r(1); exit;
     }
 
      // Страница закрытых вопросов
      public function actionFilter(){
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $status=0;
         $result="";
 
-        if (Yii::$app->request->isAjax) { 
             $data = Yii::$app->request->post();
             $questions = Questions::find()->where(['in', 'status', [6,7]]);
-            foreach($data['sorts'] as $sort){
+            $sort= $_GET['sorts'];
                 if($sort=="date-ASC"){
                     $questions->orderBy(['data_status'=>SORT_DESC]);
                 }else{
@@ -107,9 +155,8 @@ class CloseController extends Controller
                     $questions->orderBy('answers.answerscount DESC');
                 }
                
-                // 
-            }
-           // $result=$order;
+                
+
             $queryLike = Like::find()
             ->select('id_questions,count(id_user) as likecount')
             ->groupBy('id_questions');
@@ -130,18 +177,11 @@ class CloseController extends Controller
             ->select('id_questions,count(id_user) as answerscount')
             ->groupBy('id_questions');
             $questions->leftJoin(['answers'=>$queryAnswers], 'answers.id_questions = questions.id');
-            //$result=$questions->createCommand()->getRawSql();
-            foreach($questions->all() as $question){
-                $status=1;
-                $result.=$this->renderAjax("_view",["question"=>$question]);
-            }
 
-
-        }
-        return \yii\helpers\Json::encode(
+        return $this->render(
+            'index',
             [
-            'status'=>$status,
-            'result'=>$result,
+            "questions"=>$questions->all(),
             ]
         );
     

@@ -84,6 +84,7 @@ $config = [
                 //Закрытые 
                 '/questions/close'=>"close/index",
                 '/questions/close/<slug:\w+>'=>"close/view",
+                '/viewan'=>"close/viewan",
                 '/question/filter'=>"close/filter",
                 //Голосование
                 '/questions/voting'=>"voiting/voting",
@@ -119,17 +120,6 @@ $config = [
                 "/profile/ajx/get"=>'user/get',
                 "/profile/ajx/update"=>'user/update',
                 /* Пользователь */
-                /* Вопросы */
-              
-               
-                
-                
-                
-             
-                
-                
-               
-                /* Вопросы */
                 /* Лайки/Дизлайки */
                 '/like'=>'like/index',
                 '/like_block'=>'like/block',

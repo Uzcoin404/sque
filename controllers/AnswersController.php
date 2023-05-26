@@ -15,6 +15,9 @@ use app\models\Complaints;
 use app\models\Questions;
 use app\models\User;
 use app\models\ChangeEmail;
+use app\models\LikeAnswers;
+use app\models\DislikeAnswer;
+use app\models\ViewsAnswers;
 
 
 // AJAX
@@ -49,7 +52,25 @@ class AnswersController extends Controller
         $user=Yii::$app->user->identity;
         $id_answers = $_GET['answer'];
         $id_complaints = $_GET['complaints'];
+        $like = LikeAnswers::find()->where(["id_answer"=>$id_answers])->all();
+        $dislike = DislikeAnswer::find()->where(["id_answer"=>$id_answers])->all();
+        $view = ViewsAnswers::find()->where(["id_answer"=>$id_answers])->all();
         if($user->moderation == 1){
+            if($like){
+                foreach($like as $post){
+                    LikeAnswers::find()->where(["id"=>$post->id])->one()->delete();
+                }
+            }
+            if($view){
+                foreach($view as $post){
+                    ViewsAnswers::find()->where(["id"=>$post->id])->one()->delete();
+                }
+            }
+            if($dislike){
+                foreach($dislike as $post){
+                    DislikeAnswer::find()->where(["id"=>$post->id])->one()->delete();
+                }
+            }
             Answers::find()->where(["id"=>$id_answers])->one()->delete();
             Complaints::find()->where(["id"=>$id_complaints])->one()->delete();
             return $this->redirect('/');

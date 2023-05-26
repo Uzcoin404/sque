@@ -5,6 +5,7 @@ use app\models\User;
 use app\models\DislikeAnswer;
 use app\models\Questions;
 use app\models\ViewsAnswers;
+use app\models\CloseAnswer;
 
 $user_class = "";
 
@@ -71,8 +72,12 @@ if($status_questions->status >= 4){
         $status_user = 0;  
         if($users){
             $view = ViewsAnswers::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
-
+            $close = CloseAnswer::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
             if($view){
+                $text_view = Yii::t('app','Show the whole text again');
+                $class_view = 'color_view';
+            }
+            if($close){
                 $text_view = Yii::t('app','Show the whole text again');
                 $class_view = 'color_view';
             }
@@ -86,7 +91,11 @@ if($status_questions->status >= 4){
             <?=$answer->GetText();?>
         </p>
         <div class="answers_post__list_element_text_info_btn">
-            <a onclick="OpenFullText(this)" data-answer-id="<?=$answer->id;?>" data-status-user="<?=$status_user?>" class="opentext <?=$class_view?>"><?=$text_view?></a>
+            <?php if($status_questions->status == 6){ ?>
+                <a onclick="OpenFullTextClose(this)" data-answer-id="<?=$answer->id;?>" data-status-user="<?=$status_user?>" class="opentext <?=$class_view?>"><?=$text_view?></a>
+            <?php } else { ?>
+                <a onclick="OpenFullText(this)" data-answer-id="<?=$answer->id;?>" data-status-user="<?=$status_user?>" class="opentext <?=$class_view?>"><?=$text_view?></a>
+            <?php } ?>
             <a onclick="CloseFullText(this)" data-answer-id="<?=$answer->id;?>" class="closetext <?=$class_view?>"><?=\Yii::t('app','Close text')?></a>
         </div>
     </div>
