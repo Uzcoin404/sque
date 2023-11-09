@@ -66,7 +66,9 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-
+                "/info_post"=>"info/index",
+                "/info_list"=>"info/list",
+                "info/update_list/<slug:\w+>"=>"info/update",
                 //Открытые 
                 "/"=>"open/index",
                 '/question/create'=>"open/create",
@@ -78,8 +80,9 @@ $config = [
                 /* Модерация */
                 '/questions/moderation'=>"open/moderation",
                 '/questions/updatestatus'=>"open/updatestatus",
-                '/questions/timestatus'=>"open/time",
+                '/questions/timestatus'=>"open/time", // определение победителей
                 '/questions/return/<slug:\w+>'=>"open/return",
+                '/table'=>'user/tableuser',
                 /* Модерация */
                 //Закрытые 
                 '/questions/close'=>"close/index",
@@ -94,16 +97,28 @@ $config = [
                 '/questions/myquestionsfilter/<slug:\w+>'=>'my/filter',
                 '/questions/myquestions/<slug:\w+>'=>'my/view',
                 '/questions/myquestions/<page:\d+>' => 'my/index',
+                '/questions/myquestions/close/<slug:\w+>'=>"close/view",
+                '/questions/myquestions/voting/<slug:\w+>'=>"voiting/votingview",
+                '/questions/myquestions/view/<slug:\w+>'=>'open/view',
                 //МОИ ОТВЕТЫ
                 '/answer/myanswers/view/<slug:\w+>'=>'answers/myanswersview',
                 '/answer/myanswers'=>'answers/myanswers',
+                '/answer/myanswers/close/<slug:\w+>'=>"close/view",
+                '/answer/myanswers/voting/<slug:\w+>'=>"voiting/votingview",
+                '/answer/myanswers/view/<slug:\w+>'=>'open/view',
                 //МОИ ГОЛОСОВАНИЯ
                 '/questions/myvoiting'=>'myvoiting/index',
                 '/questions/myvoiting/<slug:\w+>'=>'myvoiting/view',
+                '/questions/myvoiting/close/<slug:\w+>'=>"close/view",
+                '/questions/myvoiting/voting/<slug:\w+>'=>"voiting/votingview",
+                '/questions/myvoiting/view/<slug:\w+>'=>'open/view',
                 //Избранные
                 '/favourit'=>'favourites/index',
                 '/favourit/create'=>'favourites/create',
                 '/favourit/delete'=>'favourites/delete',
+                '/favourit/close/<slug:\w+>'=>"close/view",
+                '/favourit/voting/<slug:\w+>'=>"voiting/votingview",
+                '/favourit/view/<slug:\w+>'=>'open/view',
 
                 "/login"=>'registration/login',
                 '/main'=>'registration/main',
@@ -117,6 +132,8 @@ $config = [
                 /* Пользователь */
                 "/profile"=>'user/index',
                 "/profile/download"=>'user/download',
+                "/user/info"=>'user/infouser',
+                "/user/info"=>'user/infouser',
                 "/profile/ajx/get"=>'user/get',
                 "/profile/ajx/update"=>'user/update',
                 /* Пользователь */

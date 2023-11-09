@@ -13,6 +13,11 @@ use yii\data\Pagination;
 use app\models\Queue;
 use app\models\User;
 use app\models\ChangeEmail;
+use app\models\LikeAnswers;
+use app\models\DislikeAnswer;
+use app\models\Questions;
+use app\models\ViewsAnswers;
+use app\models\Answers;
 
 // AJAX
 use yii\widgets\ActiveForm;
@@ -25,15 +30,19 @@ class UserController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','get','update','download','status','userlist'],
+                'only' => ['index','get','update','download','status','userlist','infouser','tableuser'],
                 'rules' => [
 
                     [
-                        'actions' => ['index','get','update','download','status','userlist'],
+                        'actions' => ['index','get','update','download','status','userlist','infouser','tableuser'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-
+                    [ 
+                        'actions' => ['infouser'],
+                        'allow' => true,
+                        'roles' => ['?'], 
+                    ],
                 ],
             ],
             
@@ -161,6 +170,45 @@ class UserController extends Controller
         return $user->update(0);
         
     }
+
+    public function actionInfouser(){
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $request = Yii::$app->request;
+
+        $this->info = [
+            $request->get('id_user'),
+        ];
+
+        $user = User::find()->where(['id'=>$this->info[0]])->one();
+
+        $like = LikeAnswers::find()->where(['id_user'=>$this->info[0]])->all();
+        $dislike = DislikeAnswer::find()->where(['id_user'=>$this->info[0]])->all();
+        $answers = Answers::find()->where(['id_user'=>$this->info[0]])->all();
+        $questions = Questions::find()->where(['owner_id'=>$this->info[0]])->all();
+
+        $like_count = count($like);
+        $dislike_count = count($dislike);
+        $answers_count = count($answers);
+        $questions_count = count($questions);
+        $date = date('d.m.Y', $user->create_at);
+        $date_online = date('d.m.Y', $user->date_online);
+
+        \Yii::$app->response->format = 'json';
+
+        return(
+            [
+            'date'=>$date,
+            'questions_count'=>$questions_count,
+            'answers_count'=>$answers_count,
+            'like_count'=>$like_count,
+            'dislike_count'=>$dislike_count,
+            'date_online'=>$date_online,
+            ]
+        );
+
+    }
   
     public function actionGet(){
         $request = \Yii::$app->getRequest();
@@ -219,5 +267,119 @@ class UserController extends Controller
         return [
             "success"=>0,
         ];
+    }
+
+    public function actionTableuser(){
+
+        $user_admin = Yii::$app->user->identity;
+
+        if($user_admin && $user_admin->moderation == 1){
+
+            $table = [];
+
+            $users = User::find()->where(['moderation'=>0])->all();
+
+            // echo "<pre>";
+            // print_r($users);
+            // echo "</pre>";
+
+            $number = 0;
+    
+            foreach($users as $user){
+                $like = LikeAnswers::find()->where(['id_user'=>$user->id])->all();
+                $dislike = DislikeAnswer::find()->where(['id_user'=>$user->id])->all();
+                $like_count = count($like); // 4 колво лайков
+                $dislike_count = count($dislike); // 7 колво дизлайки    
+                $ViewsAnswers_noclick = ViewsAnswers::find()->where(['id_user'=>$user->id,'button_click'=>0])->all();
+                $ViewsAnswers_noclick_count = count($ViewsAnswers_noclick); // колво ответов где поставил лайк или диз но не нажал на кнопку
+                $ViewsAnswers_click = ViewsAnswers::find()->where(['id_user'=>$user->id,'button_click'=>1])->all();
+                $ViewsAnswers_click_count = count($ViewsAnswers_click); // колво ответов где поставил лайк диз и нажал кнопку
+
+                // лайк и не нажал на кнопку
+                $likes_noclick_count = 0;
+
+                foreach ($ViewsAnswers_noclick as $noclick) {
+                    $likes_noclick = LikeAnswers::find()->where(['id_user'=>$user->id, 'id_answer'=>$noclick])->all();
+                    $likes_noclick ? $likes_noclick_count++ : 0;
+                }
+
+                // дизлайк и не нажал на кнопку
+                $dislike_noclick_count = 0;
+
+                foreach ($ViewsAnswers_noclick as $noclick) {
+                    $dislikes_noclick = DislikeAnswer::find()->where(['id_user'=>$user->id, 'id_answer'=>$noclick])->all();
+                    $dislikes_noclick ? $dislike_noclick_count++ : 0;
+                }
+
+                // лайк и нажал кнопку
+                $likes_click_count = 0;
+
+                foreach ($ViewsAnswers_click as $click) {
+                    $likes_click = LikeAnswers::find()->where(['id_user'=>$user->id, 'id_answer'=>$click])->all();
+                    $likes_click ? $likes_click_count++ : 0;
+                }
+
+                // дизлайк и нажал кнопку
+                $dislike_click_count = 0;
+
+                foreach ($ViewsAnswers_click as $click) {
+                    $dislike_click = DislikeAnswer::find()->where(['id_user'=>$user->id, 'id_answer'=>$click])->all();
+                    $dislike_click ? $dislike_click_count++ : 0;
+                }
+                
+
+                // if ($user->username == 'logggin') {
+                //     echo "<pre>";
+                //     print_r("лайки c кнопкa - " . $likes_click_count . " дизлайки c кнопкa - " . $dislike_click_count);
+                //     echo "</pre>";
+                // }
+
+                if($like_count|| $dislike_count && $ViewsAnswers_noclick_count){
+                    if($dislike_count> 0 && $like_count > 0){
+                        $number = $like_count + $dislike_count;
+                    } else {
+                        if($dislike_count > 0){
+                            $number = $dislike_count;
+                        } else {
+                            $number = $like_count;
+                        }
+                    }
+                                            
+                    $procent_like =  $number/100;
+                                            
+                    $procent_noclick = $ViewsAnswers_noclick_count/$procent_like;
+
+                    $procent = round($procent_noclick,2);
+
+                } else {
+                    $procent = 0;
+                }
+
+                if($likes_noclick_count > 0 || $dislike_click_count > 0) {
+                    array_push($table, array(
+                        'user' => $user->username, // имя
+                        'sum' => $likes_noclick_count + $dislike_noclick_count, // Сумма лайков и дизов где не нажата кнопка
+                        'like_count' => $like_count, // Сумма лайков
+                        'likes_click_count' => $likes_click_count, // Лайки и нажал на кнопку
+                        'likes_noclick_count' => $likes_noclick_count, // Лайки и не нажал на кнопку
+                        'dislike_click_count' => $dislike_click_count, // Дизлайки и нажал на кнопку
+                        'dislike_noclick_count' => $dislike_noclick_count, // Дизлайки и не нажал на кнопку
+                        'dislike_count' => $dislike_count, // Сумма дизлайков
+                    ));
+                }
+            }
+            usort($table, function($a, $b){
+                return ($b['sum'] - $a['sum']);
+            });
+            return $this->render(
+                'table',
+                [
+                    "table"=>$table,
+                ]
+            );
+
+        } else {
+            return $this->redirect('/');
+        }
     }
 }

@@ -86,7 +86,7 @@ class VoitingController extends Controller
         
         foreach($id_question as $value){
 
-            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["coast"=>SORT_DESC])->one();
+            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["data_status"=>SORT_DESC])->one();
             array_push($questions, $question);
             
         }
@@ -153,6 +153,16 @@ class VoitingController extends Controller
     
       public function actionVotingview($slug)
       {
+            $users = Yii::$app->user->identity;
+            
+            if($users){
+                $model = User::find()->where(['id'=>$users->id])->one();
+
+                $model->date_online = strtotime("now");
+        
+                $model->update();
+            }
+
           $this->ViewCreate($slug);
   
           $questions = Questions::find()->where(["id"=>$slug])->one();

@@ -4,7 +4,6 @@
     $this->title = \Yii::t('app', 'My voting'); 
 ?>
 <div class="questions">
-
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>
             <?=Yii::$app->controller->renderPartial("_viewQuestion",["question"=>$question]);?>

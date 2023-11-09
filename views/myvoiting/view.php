@@ -52,13 +52,8 @@
                             ?>
                             <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
                                 <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
-                            <?PHP } ?>
-                            <?php if($question->status >= 5){ ?>
-                                <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>            
-                            <?php } ?>
-                            <?php if($question->status == 4){ ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                            <?php } ?>
+                            <?PHP } ?>
                         </div>
                       
                 </div>

@@ -25,6 +25,7 @@ class ViewController extends Controller
     public $info = [];
     public $type_user_id = 0;
     public $id_question = [];
+    public $btn_click = [];
     public function behaviors()
     {
         return [
@@ -68,6 +69,10 @@ class ViewController extends Controller
             $request->get('id_question'),
         ];
 
+        $this->btn_click = [
+            $request->get('button_click'),
+        ];
+
         if(isset(\Yii::$app->user->identity->id)){
             $user->id=\Yii::$app->user->identity->id;
             $this->type_user_id=1;
@@ -90,17 +95,35 @@ class ViewController extends Controller
                                 if($questions->status == 5){
                                         
                                         if(!isset($Views->id)){
-                                    
-                                            $Views = new ViewsAnswers();
-                                            
-                                            $Views->id_answer=$post;
-                                            $Views->type_user=$this->type_user_id;
-                                            $Views->id_user=$user->id;
-                                            $Views->data=strtotime("now");
-                                            $Views->isNewRecord=1;
-                                            $Views->save(0);
+                                            if($this->btn_click[0] == 1){
+                                                $Views = new ViewsAnswers();
+                                                $Views->id_answer=$post;
+                                                $Views->type_user=$this->type_user_id;
+                                                $Views->id_user=$user->id;
+                                                $Views->data=strtotime("now");
+                                                $Views->isNewRecord=1;
+                                                $Views->button_click=$this->btn_click[0];
+                                                $Views->save(0);
+                                            } else {
+                                                $Views = new ViewsAnswers();
+                                                $Views->id_answer=$post;
+                                                $Views->type_user=$this->type_user_id;
+                                                $Views->id_user=$user->id;
+                                                $Views->data=strtotime("now");
+                                                $Views->isNewRecord=1;
+                                                $Views->save(0);
+                                            }
+
                                         
                                             //unset($like_answer);
+                                        } else {
+                                            if($this->btn_click[0] == 1){
+                                                $Views->button_click=$this->btn_click[0];
+                                                $Views->update(0);
+                                            } else {
+                                                $Views->button_click=0;
+                                                $Views->update(0);
+                                            }
                                         }
                     
                                 }    

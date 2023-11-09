@@ -15,9 +15,10 @@ use mihaildev\ckeditor\CKEditor;
         ]
     ); ?>
 
-    <?= $form->field($model, 'text')->textArea(['maxlength' => 2000, 'minlength' => 200]) ?>
+    <?= $form->field($model, 'text', ['template' => "{label}\n{input}"])->textArea(['maxlength' => 2000, 'minlength' => 35])->textarea(['placeholder' => "".Yii::t('app', 'Must contain at least 35 characters').""]) ?>
 
     <div class="form-group">
+        <p style="display: none;"><?=Yii::t('app','* These fields must be filled in')?></p>
         <?= Html::submitButton(\Yii::t('app', 'Create answer'), ['class' => 'btn btn-success']) ?>
     </div>
 

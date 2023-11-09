@@ -11,6 +11,7 @@ use yii\web\UploadedFile;
 
 use app\models\User;
 use app\models\Like;
+use app\models\ViewsAnswers;
 use app\models\Answers;
 use app\models\LikeAnswers;
 use app\models\DislikeAnswer;
@@ -76,6 +77,8 @@ class LikeController extends Controller
 
     public function LikeAnswers(){
 
+        $views = "";
+
         $like_answer = new LikeAnswers();
 
         $request = Yii::$app->request;
@@ -90,12 +93,18 @@ class LikeController extends Controller
           
             foreach($post as $like){
                 $id_answer=$like['answer'];
+                $answer_views = ViewsAnswers::find()->where(["id_answer"=>$id_answer,"id_user"=>$user->id])->one();
                 $answer=LikeAnswers::find()->where(["id_answer"=>$id_answer,"id_user"=>$user->id])->one();
                 $answer_dis=DislikeAnswer::find()->where(["id_answer"=>$id_answer,"id_user"=>$user->id])->one();
                 if($answer || $answer_dis){
                     if($like['status'] == 1){
                         $answer->delete();
+                        if (!$answer_views->button_click) {
+                            $answer_views->delete();
+                        }
+                        // $answer_views->delete();
                     }
+                    
                     return 0;
                 } else {
                     $answer=Answers::find()->where(["id"=>$id_answer])->one();
@@ -110,6 +119,14 @@ class LikeController extends Controller
                                     $like_answer->id_user = $user->id;
                                     $like_answer->data = strtotime('now');
                                     $like_answer->save(0);
+                                    if(!$answer_views){
+                                        $views = new ViewsAnswers();
+                                        $views->id_answer=$id_answer;
+                                        $views->id_user=$user->id;
+                                        $views->type_user=1;
+                                        $views->data=strtotime("now");
+                                        $views->save(0);
+                                    }
                                 }
                             }
                         }
@@ -150,10 +167,10 @@ class LikeController extends Controller
         // ->where(['id_questions'=>$_GET['id_question']])
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $status=0;
-        $result="";
+        $result="";        
         $data = Yii::$app->request->post();
         $sort = $data['sorts'];
-        $id = $data['id'];
+        $id = $data['id'];   
         $answer = Answers::find()->where(['in', 'id_questions', $id]);
         $answerLike = LikeAnswers::find()
         ->select('id_answer,count(id_questions) as like_answercount')

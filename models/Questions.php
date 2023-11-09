@@ -58,6 +58,8 @@ class Questions extends \yii\db\ActiveRecord
             'owner_id' => \Yii::t('app', 'Owner of question'),
             'grand'=> \Yii::t('app','Country'),
             'data'=> \Yii::t('app','Date update'),
+            'text_ru'=> \Yii::t('app','Text Russian'),
+            'text_eng'=> \Yii::t('app','Text English'),
             'text_return'=> \Yii::t('app','Reason for return'),
         ];
     }
@@ -127,7 +129,8 @@ class Questions extends \yii\db\ActiveRecord
                 $second_date = new \DateTime("@".$this->data_status);
                 $interval = $second_date->diff($first_date);
                 if($interval->days <= 0){
-                    $result= \Yii::t('app','{h} hours',['h'=>$interval->h]);
+                    $hours = $interval->d * 24 + $interval->h;
+                    $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
                     if($this->status == 2){
                         $result = Yii::t('app','Reviewed')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
                     } elseif($this->status == 1){

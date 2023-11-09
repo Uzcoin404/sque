@@ -13,7 +13,7 @@ use mihaildev\ckeditor\CKEditor;
             'enableClientValidation' => true
         ]
     ); ?>
-    <?= $form->field($model, 'text_return')->textArea(['minlength'=>100,'maxlength' => 2000]) ?>
+    <?= $form->field($model, 'text_return')->textArea(['minlength'=>30,'maxlength' => 2000]) ?>
     <div class="form-group">
         <?= Html::submitButton(\Yii::t('app', 'Return'), ['class' => 'btn btn-success']) ?>
     </div>

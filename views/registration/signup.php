@@ -34,7 +34,7 @@ $this->title = 'Регистрация';
 
                   <?= $form->field($model, 'username')->textInput(['autofocus' => true,'placeholder' => 'Логин'])->label() ?>
                   <?= $form->field($model, 'email')->textInput(['autofocus' => true,'placeholder' => 'Email'])->label() ?>
-                  <small>Пожалуйста, убедитесь в правильности введенного Вами адреса электронной почты. На этот адрес Вам будут отправлены ссылка с подтверждением регистрации.</small>
+                  <small><?=Yii::t('app','Needed to confirm registration and password recovery')?></small>
                   <?= $form->field($model, 'password')->textInput(['autofocus' => true,'placeholder' => 'Пароль'])->passwordInput() ?>
                   <div class="valid_password_line" style="display: none;">
                     <p class="lineght">Пароль должен содержать от 6 символов</p>
@@ -47,12 +47,22 @@ $this->title = 'Регистрация';
                   <?= $form->field($model, 'verifyCode')->widget(yii\captcha\Captcha::className(),
                       [
                           'captchaAction' => '/registration/captcha',
-                          'template' => '<div class="row"><div class="col-xs-3">{image}</div><div class="col-xs-4">{input}</div></div>'
-
+                          'template' => '<div class="row"><div class="col-xs-3">{image}<p style="margin-top:25px">'.Html::button(Yii::t('app','Refresh captcha'), ['id' => 'refresh-captcha']).'</p></div><div class="col-xs-4"><label class="col-sm-2 col-form-label">'.Yii::t('app','Enter the text from the image').'</label>{input}</div></div>',
+                          'imageOptions' => [
+                            'id' => 'my-captcha-image'
+                          ]
                       ]) ?>
+                      <?php $this->registerJs("
+                          $('#refresh-captcha').on('click', function(e){
+                              e.preventDefault();
+
+                              $('#my-captcha-image').yiiCaptcha('refresh');
+                          })
+                      "); ?>
                       <?= $form->field($model, 'polit')->checkbox([
                           'template' => "<div>{input} {label}</div>\n<div>{error}</div>",
                       ]) ?>
+
                   <div class="read">
                     <a href="/read" target="_blank">Прочитать правила</a>
                   </div>

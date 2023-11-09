@@ -12,7 +12,7 @@
   <div class="menu">
     <div class="menu__list">
       <div class="menu__list_element">
-            <div class="menu__list_element_logo"></div>
+            <a href="/" class="menu__list_element_logo"></a>
 
             <?php
               if($user){

@@ -35,14 +35,8 @@
                     ?>
                     <?PHP if($question->status == 6 || $question->status == 4 || $question->status == 5){?>
                         <?= \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
+                        <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?PHP } ?>
-                    <?php if($question->status > 5){ ?>
-                        <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                       
-                    <?php } ?>
-                    <?php if($question->status == 4){ ?>
-                        <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                    <?php } ?>
 
                 <?PHP IF($question->statusMoreOpen() && $question->status == 6):?>
                     <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
@@ -51,11 +45,11 @@
 
                 <div class="questions__list_element_btn">
                     <?PHP IF($question->status==4):?>
-                        <a href="/questions/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <a href="/answer/myanswers/view/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                     <?PHP ELSEIF($question->status==5):?>
-                        <a href="/questions/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <a href="/answer/myanswers/voting/<?=$question->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                     <?PHP ELSEIF($question->status==6):?>
-                        <a href="/questions/close/<?=$question->id?>#<?=$user->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
+                        <a href="/answer/myanswers/close/<?=$question->id?>#<?=$user->id?>" class="btn_questions"><?=\Yii::t('app','More detailed')?></a>
                     <?PHP ENDIF;?>
                 </div>
                 

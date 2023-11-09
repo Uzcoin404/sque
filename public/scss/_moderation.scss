@@ -46,3 +46,20 @@
         }
     }
 }
+
+table.table_like_user{
+    border: 1px solid grey;
+    margin: 0px 40px;
+    th {
+        border: 1px solid grey;
+        padding: 10px;
+        span {
+            text-align: center;
+        }
+     }
+     td {
+        border: 1px solid grey;
+        padding: 10px;
+     }
+ }
+

@@ -61,7 +61,7 @@ class CloseController extends Controller
     
     public function actionIndex()
     {
-        $questions = Questions::find()->where(['in', 'status', [6,7]])->orderBy(["coast"=>SORT_DESC])->all();
+        $questions = Questions::find()->where(['in', 'status', [6,7]])->orderBy(["data_status"=>SORT_DESC])->all();
 
         return $this->render(
             'index',
@@ -72,8 +72,20 @@ class CloseController extends Controller
     }
 
     public function actionView($slug){
+        $users = Yii::$app->user->identity;
+
+        if($users){
+            $model = User::find()->where(['id'=>$users->id])->one();
+
+            $model->date_online = strtotime("now");
+    
+            $model->update();
+        }
+        
         $questions = Questions::find()->where(["id"=>$slug])->one();
+
         if($questions->status == 6){
+            
             return $this->render(
                 'view',
                 [
@@ -136,43 +148,58 @@ class CloseController extends Controller
 
             $data = Yii::$app->request->post();
             $questions = Questions::find()->where(['in', 'status', [6,7]]);
-            $sort= $_GET['sorts'];
-                if($sort=="date-ASC"){
-                    $questions->orderBy(['data_status'=>SORT_DESC]);
-                }else{
-                    $questions->orderBy(['data_status'=>SORT_ASC]);
+                $exception = Yii::$app->errorHandler->exception;
+                if (empty($_GET)) {
+                    return $this->redirect(['/questions/close']);
                 }
-                if($sort=="view-ASC"){
+                $sort= $_GET['sorts'];
+                if($sort=="coast-ASC"){
+                    echo 1;
+                    $questions->orderBy(['coast'=>SORT_DESC]);
+                }
+                else if ($sort=="coast-DESC"){
+                    $questions->orderBy(['coast'=>SORT_ASC]);
+                }
+                else if($sort=="view-ASC"){
                     $questions->orderBy('views.viewcount ASC');
                 }
-                if($sort=="view-DESC"){
+                else if($sort=="view-DESC"){
                     $questions->orderBy('views.viewcount DESC');
                 }
-                if($sort=="answers-ASC"){
+                else if($sort=="answers-ASC"){
                     $questions->orderBy('answers.answerscount ASC');
                 }
-                if($sort=="answers-DESC"){
+                else if($sort=="answers-DESC"){
                     $questions->orderBy('answers.answerscount DESC');
                 }
-               
-                
+                else if($sort=="likes_answer-ASC"){
+                    $questions->orderBy('like_answer.likecount ASC');
+                }
+                else if($sort=="likes_answer-DESC"){
+                    $questions->orderBy('like_answer.likecount DESC');
+                }
 
-            $queryLike = Like::find()
-            ->select('id_questions,count(id_user) as likecount')
-            ->groupBy('id_questions');
-            $questions->leftJoin(['likepost'=>$queryLike], 'likepost.id_questions = questions.id');
+            // $queryLike = LikeAnswers::find()
+            // ->select('id_questions,count(id_user) as likecount')
+            // ->groupBy('id_questions')
+            // ->groupBy('id_user');
+            // $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id');  
+            
             $queryLike = LikeAnswers::find()
-            ->select('id_questions,count(id_user) as likecount')
+            ->select('id_questions,count(DISTINCT(id_user)) as likecount')
             ->groupBy('id_questions');
             $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id');
+
             $querydisLike = Dislike::find()
             ->select('id_questions,count(id_user) as dislikecount')
             ->groupBy('id_questions');
             $questions->leftJoin(['dislikepost'=>$querydisLike], 'dislikepost.id_questions = questions.id');
+
             $queryViews = Views::find()
             ->select('id_questions,count(id_user) as viewcount')
             ->groupBy('id_questions');
             $questions->leftJoin(['views'=>$queryViews], 'views.id_questions = questions.id');
+
             $queryAnswers= Answers::find()
             ->select('id_questions,count(id_user) as answerscount')
             ->groupBy('id_questions');

@@ -61,21 +61,22 @@
         border-radius: 10px;
         background: linear-gradient(180deg, #00c6fb, #005bea);
       }
-    &__list{
-
+    &_element, .answers_post__list{
         .winner{
             p.title{
                 text-align: center;
                 margin-bottom: 20px !important;
             }
             .title_info{
+                // align-self: flex-start;
+                // margin-top: 20px;
                 position: relative;
                 &::after{
                     content: '';
                     left: 0px;
                     width: 50px;
                     height: 50px;
-                    background: url(/icons/trophy.png);
+                    background: url(/icons/trophy_win.png);
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: contain;
@@ -85,12 +86,36 @@
                 }
             }
         }
+        .winner_two{
+            p.title{
+                // align-self: flex-start;
+                // margin-top: 20px;
+                text-align: center;
+                margin-bottom: 20px !important;
+            }
+            .title_info{
+                position: relative;
+                // &::after{
+                //     content: '';
+                //     left: 0px;
+                //     width: 50px;
+                //     height: 50px;
+                //     background: url(/icons/trophy.png);
+                //     background-position: center;
+                //     background-repeat: no-repeat;
+                //     background-size: contain;
+                // }
+                p.title{
+                    margin-bottom: 0px !important;
+                }
+            }
+        }
         .my_answers{
             background: #c2caff !important;
         }
-        &_element{
+        &_element, .answers_info_text_block{
             background: #fff;
-            padding: 2em;
+            padding: 1em 2em;
             border-radius: 10px;
             margin-bottom: 15px;
             p.title{
@@ -103,13 +128,47 @@
                 flex-wrap: wrap;
                 align-items: center;
                 gap: 10px;
+                .answers_post_list_element_button{
+                    position: relative;
+                    .ansers_post_list_element_user_info{
+                        position: absolute;
+                        top: -20px;
+                        max-width: 300px;                        
+                        width: 0%;
+                        left: 60px;
+                        background: #fff;
+                        z-index: 10;                        
+                        padding: 0px;
+                        border: 0px;
+                        border-radius: 20px;
+                        overflow: hidden;
+                        transition: all 0.3s ease-in-out;
+                    }
+                    .ansers_post_list_element_user_info.active{
+                        width: 300px;
+                        padding: 20px;
+                        border: 1px solid #3995b6;
+                        &::before{
+                            content: '';
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            background: url(../icons/close_user.png);
+                            background-size: contain;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            right: 15px;
+                            cursor: pointer;
+                        }
+                    }
+                }
                 img{
-                    width: 50px;
-                    height: 50px;
+                    width: 30px;
+                    height: 30px;
                     object-fit: cover;
                     border-radius: 50px;
                 }
-                margin-bottom: 1rem;
+                // margin-bottom: 1rem;
             }
             .answers_post__list_element_text_info{
                 display: flex;
@@ -118,7 +177,7 @@
                 align-items: center;
             }
             p.text{
-                max-width: 1400px;
+                // max-width: 1400px;
                 font-size: 18px;
                 overflow: hidden;
                 word-wrap: break-word;
@@ -129,11 +188,13 @@
                 cursor: pointer;
                 margin-bottom: 15px;
                 display: block;
+                white-space: nowrap;
             }
             a.color_view{
                 color: #E63244 !important;
             }
             a.closetext{
+                white-space: nowrap;
                 display: none;
                 color: rgb(105, 111, 218);
                 text-decoration: underline;
@@ -149,8 +210,51 @@
             .answers_post__list_element_text_price_full{
                 display: flex;
                 flex-wrap: wrap;
-                gap: 15px;
+                gap: 5px;
                 align-items: center;
+                p{
+                    margin: 0px;
+                }
+                .answers_post_list_element_button{
+                    position: relative;
+                    img{
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 250px;
+                        cursor: pointer;
+                    }
+                    .ansers_post_list_element_user_info{
+                        position: absolute;
+                        top: -20px;
+                        max-width: 300px;                        
+                        width: 0%;
+                        left: 60px;
+                        background: #fff;
+                        z-index: 10;                        
+                        padding: 0px;
+                        border: 0px;
+                        border-radius: 20px;
+                        overflow: hidden;
+                        transition: all 0.3s ease-in-out;
+                    }
+                    .ansers_post_list_element_user_info.active{
+                        width: 300px;
+                        padding: 20px;
+                        border: 1px solid #3995b6;
+                        &::before{
+                            content: '';
+                            position: absolute;
+                            width: 20px;
+                            height: 20px;
+                            background: url(../icons/close_user.png);
+                            background-size: contain;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            right: 15px;
+                            cursor: pointer;
+                        }
+                    }
+                }
                 p.views{
                     position: relative;
                     padding-left: 25px;
@@ -172,6 +276,18 @@
                     button.active{
                         background: url(/icons/like_before.png) !important;
                     }
+                    button.btn_like_answer.status_close{
+                        background: url(/icons/like_close_no.png) !important;
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                    }
+                    button.btn_like_answer.status_close.active{
+                        background: url(/icons/like_close.png) !important;
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                    }
                     button.btn_like_answer{
                         position: absolute;
                         background: url(/icons/like.png);
@@ -189,6 +305,7 @@
                     .btn_like_view{
                         background: none;
                         border: none !important;
+                        color: #696fda;
                         border-radius: 0px !important;
                         box-shadow: 0px 0px 0px !important;
                         font-weight: 300;
@@ -203,9 +320,21 @@
                     button.active{
                         background: url(/icons/dislike_before.png) !important;
                     }
+                    button.btn_dislike_answer.status_close{
+                        background: url(/icons/dislike_close_no.png) !important;
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                    }
+                    button.btn_dislike_answer.status_close.active{
+                        background: url(/icons/dislike_close.png) !important;
+                        background-size: contain !important;
+                        background-repeat: no-repeat !important;
+                        background-position: center !important;
+                    }
                     button.btn_dislike_answer{
                         position: absolute;
-                        background: url(/icons/dislike.png);
+                        background: url(/icons/dislike_close_no.png);
                         background-size: contain !important;
                         background-repeat: no-repeat !important;
                         background-position: center !important;
@@ -220,6 +349,7 @@
                     button.btn_dislike_view{
                         background: none;
                         border: none !important;
+                        color: #696fda;
                         border-radius: 0px !important;
                         box-shadow: 0px 0px 0px !important;
                         font-weight: 300;
@@ -238,6 +368,360 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.question_post_list_element_button{
+    position: relative;
+    .question_post_list_element_user_info{
+        position: absolute;
+        top: -20px;
+        max-width: 300px;                        
+        width: 0%;
+        left: -300px;
+        background: #fff;
+        z-index: 10;                        
+        padding: 0px;
+        border: 0px;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    .question_post_list_element_user_info.active{
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #3995b6;
+    }
+}
+
+@media(max-width:700px){
+    .question_post_list_element_button{
+        .question_post_list_element_user_info{
+            left: 0px;
+        }
+    }
+}
+
+@media(max-width:430px){
+    .question_post_list_element_button{
+        .question_post_list_element_user_info{
+            left: -130px;
+        }
+    }
+}
+
+.block_info_notauth{
+    padding: 30px;
+    background: #FFD5D5;
+    margin: 0px 20px;
+    width: 100%;
+    font-size: 20px;
+    max-width: 1400px;
+    border: 1px solid #b08686;
+    border-radius: 15px;
+    p{
+        margin: 0px;
+        font-weight: 500;
+    }
+}
+
+@media(max-width:640px){
+    .block_info_notauth{
+        margin: 0px;
+    }
+}
+.control-label[for=answers-text] {
+    &::after {
+        content: "" !important;
+    }
+}
+
+
+
+
+
+
+// СУПЕР КОСТЫЛЬ 
+/*
+.answers_info_text_block{
+    background: #fff;
+    padding: 1em 2em;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    p.title{
+        font-size: 22px;
+        font-weight: 400;
+        margin-bottom: 0px !important;
+    }
+    .title_info{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        .answers_post_list_element_button{
+            position: relative;
+            .ansers_post_list_element_user_info{
+                position: absolute;
+                top: -20px;
+                max-width: 300px;                        
+                width: 0%;
+                left: 60px;
+                background: #fff;
+                z-index: 10;                        
+                padding: 0px;
+                border: 0px;
+                border-radius: 20px;
+                overflow: hidden;
+                transition: all 0.3s ease-in-out;
+            }
+            .ansers_post_list_element_user_info.active{
+                width: 300px;
+                padding: 20px;
+                border: 1px solid #3995b6;
+                &::before{
+                    content: '';
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background: url(../icons/close_user.png);
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    right: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+        img{
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50px;
+        }
+        // margin-bottom: 1rem;
+    }
+    .answers_post__list_element_text_info{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+    }
+    p.text{
+        // max-width: 1400px;
+        font-size: 18px;
+        overflow: hidden;
+        word-wrap: break-word;
+    }
+    a.opentext{
+        color: rgb(105, 111, 218);
+        text-decoration: underline;
+        cursor: pointer;
+        margin-bottom: 15px;
+        display: block;
+        white-space: nowrap;
+    }
+    a.color_view{
+        color: #E63244 !important;
+    }
+    a.closetext{
+        white-space: nowrap;
+        display: none;
+        color: rgb(105, 111, 218);
+        text-decoration: underline;
+        cursor: pointer;
+        margin-bottom: 15px;
+    }
+    .user_block_like{
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .answers_post__list_element_text_price_full{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        align-items: center;
+        p{
+            margin: 0px;
+        }
+        .answers_post_list_element_button{
+            position: relative;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 250px;
+                cursor: pointer;
+            }
+            .ansers_post_list_element_user_info{
+                position: absolute;
+                top: -20px;
+                max-width: 300px;                        
+                width: 0%;
+                left: 60px;
+                background: #fff;
+                z-index: 10;                        
+                padding: 0px;
+                border: 0px;
+                border-radius: 20px;
+                overflow: hidden;
+                transition: all 0.3s ease-in-out;
+            }
+            .ansers_post_list_element_user_info.active{
+                width: 300px;
+                padding: 20px;
+                border: 1px solid #3995b6;
+                &::before{
+                    content: '';
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background: url(../icons/close_user.png);
+                    background-size: contain;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    right: 15px;
+                    cursor: pointer;
+                }
+            }
+        }
+        p.views{
+            position: relative;
+            padding-left: 25px;
+            &::before{
+                position: absolute;
+                content: '';
+                background: url(/icons/visibility.png);
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                width: 20px;
+                height: 20px;
+                left: 0px;
+            }
+        }
+        p.like_answer{
+            position: relative;
+            padding-left: 25px;
+            button.active{
+                background: url(/icons/like_before.png) !important;
+            }
+            button.btn_like_answer.status_close{
+                background: url(/icons/like_close_no.png) !important;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+            }
+            button.btn_like_answer.status_close.active{
+                background: url(/icons/like_close.png) !important;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+            }
+            button.btn_like_answer{
+                position: absolute;
+                background: url(/icons/like.png);
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+                width: 20px;
+                height: 20px;
+                left: 0px;
+                border: none !important;
+                border-radius: 0px !important;
+                box-shadow: 0px 0px 0px !important;
+                transition: all 0.2s ease-in-out;
+            }
+            .btn_like_view{
+                background: none;
+                border: none !important;
+                color: #696fda;
+                border-radius: 0px !important;
+                box-shadow: 0px 0px 0px !important;
+                font-weight: 300;
+            }
+            button.true{
+                pointer-events: none !important;
+            }
+        }
+        p.dislike_answer{
+            position: relative;
+            padding-left: 25px;
+            button.active{
+                background: url(/icons/dislike_before.png) !important;
+            }
+            button.btn_dislike_answer.status_close{
+                background: url(/icons/dislike_close_no.png) !important;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+            }
+            button.btn_dislike_answer.status_close.active{
+                background: url(/icons/dislike_close.png) !important;
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+            }
+            button.btn_dislike_answer{
+                position: absolute;
+                background: url(/icons/dislike_close_no.png);
+                background-size: contain !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+                width: 20px;
+                height: 20px;
+                left: 0px;
+                border: none !important;
+                border-radius: 0px !important;
+                box-shadow: 0px 0px 0px !important;
+                transition: all 0.2s ease-in-out;
+            }
+            button.btn_dislike_view{
+                background: none;
+                border: none !important;
+                color: #696fda;
+                border-radius: 0px !important;
+                box-shadow: 0px 0px 0px !important;
+                font-weight: 300;
+            }
+            button.true{
+                pointer-events: none !important;
+            }
+        }
+        p.complaints{
+            a{
+                text-decoration: none;
+                transition: all 0.3s ease-in-out;
+                &:hover{
+                    color: rgba(238, 61, 61, 0.96);
+                }
+            }
+        }
+    }
+}
+*/
+
+// СУПЕР КОСТЫЛЬ 2
+.winner{
+    p.title{
+        text-align: center;
+        margin-bottom: 20px !important;
+    }
+    .title_info{
+        position: relative;
+        &::after{
+            content: '';
+            left: 0px;
+            width: 50px;
+            height: 50px;
+            background: url(/icons/trophy_win.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        p.title{
+            margin-bottom: 0px !important;
         }
     }
 }

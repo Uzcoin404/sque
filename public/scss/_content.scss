@@ -133,6 +133,22 @@ a.dropdown-item,
     width: 40%;
     left: 50%;
     transform: translate(-50%, 0px);
+    .read{
+        padding: 40px 0px;
+        text-align: left;
+        a{
+            padding: 15px 25px;
+            background: #3f3fd9;
+            color: #fff;
+            border: 1px solid #3f3fd9;
+            transition: all 0.3s ease-in-out;
+            border-radius: 15px;
+            &:hover{
+                background: #fff;
+                color: #3f3fd9;
+            }
+        }
+    }
 }
 
 .group-card.main_page a{
@@ -749,9 +765,14 @@ a.disabled {
       width:60%;
   }
   form#login-form .btn{
-      width:100%;
-      margin:20px 0px;
-      padding: 7px 0px;
+    width: 100%;
+    margin: 20px 0px;
+    padding: 15px 25px;
+    background: #ffff00;
+    color: #000;
+    border: 1px solid #ffff00;
+    font-size: 16px;
+    font-weight: 500;
   }
 
   form#login-form .form-group a{
@@ -771,7 +792,7 @@ a.disabled {
       cursor: pointer!important;
   }
   form#login-form small{
-    font-size: 10px;
+    font-size: 14px;
     line-height: 10px;
     width: 100%;
 
@@ -1114,9 +1135,14 @@ content{
                     ul{
                         list-style: none;
                         padding: 0px;
+                        
                         li{
                             text-align: center;
                             margin-bottom: 5px;
+                            position: relative;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
                             a{
                                 color: #000;
                                 font-size: 20px;

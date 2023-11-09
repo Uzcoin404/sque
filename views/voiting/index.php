@@ -4,8 +4,8 @@
     $this->title = \Yii::t('app', 'My voiting'); 
 ?>
 <div class="questions">
+    
     <div class="questions__list">
-            
             <?PHP
                 FOREACH($questions as $question):
             ?>

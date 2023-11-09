@@ -2,7 +2,7 @@
 <?php 
 
     $user=Yii::$app->user->identity;
-
+    
 ?>
 <?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $question->id]);?>
 <div class="questions">
@@ -38,7 +38,18 @@
                                 <?= \app\widgets\Statusdatevotepost::widget(['question_id' => $question->id]) ?>
                                 <?= \app\widgets\Viewspost::widget(['question_id' => $question->id,"addView"=>1]) ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                                <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                                <div class="question_post_list_element_button" data-id="<?=$question->owner_id?>" onclick="UserInfo(this, 1)">
+                                    <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                                    <div class="question_post_list_element_user_info" data-id="<?=$question->owner_id?>">
+                                        <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
+                                        <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
+                                        <p class="answers_info"><?=Yii::t('app','Gave answers')?>: <span></span></p>
+                                        <p class="like_info"><?=Yii::t('app','Put Likes')?>: <span></span></p>
+                                        <p class="dislike_info"><?=Yii::t('app','Put dislikes')?>: <span></span></p>
+                                        <p class="action"><?=Yii::t('app','Last activity')?>: <span></span></p>
+                                    </div>
+                                </div>
+
                                 <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                         </div>
          

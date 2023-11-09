@@ -32,13 +32,20 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function ApplyFilter(){
+function ApplyFilter(element){
     let sorts="?";
-    $('.questions__filter_form__list_element .questions__filter_form__list_element_to a.sort.active').each(function(){
-        sorts+="sorts="+$(this).attr('data-sort');
-    });
-    location.replace('/question/filter'+sorts+'');
-    console.log(sorts);
+
+    if($(element).hasClass('active')){
+        location.replace('/question/filter'+sorts+'');
+    } else {
+        $(element).each(function(){
+            sorts+="sorts="+$(element).attr('data-sort');
+        });
+        console.log($(element).attr('data-sort')); 
+        location.replace('/question/filter'+sorts+'');
+    }
+
+ 
     return;
     // $("a.btn_filter [data-filter=1]").attr("href", $(this).attr('data-sort'))
     // console.log(sorts);

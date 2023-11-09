@@ -14,7 +14,7 @@
                     <a><?=Yii::t('app','Sort')?>:</a>
                     
                 </div>
-                <a class="seacrh_answers like" onclick="FilterLike(this)" data-id="<?=$questions->id?>" data-sort="ALL"><?=Yii::t('app','Sort like')?></a>
+                <!-- <a class="seacrh_answers like" onclick="FilterLike(this)" data-id="<?=$questions->id?>" data-sort="ALL"><?=Yii::t('app','By default')?></a> -->
                 <a class="seacrh_answers dislike" onclick="FilterDislike(this)" data-id="<?=$questions->id?>" data-sort="ALL"><?=Yii::t('app','Sort dislike')?></a>
             <?php } ?>
         <?php } ?>

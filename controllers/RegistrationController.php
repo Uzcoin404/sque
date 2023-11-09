@@ -147,6 +147,7 @@ class RegistrationController extends Controller
         }
         
         $model->password = '';
+        
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -155,9 +156,16 @@ class RegistrationController extends Controller
     //Выход
     public function actionLogout()
     {
-        Yii::$app->user->logout();
+        $model = User::find()->where(['id'=>Yii::$app->user->id])->one();
 
-        return $this->goHome();
+        $model->date_online = strtotime("now");
+
+        if($model->update()){
+            Yii::$app->user->logout();
+
+            return $this->goHome();
+        }
+    
     }
 
     public function actionRegistration(){

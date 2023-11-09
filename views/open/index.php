@@ -1,7 +1,9 @@
 <?php 
-    $this->title = \Yii::t('app', 'Questions list'); 
+    $this->title = \Yii::t('app', 'Here to answer questions'); 
     use yii\widgets\LinkPager;
+    $user=Yii::$app->user->identity;
 ?>
+
 <div class="questions">
     <div class="questions__list">
         <?PHP FOREACH($questions as $question):?>

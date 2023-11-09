@@ -27,7 +27,7 @@ class Likeanwsers extends \yii\bootstrap5\Widget
         }
         $result = array_unique($id_user);
         $count = count($result);
-        return '<p class="like_answer">'.Html::encode($count).'</p>';
+        return '<p class="like_answer">'.Html::encode($count).' '.Yii::t('app','Voitings').'</p>';
     }
     
 }

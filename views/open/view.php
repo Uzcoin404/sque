@@ -34,8 +34,12 @@
                             <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
                             <?php
                                 if($question->status > 7 || $question->status < 7){
-                            ?>
-                                <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
+                            ?>  
+                                <?php if ($question->status == 4 || $question->status == 5 || $question->status == 6){?>
+                                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
+                                <?php } else { ?>
+                                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
+                                <?php } ?>
                             <?php
                                 }
                             ?>
@@ -78,6 +82,12 @@
                                 <?php } ?> -->
                             </div>
                         <?php
+                            } else {
+                                ?>
+                                <div class="questions__list_element_btn">
+                                    <a href="/answer/create/<?=$question->id?>" class="btn_answers login_user"><?=\Yii::t('app', 'Answer the question');?></a>
+                                </div>
+                                <?php
                             }
                         ?>
                 </div>
@@ -88,7 +98,11 @@
         <!-- <?PHP IF($question->statusMoreCloseNoPay()):?>
             <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
         <?PHP ENDIF;?> -->
-       
+        <?php if(!$user){ ?>
+            <div class="block_info_notauth" style="margin: 0px 0px 20px 0px;">
+                <p class="info"><?=Yii::t('app','Only authorized users can answer questions on the site, please Log in or Register!')?></p>
+            </div>
+        <?php } ?>
     </div>
 </div>
 

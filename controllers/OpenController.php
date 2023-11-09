@@ -35,7 +35,7 @@ class OpenController extends Controller
     public $slut = 1;
     public $user_answer = [];
     public $number = [];
-    public $winner_procent = 0;
+    public $winner_procent = 0.0;
 
     //Настройка прав доступа
     public function behaviors()
@@ -52,7 +52,7 @@ class OpenController extends Controller
                         'roles' => ['@'], 
                     ],
                     [ 
-                        'actions' => ['index','close','voting','filter','closeview','votingview','myquestionview','search'],
+                        'actions' => ['index','create','close','voting','filter','closeview','votingview','myquestionview','search', 'time'],
                         'allow' => true,
                         'roles' => ['?'], 
                     ],
@@ -68,7 +68,7 @@ class OpenController extends Controller
     
     public function actionIndex()
     {
-        $questions = Questions::find()->where(["status"=>[4]])->orderBy(["coast"=>SORT_DESC]);
+        $questions = Questions::find()->where(["status"=>[4]])->orderBy(["data_status"=>SORT_DESC]);
 
         $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
@@ -91,8 +91,18 @@ class OpenController extends Controller
 
         $this->ViewCreate($slug);
 
+        $users = Yii::$app->user->identity;
+
+        if($users){
+            $model = User::find()->where(['id'=>$users->id])->one();
+
+            $model->date_online = strtotime("now");
+    
+            $model->update();
+        }
+
         $questions = Questions::find()->where(["id"=>$slug])->all();
-        if($questions[0]->status == 4){
+        if($questions[0]->status == 4 || $questions[0]->status == 2 || $questions[0]->status == 1){
             return $this->render(
                 'view',
                 [
@@ -211,59 +221,121 @@ class OpenController extends Controller
         
     }
 
+    public function actionSetStatusActive(){
+
+        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data",strtotime("-1 day")])->all();
+
+        foreach($questions as $value){
+            if($value->status == 4){
+                        
+                $value->status = 5;
+                if(!$value->date_changes){
+                    $value->data_open = strtotime("now");
+                }
+                $value->data_status = strtotime("now");
+                $value->data = strtotime("now");
+                $value->update(0);
+            }
+        }
+    }
+
+    public function array_swap(array &$array, $key, $key2)
+    {
+        if (isset($array[$key]) && isset($array[$key2])) {
+            list($array[$key], $array[$key2]) = array($array[$key2], $array[$key]);
+            return true;
+        }
+
+        return false;
+    }
+
     // Смена статуса по времени
 
     public function actionTime(){
-        $questions = Questions::find()->all();
-  
-        foreach($questions as $value){
-           
-            $first_date = new \DateTime("now");
-            $second_date = new \DateTime("@".$value->data);
-            $interval = $second_date->diff($first_date);
-            
-            if($interval->d >= 1){
-                
-                if($value->status == 5){
 
-                    $this->user_answer = [];
-                    
-                    $value->winner_id = $this->actionWinner($value->id, $value->owner_id);
-                    $users = User::find()->where(["id"=> $value->winner_id])->one();
+        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1 day")])->all(); 
+        // если надо сменить статус, то раскомментируйте эту строку, она не работает, так что перенос будет работать независимо от времени. 
+        // $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1")])->all();
+         echo '<pre>';
+  
+        foreach($questions as $value) {
+              
+            $i = 0;
+           
+            $this->user_answer = [];
+            
+            $winner_id = $this->actionWinner($value->id, $value->owner_id);
+
+            $winners_number = 0;
+
+            foreach($winner_id as $id) {
+                if($id['number'] == 1){
+                    $winners_number++;
+                }
+            }
+
+          /*  foreach($winner_id as $key => $item) {
+       
+                $dislikeItem = DislikeAnswer::find()->where(['id_user' => $item['id_user'], 'id_questions' => $value['id']])->count();
+                $winner_id[$key]['dislike'] = $dislikeItem;
+            }
+            print_r($winner_id); exit;
+
+            for ($i = 0; $i < count($winner_id); $i++) { 
+                for ($j = 1; $j < count($winner_id); $j++) {
+
+                    if ($winner_id[$i]['number'] == $winner_id[$j]['number']) {
+
+                        echo '|';
+                        print_r($winner_id[$i]['dislike']);
+                        echo '<>';
+                        print_r($winner_id[$j]['dislike']);
+                        echo '|';
+
+                        if ($winner_id[$i]['dislike'] > $winner_id[$j]['dislike']) {
+                            print_r('ok');
+                            $old = $winner_id[$i];
+                            $winner_id[$i] = $winner_id[$j];
+                            $winner_id[$j] = $old;
+                        }
+                    }
+                }
+            }*/
+            
+            if($value->winner_id){
+                foreach($value->winner_id as $id){
+
+                    $users = User::find()->where(["id"=> $id['id_user']])->one();
 
                     if($users){
                         if(!$users->money){
-                            $users->money = $value->coast + 0;
+                            $users->money = $value->coast/$winners_number + 0;
                         } else {
-                            $users->money = $value->coast + $users->money;
+                            $users->money = $value->coast/$winners_number + $users->money;
                         }
                         $users->update(0);
                     } 
-                    if(!$value->date_changes){
-                        $value->data_voiting = strtotime("now");
-                    }
-                    $value->data = strtotime("now");
-                    $value->status = 6;
-                    $value->update(0);
 
                 }
-
-                if($value->status == 4){
-                    
-                    $value->status = 5;
-                    if(!$value->date_changes){
-                        $value->data_open = strtotime("now");
-                    }
-                    $value->data_status = strtotime("now");
-                    $value->data = strtotime("now");
-                    $value->update(0);
-
+                if(!$value->date_changes){
+                    $value->data_voiting = strtotime("now");
                 }
+                $value->data = strtotime("now");
+                $value->status = 6;
+                $value->update(0);
 
+                $i++;
+            } else {
+                $value->data = strtotime("now");
+                $value->status = 6;
+                $value->update(0);
             }
 
         }
-
+        
+        // echo 'ok';
+        // exit;
+        $this->actionSetStatusActive();
     }
 
 
@@ -271,48 +343,47 @@ class OpenController extends Controller
 
     public function actionWinner($id, $user){
         $win=[];
+        $answers_number_win = [];
         $answers=[];
         $answer = Answers::find()->where(['id_questions'=>$id])->orderBy(['data'=>SORT_DESC])->all();
-        echo "<pre>";
-        
+      
         foreach($answer as $value){
 
-            $like = LikeAnswers::find()->where(['id_answer'=>$value->id])->one();
-
-            $slit_like = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM like_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$value->id])->queryOne();
-            
-            $this->winner_procent = $slit_like['count'];
-
-            if($this->winner_procent < 0){
-                $this->winner_procent = 0;
-            }
-
-            $this->winner_procent = $this->winner_procent/100;
+            $this->winner_procent= LikeAnswers::find()->where(['id_answer'=>$value->id])->count();
+            $this->winner_procent = round(100/(DislikeAnswer::find()->where(['id_answer'=>$value->id])->count()+$this->winner_procent), 2);
 
             if($value->id_user){
-                $win[$value->id_user]=$this->winner_procent;
                 $answers[$value->id_user]=$value->id;
+                $win[$this->winner_procent][]=$value->id_user;
             }
+           
             
-        }
-        arsort($win);
-        $winner=0;
-        $number=1;
-        foreach($win as $user=>$value){
-            if(!$win){
-                $win=$user;
+            
+        }  
+  
+      //  $dislikeItem = DislikeAnswer::find()->where(['id_user' => $item['id_user'], 'id_questions' => $value['id']])->count();
+      //  $winner_id[$key]['dislike'] = $dislikeItem;
+    
+ 
+        krsort($win);
+        $win = array_reverse($win);
+   
+        $winner=[];
+        $number=0;
+
+        foreach($win as $k=>$values){
+            
+            foreach($values as $value){
+                
+                array_push($winner,array('id_user' => $value, 'number'=> count($win) - $number));
+                $answer=Answers::find()->where(['id'=>$answers[$value]])->one();
+                $answer->number= count($win) - $number;//$winner[$number]['number'];
+                $answer->update(0);
             }
-            if($number == 1){
-                $winner = $user;
-            }
-            $answer=Answers::find()->where(['id'=>$answers[$user]])->one();
-            $answer->number=$number;
-            $answer->update(0);
             $number++;
         }
-
+     
         return $winner;
-
     }
     
     // Страница моих вопросов

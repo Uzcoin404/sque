@@ -55,14 +55,14 @@ class SignupForm extends Model
     {
         return [
             'id' => 'ID',
-            'email' => 'Введите Ваш Email',
-            'username'=>'Введите Логин',
-            'password'=>'Введите пароль',
-            'repassword'=>'Подтвердите пароль',
-            'grand'=>'Гражданство',
-            'image'=>'Фото',
-            'verifyCode'=>'Капча',
-            'polit'=>'Я принимаю условия пользовательского соглашения и политики конфиденциальности'
+            'email' => ''.Yii::t('app','Enter Your Email').'',
+            'username'=>''.Yii::t('app','Come up with a login').'',
+            'password'=>''.Yii::t('app','Come up with a password').'',
+            'repassword'=>''.Yii::t('app','Repeat the password').'',
+            'grand'=>''.Yii::t('app','Citizenship').'',
+            'image'=>''.Yii::t('app','Image').'',
+            'verifyCode'=>''.Yii::t('app','VerifyCode').'',
+            'polit'=>''.Yii::t('app','I accept the terms of the User Agreement and the Privacy Policy').''
         ];
     }
     /**

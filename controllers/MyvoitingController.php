@@ -59,23 +59,21 @@ class MyvoitingController extends Controller
     
     public function actionIndex()
     {
-
         $user=Yii::$app->user->identity;
 
         $id_questions = [];
         
         $questions = [];
 
-        $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
-        $queryLike = LikeAnswers::find();
-        $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id');
-        if(isset($user->id)){
-            $questions->where(['id_user'=>$user->id]);
-        }
-        $questions->orderBy(["coast"=>SORT_DESC]);
-        $result = $questions;
+        $questions = Questions::find()->where(['status', [4,5,6]])->orderBy(["data"=>SORT_DESC]);
 
-        $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $queryLike = LikeAnswers::find();
+        $questions->leftJoin(['like_answer'=>$queryLike], 'like_answer.id_questions = questions.id')->where(['id_user'=>$user->id])
+        ->groupBy(['id']);
+        $questions->orderBy(["data"=>SORT_DESC]);
+        $result = $questions;
+        
+        $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
         $result = $result->offset($pages->offset)
         ->limit($pages->limit)

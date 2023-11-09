@@ -2,6 +2,8 @@
 $(document).ready(function(){
     
     let url = window.location.pathname;
+
+    console.log(url);
     
     $menu = $('.menu_left__list .menu_left__list_element a').removeClass("active");
     if (url.toLowerCase().indexOf("/questions/close") >= 0){
@@ -9,17 +11,37 @@ $(document).ready(function(){
     }
     if (url.toLowerCase().indexOf("/questions/view") >= 0){
         url="/";
+
     }
     if (url.toLowerCase().indexOf("/answer/myanswers") >= 0){
         url="/answer/myanswers";
     }
     if (url.toLowerCase().indexOf("/questions/voting") >= 0){
         url="/questions/voting";
+
     }
     
     if (url.toLowerCase().indexOf("/questions/myquestions") >= 0){
         url="/questions/myquestions";
     }
+
+    if(url.toLowerCase().indexOf("/questions/myvoiting") >= 0){
+        url="/questions/myvoiting";
+    }
+
+    if(url.toLowerCase().indexOf("/favourit") >= 0){
+        url="/favourit";
+    }
+
+    if(url.toLowerCase().indexOf("/question/create") >= 0){
+        url="/question/create";
+
+    }
+
+    if(url == "/"){
+
+    }
+    
      $('.menu_left__list .menu_left__list_element a[href="'+url+'"]').addClass("active");
 
 });
@@ -55,3 +77,16 @@ function CloseMobileMenu(element){
     $(".main_section__left").css("width","0px");
     $(".menu_mobile__list_element_control").css("left","-55px");
 }
+
+
+$('#questions-title').on( "click", function(){
+    $('.form-group.js-model p').css('display','block');
+});
+
+$('#questions-text').on( "click", function(){
+    $('.form-group.js-model p').css('display','block');
+});
+
+$('#questions-coast').on( "click", function(){
+    $('.form-group.js-model p').css('display','block');
+});

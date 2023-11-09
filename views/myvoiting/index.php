@@ -2,7 +2,7 @@
     use app\models\Answers;
     use yii\widgets\LinkPager;
     $user=Yii::$app->user->identity;
-    $this->title = \Yii::t('app', 'My voiting'); 
+    $this->title = \Yii::t('app', 'My voiting');
 ?>
 <div class="questions">
     <div class="questions__list">

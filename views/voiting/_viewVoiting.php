@@ -64,6 +64,11 @@
                       
                 </div>
         </div>
+        <?php if(!$user){ ?>
+            <div class="block_info_notauth" style="margin: 0px 0px 20px 0px;">
+                <p class="info"><?=Yii::t('app','Only authorized users can vote for answers on the site, please Log in or Register!')?></p>
+            </div>
+        <?php } ?>
         <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
         
         <!-- <?PHP IF($question->statusMoreCloseNoPay()):?>

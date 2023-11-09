@@ -31,7 +31,7 @@
             padding: 2em;
             border-radius:10px;
             background:#fff;
-            margin-bottom: 30px;
+            margin-bottom: 15px;
             .questions__list_element_text{
                 width:100%;
                 word-wrap: break-word;
@@ -42,7 +42,7 @@
                 }
                 p.text{
                     font-size: 18px;
-                    max-width: 1400px;
+                    // max-width: 1400px;
                     width: 100%;
                 }
             }
@@ -334,6 +334,10 @@
                         background: #5f5fce;
                     }
                 }
+                a.btn_answers.login_user{
+                    pointer-events: none;
+                    background: #3f3fd938;
+                }
                 .status_time{
                     font-size: 20px;
                     color: rgb(0 0 0 / 32%);
@@ -379,6 +383,7 @@
                         width: 30px;
                         height: 30px;
                         border-radius: 50px;
+                        cursor: pointer;
                     }
                 }
                 p{
@@ -390,6 +395,59 @@
                     }
                 }
             }
+        }
+    }
+}
+
+
+
+.block_btn_info_text_status{
+    position: absolute;
+    right: -40px;
+    .btn_info_text{
+        background: url(/img/icons/question.png);
+        background-position: center !important;
+        background-size: 25px 25px !important;
+        background-repeat: no-repeat !important;
+        width: 35px;
+        height: 35px;
+        margin: 0px 30px;
+        cursor: pointer;
+    }
+    .btn_info_text.index{
+        margin: 0px 0px 10px 0px;
+    }
+    .block_btn_info_text_status_text{
+        position: absolute;
+        top: 0px;
+        left: 80px;
+        // left: 65px;
+        z-index: 1;
+        background: #fff;
+        padding: 0px;
+        width: 0px;
+        border: 0px;
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    .block_btn_info_text_status_text.index{
+        left: 35px;
+    }
+    .block_btn_info_text_status_text.active{
+        width: 300px;
+        border: 1px solid #5C5CCF;
+        padding: 25px;
+    }
+}
+
+@media (max-width:640px){
+    .block_btn_info_text_status{
+        .btn_info_text{
+            background: url(/img/icons/question_white.png);
+        }
+        .block_btn_info_text_status_text{
+            left: -220px;
         }
     }
 }

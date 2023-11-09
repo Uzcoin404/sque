@@ -1,13 +1,13 @@
 
 <?php 
-        $this->title = \Yii::t('app', 'Close questions'); 
+        $this->title = \Yii::t('app', 'Archive of questions and answers'); 
         use yii\widgets\LinkPager;
 ?>
 
 <div class="questions close">
     <?=Yii::$app->controller->renderPartial("_filter");?>
     <div class="questions__list">
-      
+
         <?PHP FOREACH($questions as $question):?>
             <?=Yii::$app->controller->renderPartial("_view",["question"=>$question]);?>
         <?PHP ENDFOREACH;?>

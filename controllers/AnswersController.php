@@ -123,12 +123,11 @@ class AnswersController extends Controller
 
     public function actionMyanswers()
     {
-
         $user=Yii::$app->user->identity;
 
         $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
         $queryLike = Answers::find();
-        $questions->leftJoin(['answers'=>$queryLike], 'answers.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $questions->leftJoin(['answers'=>$queryLike], 'answers.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["data"=>SORT_DESC]);
         $result = $questions;
         
         $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
@@ -136,7 +135,8 @@ class AnswersController extends Controller
         $result = $result->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
-        
+
+
         return $this->render(
             '_myanswers',
             [

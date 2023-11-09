@@ -33,7 +33,7 @@ class Answersblock extends \yii\bootstrap5\Widget
         if($question_status->status == 4){
             if($user){
                 $answers = Answers::find()->where(["id_questions"=>$this->question_id,"id_user"=>$user->id]);
-                return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner]);
+                return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
             } else {
                 return;
             }
@@ -44,7 +44,7 @@ class Answersblock extends \yii\bootstrap5\Widget
         }
 
         if($answers){
-            return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner]);
+            return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
         }
        
     }

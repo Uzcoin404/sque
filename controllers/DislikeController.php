@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 use app\models\User;
+use app\models\ViewsAnswers;
 use app\models\Dislike;
 use app\models\DislikeAnswer;
 use app\models\LikeAnswers;
@@ -81,10 +82,12 @@ class DislikeController extends Controller
         $data = Yii::$app->request->post();
         $sort = $data['sorts'];
         $id = $data['id'];
+        $filter = 0;
       
         $answer = Answers::find()->where(['in', 'id_questions', $id]);
         if($sort == "DESC"){
             $answer->orderBy('dislike_answer.dislike_answercount DESC');
+            $filter = 1;
         }
         if($sort == "ASC"){
             $answer->orderBy('dislike_answer.dislike_answercount ASC');
@@ -98,7 +101,7 @@ class DislikeController extends Controller
         $answer->leftJoin(['dislike_answer'=>$answerLike], 'dislike_answer.id_answer = answers.id');
         foreach($answer->all() as $question){
             $status=1;
-            $result.=$this->renderAjax("@app/widgets/views/answers/_view",["answer"=>$question,"id_questions"=>$id, "orderWinner"=>$question->number]);
+            $result.=$this->renderAjax("@app/widgets/views/answers/_view",["answer"=>$question,"id_questions"=>$id, "orderWinner"=>$question->number, 'filter_status'=> $filter]);
         }
         return \yii\helpers\Json::encode(
             [
@@ -122,12 +125,18 @@ class DislikeController extends Controller
 
             foreach($post as $id_answers){
                 $id_an=$id_answers['answer'];
+                $answer_views = ViewsAnswers::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
                 $dislike_answer=DislikeAnswer::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
                 $like_answer=LikeAnswers::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
                 if($dislike_answer || $like_answer){
                     if($id_answers['status'] == 1){
                         $dislike_answer->delete();
-                    } 
+                        if (!$answer_views->button_click) {
+                            $answer_views->delete();
+                        }
+                        // $answer_views->delete();
+                    }
+                    return 0;
                 } else {
                     $answer=Answers::find()->where(["id"=>$id_an])->one();
                     $question = Questions::find()->where(["id"=>$id_answers['question'][0]])->one();
@@ -143,6 +152,15 @@ class DislikeController extends Controller
                                     $dislike_answer->data = strtotime('now');
                                     
                                     $dislike_answer->save(0);
+
+                                    if(!$answer_views){
+                                        $views = new ViewsAnswers();
+                                        $views->id_answer=$id_an;
+                                        $views->id_user=$user->id;
+                                        $views->type_user=1;
+                                        $views->data=strtotime("now");
+                                        $views->save(0);
+                                    }
                     
                                     //unset($like_answer);
                                 }
