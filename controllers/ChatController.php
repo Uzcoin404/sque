@@ -53,7 +53,7 @@ class ChatController extends Controller
         $id_recipient = $this->RandomIdAdmin();
 
         $model = new Chat();
-
+     
         if(!Chat::find()->all()){
             if ($model->load(Yii::$app->request->post())) {
                 $model->sender_id=$user->id;
@@ -61,10 +61,11 @@ class ChatController extends Controller
                 $model->data=strtotime('now');
                 $model->status=0;
                 if($model->save()){
+             
                     return $this->redirect('/chat');
                 }
             }
-
+       
             return $this->render(
                 'index',
                 [
@@ -74,7 +75,7 @@ class ChatController extends Controller
                 ]
             );
         }
-
+    
         if($this->SearchChat($user->id, $id_recipient)){
             if ($model->load(Yii::$app->request->post())) {
                 $model->sender_id=$user->id;
@@ -106,18 +107,15 @@ class ChatController extends Controller
 
         $admin = User::find()->where(["moderation"=>1])->one();
 
-        $chat_list = Chat::find()->where(["recipient_id"=>$admin->id]);
+        $chat_list = Chat::find()->where(["recipient_id"=>$admin->id])->all();
 
-        $pages = new Pagination(['totalCount' => $chat_list->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
-        $chat_list = $chat_list->offset($pages->offset)
-        ->limit($pages->limit)
-        ->all();
 
         foreach($chat_list as $value){
             array_push($this->id_user,$value->sender_id);
         }
         $result = array_unique($this->id_user);
+        $pages = new Pagination(['totalCount' => count($result), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
         return $this->render(
             '_list',
@@ -141,7 +139,7 @@ class ChatController extends Controller
             $model->data=strtotime('now');
             $model->status=0;
             if($model->save()){
-                return $this->redirect('/');
+                header('Location: '.$_SERVER['REQUEST_URI']);
             }
         }
 

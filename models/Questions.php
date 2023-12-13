@@ -126,10 +126,14 @@ class Questions extends \yii\db\ActiveRecord
         $result = "";
         if($this->isReturnDate()){
                 $first_date = new \DateTime("now");
-                $second_date = new \DateTime("@".$this->data_status);
+                $first_date->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $second_date = new \DateTime("@".$this->data_start);
+                $second_date->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
                 $interval = $second_date->diff($first_date);
                 if($interval->days <= 0){
+
                     $hours = $interval->d * 24 + $interval->h;
+            
                     $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
                     if($this->status == 2){
                         $result = Yii::t('app','Reviewed')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
@@ -138,8 +142,9 @@ class Questions extends \yii\db\ActiveRecord
                     }
                 } else {
                     if($this->status == 6){
-                        $result= date("d.m.y", $this->data_status);
+                        $result= date("d.m.y", $this->data);
                     } else {
+        
                         $hours = $interval->d * 24 + $interval->h;
                         $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
                         if($this->status == 2){
