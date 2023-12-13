@@ -197,7 +197,7 @@ class OpenController extends Controller
                 if($model->status == 4){
                     $model->data_open = $model->data;
                 } elseif ($model->status == 5){
-                    $model->data_voiting = $model->data;
+                    $model->data_voiting = strtotime("now");
                 }
 
                 $date = date("d.m.y", $model->data_status);
@@ -223,7 +223,7 @@ class OpenController extends Controller
 
     public function actionSetStatusActive(){
 
-        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data",strtotime("-1 day")])->all();
+        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("-1 day")])->all();
 
         foreach($questions as $value){
             if($value->status == 4){
@@ -253,10 +253,10 @@ class OpenController extends Controller
 
     public function actionTime(){
 
-        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1 day")])->all(); 
+        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("-1 day")])->all(); 
         // если надо сменить статус, то раскомментируйте эту строку, она не работает, так что перенос будет работать независимо от времени. 
         // $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1")])->all();
-         echo '<pre>';
+          echo '<pre>';
   
         foreach($questions as $value) {
               
@@ -273,7 +273,7 @@ class OpenController extends Controller
                     $winners_number++;
                 }
             }
-
+       
           /*  foreach($winner_id as $key => $item) {
        
                 $dislikeItem = DislikeAnswer::find()->where(['id_user' => $item['id_user'], 'id_questions' => $value['id']])->count();
@@ -350,7 +350,9 @@ class OpenController extends Controller
         foreach($answer as $value){
 
             $this->winner_procent= LikeAnswers::find()->where(['id_answer'=>$value->id])->count();
-            $this->winner_procent = round(100/(DislikeAnswer::find()->where(['id_answer'=>$value->id])->count()+$this->winner_procent), 2);
+            $this->winner_procent= $this->winner_procent-DislikeAnswer::find()->where(['id_answer'=>$value->id])->count();
+          
+           
 
             if($value->id_user){
                 $answers[$value->id_user]=$value->id;
@@ -364,10 +366,10 @@ class OpenController extends Controller
       //  $dislikeItem = DislikeAnswer::find()->where(['id_user' => $item['id_user'], 'id_questions' => $value['id']])->count();
       //  $winner_id[$key]['dislike'] = $dislikeItem;
     
- 
+      
         krsort($win);
         $win = array_reverse($win);
-   
+
         $winner=[];
         $number=0;
 
