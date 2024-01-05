@@ -73,7 +73,7 @@ class CloseController extends Controller
 
     public function actionView($slug){
         $users = Yii::$app->user->identity;
-
+        
         if($users){
             $model = User::find()->where(['id'=>$users->id])->one();
 
@@ -83,7 +83,8 @@ class CloseController extends Controller
         }
         
         $questions = Questions::find()->where(["id"=>$slug])->one();
-
+        if(!isset($questions->id)) return $this->redirect("/");
+        
         if($questions->status == 6){
             
             return $this->render(

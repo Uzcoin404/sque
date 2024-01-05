@@ -101,12 +101,13 @@ class OpenController extends Controller
             $model->update();
         }
 
-        $questions = Questions::find()->where(["id"=>$slug])->all();
-        if($questions[0]->status == 4 || $questions[0]->status == 2 || $questions[0]->status == 1){
+        $questions = Questions::find()->where(["id"=>$slug])->one();
+        if(!isset($questions->id)) return $this->redirect("/");
+        if($questions->status == 4 || $questions->status == 2 || $questions->status == 1){
             return $this->render(
                 'view',
                 [
-                    "questions"=>$questions,
+                    "question"=>$questions,
                 ]
             );
         } else {

@@ -4,10 +4,10 @@
     $user=Yii::$app->user->identity;
     use app\models\Answers;
 ?>
-<?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $questions[0]->id]);?>
+<?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $question->id]);?>
 <div class="questions">
     <div class="questions__list">
-        <?PHP FOREACH($questions as $question):?>
+  
             <?php \app\widgets\Viewspost::widget(['question_id' => $question->id]) ?>
             <div class="questions__list__element full">
                 <div class="questions__list_element_text">
@@ -92,7 +92,7 @@
                         ?>
                 </div>
         </div>
-        <?PHP ENDFOREACH;?>
+       
         <?= \app\widgets\Answersblock::widget(['question_id' => $question->id]) ?>
         
         <!-- <?PHP IF($question->statusMoreCloseNoPay()):?>

@@ -78,11 +78,13 @@
                   <?=\Yii::t('app', 'My favourites');?>
                 </a>
               </li>
-              <li>
-                <a href="/chat">
-                  <?=\Yii::t('app', 'Go to the chat');?>
-                </a>
-              </li>
+              <?PHP if($user->moderation != 1):?>
+                <li>
+                  <a href="/chat">
+                    <?=\Yii::t('app', 'Go to the chat');?>
+                  </a>
+                </li>
+              <?PHP ENDIF;?>
               <?php
               if($user->moderation == 1 && $user->key == $key){
             ?>
