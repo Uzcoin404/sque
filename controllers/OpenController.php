@@ -189,8 +189,26 @@ class OpenController extends Controller
             $model = Questions::find()->where(['id'=>$slug])->one();
 
             if ($model->load(Yii::$app->request->post())) {
-
                 $model->data = strtotime($model->data);
+                if($model->data<=strtotime("now")){
+                    Yii::$app->session->setFlash('error', \Yii::t('app', 'The date is set incorrectly. It should be longer than {date}',['date'=>date("d.m.Y",strtotime("now"))]));
+                    return $this->render(
+                        '_dateupdate',
+                        [
+                            "model"=>$model,
+                        ]
+                    );
+                }
+                if($model->data>strtotime("+14 days")){
+                    Yii::$app->session->setFlash('error', \Yii::t('app', 'The date is set incorrectly. It should be longer than {date}',['date'=>date("d.m.Y",strtotime("+14 days"))]));
+                    return $this->render(
+                        '_dateupdate',
+                        [
+                            "model"=>$model,
+                        ]
+                    );
+                }
+                
                 $model->data_status = $model->data;
                 $model->date_changes = 1;
 

@@ -180,6 +180,8 @@
         "Like percentage" => "Процент лайков",
         "Dislike percentage" => "Процент дизлайков",
         "Questions is closed" => "Вопрос закрыт",
+        "The date is set incorrectly. It should be longer than {date}"=>"Дата установлена неверно. Она должна быть больше {date}",
+        "The date is set incorrectly. The date cannot be longer than {date}"=>"Дата установлена неверно. Дата не может быть больше {date}",
     ];
 
 ?>
