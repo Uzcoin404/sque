@@ -89,7 +89,7 @@ class OpenController extends Controller
     
     public function actionView($slug){
 
-        $this->ViewCreate($slug);
+        
 
         $users = Yii::$app->user->identity;
 
@@ -103,6 +103,7 @@ class OpenController extends Controller
 
         $questions = Questions::find()->where(["id"=>$slug])->one();
         if(!isset($questions->id)) return $this->redirect("/");
+        $this->ViewCreate($slug);
         if($questions->status == 4 || $questions->status == 2 || $questions->status == 1){
             return $this->render(
                 'view',

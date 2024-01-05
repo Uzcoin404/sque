@@ -115,9 +115,11 @@ class VoitingController extends Controller
 
     public function actionView($slug){
 
-        $this->ViewCreate($slug);
+        
 
         $questions = Questions::find()->where(["id"=>$slug])->one();
+        if(!isset($questions->id)) return $this->redirect("/");
+        $this->ViewCreate($slug);
         if($questions->status == 5){
             return $this->render(
                 'view',
