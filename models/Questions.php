@@ -125,11 +125,51 @@ class Questions extends \yii\db\ActiveRecord
         
         $result = "";
         if($this->isReturnDate()){
+            $date_now = new \DateTime("now");
+            $date_now->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+            if($this->status==1){ // Создан, на модерации
+                $date_create = new \DateTime("@".$this->date_create);
+                $date_create->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_create->diff($date_now);
+                $result = Yii::t('app','Moderation')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+            }elseif($this->status==2){ // Пропущен дальше, Модерация не пройдена, не опубликован
+                $date_return_moderation = new \DateTime("@".$this->date_return_moderation);
+                $date_return_moderation->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_return_moderation->diff($date_now);
+                $result = Yii::t('app','Reviewed')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+
+            }elseif($this->status==4){
+                $date_open = new \DateTime("@".$this->date_open);
+                $date_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_open->diff($date_now);
+                $result = Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+            }elseif($this->status==5){
+                $date_voting = new \DateTime("@".$this->date_voting);
+                $date_voting->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_voting->diff($date_now);
+                $result = Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+            }elseif($this->status==6){
+                $date_close = new \DateTime("@".$this->date_close);
+                $date_close->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_now->diff($date_close);
+                $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+            }else{
+                $date_open = new \DateTime("@".$this->date_open);
+                $date_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_now->diff($date_now);
+                $hours = $interval->d * 24 + $interval->h;
+                $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+            }
+            
+            /*
+
                 $first_date = new \DateTime("now");
                 $first_date->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
                 $second_date = new \DateTime("@".$this->data_start);
                 $second_date->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
                 $interval = $second_date->diff($first_date);
+
+
                 if($interval->days <= 0){
  
                     $hours = $interval->d * 24 + $interval->h;
@@ -153,7 +193,7 @@ class Questions extends \yii\db\ActiveRecord
                             $result = Yii::t('app','Moderation')." ".Yii::t('app','Passed').": ".Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
                         }
                     }
-                }
+                }*/
         }
      
         return $result;
@@ -165,23 +205,25 @@ class Questions extends \yii\db\ActiveRecord
         $result = "";
         
         if($this->status > 0){
-            
+            $date_now = new \DateTime("now");
+            $date_now->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+
             if($this->status == 5){
         
-                $first_date = new \DateTime("now");
-                $second_date = new \DateTime("@".$this->data_status);
-                $interval = $second_date->diff($first_date);
+                $date_end_voting = new \DateTime("@".$this->date_end_voting);
+                $date_end_voting->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_end_voting->diff($date_now);
            
                 $hours = $interval->days * 24 + $interval->h;
                 $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
-            }elseif($this->status == 4){
-                $first_date = new \DateTime("now");
-                $second_date = new \DateTime("@".$this->data_status);
-                $interval = $first_date->diff($second_date);
+            }elseif($this->status == 4){ // Открыт
+                
+                $date_end_open = new \DateTime("@".$this->date_end_open);
+                $date_end_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+                $interval = $date_end_open->diff($date_now);
                 $hours = $interval->days * 24 + $interval->h;
-                if($this->status == 4) {
-                    $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
-                } 
+                $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+
                 
             }else{
                 $first_date = new \DateTime("now");
@@ -275,13 +317,17 @@ class Questions extends \yii\db\ActiveRecord
         $this->date_return_moderation=strtotime("now");
     }
 
-    public function setDateOpen($not_now=0){
+    public function setDateOpen(){
+        $this->date_open=strtotime("now");
+    }
+    public function setDateEndOpen($not_now=0){
         if(!$not_now){
-            $this->date_open=strtotime("now");
+            $this->date_end_open=strtotime("+1 day");
         }else{
-            $this->date_open=$not_now;
+            $this->date_end_open=$not_now+(24*60*60);;
         }
     }
+
     public function setDateVoting(){
         $this->date_voting=strtotime("now");
     }
@@ -296,6 +342,45 @@ class Questions extends \yii\db\ActiveRecord
     }
     public function setDateClose(){
         $this->date_close=strtotime("now");
+    }
+
+
+    public function WasOpened($id=0){
+        $question=0;
+        if($id){
+            $question=Questions::find()->where(['id' => $id])->one();
+        }else{
+            $question=$this;
+        }
+        if(!isset($question->id))return 0;
+
+        $date_close = new \DateTime("@".$question->date_close);
+        $date_close->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+        $date_open = new \DateTime("@".$question->date_open);
+        $date_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+        $interval = $date_close->diff($date_open);
+
+        return \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+
+    }
+
+    public function WasVoting($id=0){
+        $question=0;
+        if($id){
+            $question=Questions::find()->where(['id' => $id])->one();
+        }else{
+            $question=$this;
+        }
+        if(!isset($question->id))return 0;
+
+        $date_end_voting = new \DateTime("@".$question->date_end_voting);
+        $date_end_voting->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+        $date_voting = new \DateTime("@".$question->date_voting);
+        $date_voting->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+        $interval = $date_end_voting->diff($date_voting);
+
+        return \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
+
     }
 
 }

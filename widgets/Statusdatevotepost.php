@@ -18,19 +18,8 @@ class Statusdatevotepost extends \yii\bootstrap5\Widget
     }
     public function run()
     {   
-        $sql = Yii::$app->getDb()->createCommand("SELECT * FROM questions WHERE id=:ID",["ID"=>$this->question_id])->queryOne();
-        return '<p class="voting_text">'.Yii::t('app','Was on voiting').' : '.Html::encode($this->DateStatus($sql['data_open'],$sql['data'])).'</p>';
+        return '<p class="voting_text">'.Yii::t('app','Was on voiting').' : '.Html::encode(Questions::WasVoting($this->question_id)).'</p>';
     }
 
-    private function DateStatus($date,$date_status){
-        $first_date = new \DateTime("@".$date);
-        $second_date = new \DateTime("@".$date_status);
-        $interval = $first_date->diff($second_date);
-        if($interval->days <= 0){
-            return \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
-        } else {
-            $hours = $interval->d * 24 + $interval->h;
-            return \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
-        }
-    }
+
 }

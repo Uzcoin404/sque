@@ -196,7 +196,7 @@ class OpenController extends Controller
 
                 if($model->status == 4){
                     $model->data_open = $model->data;
-                    $model->setDateOpen($model->data);
+                    $model->setDateEndOpen($model->data);
                 } elseif ($model->status == 5){
                     $model->data_voiting = strtotime("now");
                     $model->setDateEndVoting($model->data);
@@ -225,7 +225,7 @@ class OpenController extends Controller
 
     public function actionSetStatusActive(){
         //$questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("now")])->all();
-        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","date_open",strtotime("-1 day")])->all();
+        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","date_end_open",strtotime("now")])->all();
         foreach($questions as $value){
             if($value->status == 4){
                 $value->status = 5;
@@ -607,7 +607,7 @@ class OpenController extends Controller
                 $questions->setDateUpdate();
                 $questions->setDateModeration();
                 $questions->setDateOpen();
-
+                $questions->setDateEndOpen();
                 return $questions->update(0);
                 
             }
