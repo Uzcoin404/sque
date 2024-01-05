@@ -131,7 +131,7 @@ class Questions extends \yii\db\ActiveRecord
                 $second_date->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
                 $interval = $second_date->diff($first_date);
                 if($interval->days <= 0){
-
+ 
                     $hours = $interval->d * 24 + $interval->h;
             
                     $result= \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
@@ -163,43 +163,34 @@ class Questions extends \yii\db\ActiveRecord
     {
         
         $result = "";
-
+        
         if($this->status > 0){
-            $first_date = new \DateTime("now");
-            $second_date = new \DateTime("@".$this->data_status);
             
-            $second_date = $second_date->modify('+1 day');
-
-            if($second_date < $first_date){
-
-                $questions = Questions::find()->where(['id'=>$this->id])->one();
-
-                if($questions->status < 6 && $questions->status > 3){
-                    $questions->status = $this->status + 1;
-                }
-
-               // return $questions->update(0);
-
-            }
-
-            $interval = $first_date->diff($second_date);
-
-            if($interval->days <= 0){
-                $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
-                if($this->status == 4) {
-                    $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
-                } elseif($this->status == 5){
-                    $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
-                }
-            } else {
-                $hours = $interval->d * 24 + $interval->h;
-                $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+            if($this->status == 5){
+        
+                $first_date = new \DateTime("now");
+                $second_date = new \DateTime("@".$this->data_status);
+                $interval = $second_date->diff($first_date);
+           
+                $hours = $interval->days * 24 + $interval->h;
+                $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
+            }elseif($this->status == 4){
+                $first_date = new \DateTime("now");
+                $second_date = new \DateTime("@".$this->data_status);
+                $interval = $first_date->diff($second_date);
+                $hours = $interval->days * 24 + $interval->h;
                 if($this->status == 4) {
                     $result = Yii::t('app','Open')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
-                } elseif($this->status == 5){
-                    $result = Yii::t('app','Voting')." ".Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
-                }
+                } 
+                
+            }else{
+                $first_date = new \DateTime("now");
+                $second_date = new \DateTime("@".$this->data_status);
+                $interval = $first_date->diff($second_date);
+                $hours = $interval->days * 24 + $interval->h;
+                $result= \Yii::t('app', 'Remained {h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
             }
+           
         }
 
         return $result;

@@ -179,6 +179,7 @@
         "Dislike and press the button" => "Дизлайк и нажал кнопку",
         "Like percentage" => "Процент лайков",
         "Dislike percentage" => "Процент дизлайков",
+        "Questions is closed" => "Вопрос закрыт",
     ];
 
 ?>

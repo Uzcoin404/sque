@@ -28,8 +28,10 @@ class Statusdatepost extends \yii\bootstrap5\Widget
         $second_date = new \DateTime("@".$date_open);
         $interval = $first_date->diff($second_date);
         if($interval->days <= 0){
+            
             return \Yii::t('app', '{h} hours {i} minutes',['h'=>$interval->h,'i'=>$interval->i]);
         } else {
+           
             $hours = $interval->d * 24 + $interval->h;
             return \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);
         }

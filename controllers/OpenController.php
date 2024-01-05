@@ -223,16 +223,12 @@ class OpenController extends Controller
 
     public function actionSetStatusActive(){
 
-        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("-1 day")])->all();
+        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("now")])->all();
 
         foreach($questions as $value){
             if($value->status == 4){
-                        
                 $value->status = 5;
-                if(!$value->date_changes){
-                    $value->data_open = strtotime("now");
-                }
-                $value->data_status = strtotime("now");
+                $value->data_status = strtotime("+1 day");
                 $value->data = strtotime("now");
                 $value->update(0);
             }
@@ -253,7 +249,7 @@ class OpenController extends Controller
 
     public function actionTime(){
 
-        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("-1 day")])->all(); 
+        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("now")])->all(); 
         // если надо сменить статус, то раскомментируйте эту строку, она не работает, так что перенос будет работать независимо от времени. 
         // $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1")])->all();
           echo '<pre>';
@@ -622,7 +618,7 @@ class OpenController extends Controller
 
                 $questions->status = $this->slut;
 
-                $questions->data_status=strtotime('now');
+                $questions->data_status=strtotime('+1 day');
 
                 return $questions->update(0);
                 
