@@ -1015,6 +1015,10 @@ a.btn.form-modal__footer-btn{
             flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
+            @media(max-width:900px){
+                flex-direction: column;
+                gap: 10px;
+            }
             &_logo{
                 background: url(/icons/qa.png);
                 background-size: contain;
