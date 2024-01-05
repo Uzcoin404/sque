@@ -259,4 +259,43 @@ class Questions extends \yii\db\ActiveRecord
     }
     
 
+    public function setDateCreate(){
+        $this->date_create=strtotime("now");
+    }
+
+    public function setDateModeration(){
+        $this->date_moderation=strtotime("now");
+    }
+
+    public function setDateUpdate(){
+        $this->date_update=strtotime("now");
+    }
+
+    public function setDateReturnModeration(){
+        $this->date_return_moderation=strtotime("now");
+    }
+
+    public function setDateOpen($not_now=0){
+        if(!$not_now){
+            $this->date_open=strtotime("now");
+        }else{
+            $this->date_open=$not_now;
+        }
+    }
+    public function setDateVoting(){
+        $this->date_voting=strtotime("now");
+    }
+    public function setDateEndVoting($not_now=0){
+        if(!$not_now){
+            $this->date_end_voting=strtotime("+1 day");
+        }else{
+     
+            $this->date_end_voting=$not_now+(24*60*60);
+ 
+        }
+    }
+    public function setDateClose(){
+        $this->date_close=strtotime("now");
+    }
+
 }

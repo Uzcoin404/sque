@@ -196,12 +196,14 @@ class OpenController extends Controller
 
                 if($model->status == 4){
                     $model->data_open = $model->data;
+                    $model->setDateOpen($model->data);
                 } elseif ($model->status == 5){
                     $model->data_voiting = strtotime("now");
+                    $model->setDateEndVoting($model->data);
                 }
-
+                
                 $date = date("d.m.y", $model->data_status);
-    
+                $model->setDateUpdate();
                 if($model->update(0)){
                     return $this->redirect(
                         '/',
@@ -222,14 +224,16 @@ class OpenController extends Controller
     }
 
     public function actionSetStatusActive(){
-
-        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("now")])->all();
-
+        //$questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("now")])->all();
+        $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","date_open",strtotime("-1 day")])->all();
         foreach($questions as $value){
             if($value->status == 4){
                 $value->status = 5;
                 $value->data_status = strtotime("+1 day");
                 $value->data = strtotime("now");
+                $value->setDateVoting();
+                $value->setDateUpdate();
+                $value->setDateEndVoting();
                 $value->update(0);
             }
         }
@@ -249,11 +253,11 @@ class OpenController extends Controller
 
     public function actionTime(){
 
-        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("now")])->all(); 
+        //$questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("now")])->all(); 
         // если надо сменить статус, то раскомментируйте эту строку, она не работает, так что перенос будет работать независимо от времени. 
         // $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1")])->all();
-          echo '<pre>';
-  
+        // echo '<pre>';
+        $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","date_end_voting",strtotime("now")])->all(); 
         foreach($questions as $value) {
               
             $i = 0;
@@ -270,33 +274,6 @@ class OpenController extends Controller
                 }
             }
        
-          /*  foreach($winner_id as $key => $item) {
-       
-                $dislikeItem = DislikeAnswer::find()->where(['id_user' => $item['id_user'], 'id_questions' => $value['id']])->count();
-                $winner_id[$key]['dislike'] = $dislikeItem;
-            }
-            print_r($winner_id); exit;
-
-            for ($i = 0; $i < count($winner_id); $i++) { 
-                for ($j = 1; $j < count($winner_id); $j++) {
-
-                    if ($winner_id[$i]['number'] == $winner_id[$j]['number']) {
-
-                        echo '|';
-                        print_r($winner_id[$i]['dislike']);
-                        echo '<>';
-                        print_r($winner_id[$j]['dislike']);
-                        echo '|';
-
-                        if ($winner_id[$i]['dislike'] > $winner_id[$j]['dislike']) {
-                            print_r('ok');
-                            $old = $winner_id[$i];
-                            $winner_id[$i] = $winner_id[$j];
-                            $winner_id[$j] = $old;
-                        }
-                    }
-                }
-            }*/
             
             if($value->winner_id){
                 foreach($value->winner_id as $id){
@@ -318,12 +295,16 @@ class OpenController extends Controller
                 }
                 $value->data = strtotime("now");
                 $value->status = 6;
+                $value->setDateUpdate();
+                $value->setDateClose();
                 $value->update(0);
 
                 $i++;
             } else {
                 $value->data = strtotime("now");
                 $value->status = 6;
+                $value->setDateUpdate();
+                $value->setDateClose();
                 $value->update(0);
             }
 
@@ -542,6 +523,8 @@ class OpenController extends Controller
                 $user = Yii::$app->user->identity;
                 $model->text_return=$model->text_return;
                 $model->status=2;
+                $model->setDateUpdate();
+                $model->setDateReturnModeration();
                 if($model->update(0)){
                     
                     return $this->redirect('/questions/moderation');
@@ -568,6 +551,7 @@ class OpenController extends Controller
                 $user = Yii::$app->user->identity;
                 $model->owner_id=$user->id;
                 $model->status=1;
+                $model->setDateUpdate();
                 if($model->save()){
                     return $this->redirect('/questions/myquestions');
                 }
@@ -619,6 +603,10 @@ class OpenController extends Controller
                 $questions->status = $this->slut;
 
                 $questions->data_status=strtotime('+1 day');
+
+                $questions->setDateUpdate();
+                $questions->setDateModeration();
+                $questions->setDateOpen();
 
                 return $questions->update(0);
                 
@@ -687,7 +675,7 @@ class OpenController extends Controller
                 $user_coast->money = $user->money - $model->coast;
             }
             $user_coast->update(0);
-
+            $model->setDateCreate();
             if($model->save()){
                 return $this->redirect(
                     '/questions/myquestionsfilter/'.$model->id.'',
