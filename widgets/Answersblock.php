@@ -5,6 +5,7 @@ namespace app\widgets;
 use Yii;
 use app\models\Questions;
 use app\models\Answers;
+use app\models\DislikeAnswer;
 use app\models\ViewsAnswers;
 use app\models\User;
 
@@ -19,14 +20,23 @@ class Answersblock extends \yii\bootstrap5\Widget
 
         $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
         $question_status = Questions::find()->where(["id"=>$this->question_id])->one();
-
-        if($question_status->status == 5){
+       
+        if($question_status->status >= 5){
             $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
             $answers->orderBy('views_answer.views_answercount ASC');
+            
             $answerlike = ViewsAnswers::find()
             ->select('id_answer,count(id_user) as views_answercount')
             ->groupBy('id_answer');
             $answers->leftJoin(['views_answer'=>$answerlike], 'views_answer.id_answer = answers.id');
+            if($this->orderWinner){
+
+                $answers->orderBy('views_answer.views_answercount ASC, dislikes_answer.views_dislaikanswercount as ASC');
+                $answerlike = DislikeAnswer::find()
+                ->select('id_answer,count(id_user) as views_answercount')
+                ->groupBy('id_answer');
+                $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.id_answer = answers.id');
+            }
             
         }
        

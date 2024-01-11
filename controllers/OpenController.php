@@ -347,7 +347,7 @@ class OpenController extends Controller
         foreach($answer as $value){
 
             $this->winner_procent= LikeAnswers::find()->where(['id_answer'=>$value->id])->count();
-            $this->winner_procent= $this->winner_procent-DislikeAnswer::find()->where(['id_answer'=>$value->id])->count();
+          //  $this->winner_procent= $this->winner_procent-DislikeAnswer::find()->where(['id_answer'=>$value->id])->count();
           
            
 
