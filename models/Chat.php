@@ -39,4 +39,11 @@ class Chat extends \yii\db\ActiveRecord
         return Chat::find()->where(["status"=>1])->count();
     }
 
+    public static function LastData($user_id){
+
+    
+            return Chat::find()->where(["sender_id"=>$user_id])->orderBy(["data"=>SORT_DESC])->one()->data;
+        
+    }
+
 }

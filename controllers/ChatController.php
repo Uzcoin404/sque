@@ -90,22 +90,31 @@ class ChatController extends Controller
         $chat_list = Chat::find()->where(["recipient_id"=>$admin])->all();
 
         $id_user=[];
-
+        $id_user_no_read=[];
         foreach($chat_list as $value){
             if(!isset($id_user[$value->sender_id])){
-                $id_user[$value->sender_id]=Chat::GetNoRead($value->sender_id);
+                if(Chat::GetNoRead($value->sender_id)){
+                    if(!isset($id_user_no_read[$value->sender_id])){
+                        $id_user_no_read[$value->sender_id]=Chat::LastData($value->sender_id);
+                    }
+                }else{
+                    $id_user[$value->sender_id]=Chat::LastData($value->sender_id);
+                }
+                
             }
            
         }
         arsort($id_user);
+        arsort($id_user_no_read);
+        $result = $id_user_no_read+$id_user;
      
        // $result = array_unique($this->id_user);
-        $pages = new Pagination(['totalCount' => count($id_user), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $pages = new Pagination(['totalCount' => count($result), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
         return $this->render(
             '_list',
             [
-                "chats" => $id_user,
+                "chats" => $result,
                 "pages"=>$pages,
             ]
         );
