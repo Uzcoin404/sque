@@ -61,7 +61,7 @@ class CloseController extends Controller
     
     public function actionIndex()
     {
-        $questions = Questions::find()->where(['in', 'status', [6,7]])->orderBy(["data_status"=>SORT_DESC])->all();
+        $questions = Questions::find()->where(['in', 'status', [6,7]])->orderBy(["date_close"=>SORT_DESC])->all();
 
         return $this->render(
             'index',

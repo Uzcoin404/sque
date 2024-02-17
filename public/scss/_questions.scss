@@ -12,7 +12,7 @@
         text-decoration: underline;
     }
 }
-@media(max-width:900px){
+@media(max-width:990px){
     .question_back__btn{
         left: 2em;
         top:-2em;
@@ -413,6 +413,9 @@
         height: 35px;
         margin: 0px 30px;
         cursor: pointer;
+        @media(max-width:990px){
+            background: url(/img/icons/question_white.png);
+        }
     }
     .btn_info_text.index{
         margin: 0px 0px 10px 0px;
@@ -430,6 +433,9 @@
         border-radius: 10px;
         overflow: hidden;
         transition: all 0.3s ease-in-out;
+        @media (max-width: 990px){
+            left:-50vw;
+        }
     }
     .block_btn_info_text_status_text.index{
         left: 35px;
@@ -443,11 +449,9 @@
 
 @media (max-width:640px){
     .block_btn_info_text_status{
-        .btn_info_text{
-            background: url(/img/icons/question_white.png);
-        }
+     
         .block_btn_info_text_status_text{
-            left: -220px;
+            left: -80vw;
         }
     }
 }

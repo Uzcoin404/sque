@@ -50,54 +50,34 @@ class ChatController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $id_recipient = $this->RandomIdAdmin();
+        $id_recipient = $this->RandomIdAdmin($user->id);
 
         $model = new Chat();
-     
-        if(!Chat::find()->all()){
             if ($model->load(Yii::$app->request->post())) {
                 $model->sender_id=$user->id;
                 $model->recipient_id=$id_recipient;
                 $model->data=strtotime('now');
-                $model->status=0;
-                if($model->save()){
-             
-                    return $this->redirect('/chat');
+                $model->status=1;
+                if(strlen($model->text)>1){
+                    if($model->save()){
+                
+                        return $this->redirect('/chat');
+                    }
                 }
+                
             }
        
             return $this->render(
                 'index',
                 [
-                    "chats" => Chat::find()->where(['sender_id'=>$user->id])->all(),
+                    "chats" => Chat::find()->where(['sender_id'=>$user->id])->orWhere(['recipient_id'=>$user->id])->all(),
                     "admin" => $id_recipient,
                     "model" => $model,
                 ]
             );
-        }
+        
     
-        if($this->SearchChat($user->id, $id_recipient)){
-            if ($model->load(Yii::$app->request->post())) {
-                $model->sender_id=$user->id;
-                $model->recipient_id=$id_recipient;
-                $model->data=strtotime('now');
-                $model->status=0;
-                if($model->save()){
-                    header('Location: '.$_SERVER['REQUEST_URI']);
-                }
-            }
-
-            return $this->render(
-                'index',
-                [
-                    "chats" => Chat::find()->all(),
-                    "admin" => $id_recipient,
-                    "model" => $model,
-                ]
-            );
-        } else {
-            header('Location: '.$_SERVER['REQUEST_URI']);
-        }
+       
 
 
 
@@ -105,22 +85,27 @@ class ChatController extends Controller
 
     public function actionList(){
 
-        $admin = User::find()->where(["moderation"=>1])->one();
+        $admin = Yii::$app->user->identity;
 
-        $chat_list = Chat::find()->where(["recipient_id"=>$admin->id])->all();
+        $chat_list = Chat::find()->where(["recipient_id"=>$admin])->all();
 
-
+        $id_user=[];
 
         foreach($chat_list as $value){
-            array_push($this->id_user,$value->sender_id);
+            if(!isset($id_user[$value->sender_id])){
+                $id_user[$value->sender_id]=Chat::GetNoRead($value->sender_id);
+            }
+           
         }
-        $result = array_unique($this->id_user);
-        $pages = new Pagination(['totalCount' => count($result), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        arsort($id_user);
+     
+       // $result = array_unique($this->id_user);
+        $pages = new Pagination(['totalCount' => count($id_user), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
         return $this->render(
             '_list',
             [
-                "chats" => $result,
+                "chats" => $id_user,
                 "pages"=>$pages,
             ]
         );
@@ -132,14 +117,16 @@ class ChatController extends Controller
         $model = new Chat();
 
         $user=Yii::$app->user->identity;
-
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->sender_id=$user->id;
             $model->recipient_id=$slug;
             $model->data=strtotime('now');
             $model->status=0;
-            if($model->save()){
-                header('Location: '.$_SERVER['REQUEST_URI']);
+            if(strlen($model->text)>1){
+                if($model->save()){
+                    header('Location: '.$_SERVER['REQUEST_URI']);
+                }
             }
         }
 
@@ -153,13 +140,19 @@ class ChatController extends Controller
         );
     }
 
-    public function RandomIdAdmin(){
+    public function RandomIdAdmin($id_user=0){
 
         $admin = User::find()->where(["moderation"=>1])->all();
         foreach($admin as $value){
             array_push($this->admin_id, $value->id);
         }
-
+        if($id_user){
+            $user = Chat::find()->where(["sender_id"=>$id_user])->orderBy("id DESC")->one();
+        
+            if(isset($user->recipient_id)){
+                return $user->recipient_id;
+            }
+        }
         $lenght = count($this->admin_id) - 1;
 
         if($lenght < 0){

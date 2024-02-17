@@ -74,7 +74,7 @@ class FavouritesController extends Controller
     }
 
     public function actionCreate(){
-
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $favourites = new Favourites();
 
         $request = Yii::$app->request;
@@ -92,10 +92,14 @@ class FavouritesController extends Controller
                 $favourites->id_user = $user->id;
                 $favourites->data = strtotime('now');
                 
-                $favourites->save(0);
-                
+                if($favourites->save(0)){
+                    return \yii\helpers\Json::encode(
+                        $favourites->id
+                    );
+                }
             }
         }
+      
 
     }
 

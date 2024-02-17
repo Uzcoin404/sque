@@ -1,7 +1,7 @@
 <?php 
 
     use app\models\User;
-
+    use app\models\Chat;
     $this->title = \Yii::t('app', 'Chat'); 
 
     $user=Yii::$app->user->identity;
@@ -28,6 +28,14 @@
                 <?=Yii::$app->controller->renderPartial("_Admin",["chat"=>$chat,"name_sender"=>$name->username]);?>
             <?php
             } 
+            ?>
+            <?PHP 
+                if(Chat::GetNoRead($id)){
+                    $chat->status=0;
+                    $chat->save();
+                }
+
+
             ?>
         <?PHP ENDFOREACH;?>
         <div class="chat__list_controller">

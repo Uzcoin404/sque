@@ -1134,7 +1134,7 @@ content{
             flex: 0 0 260px;
             height: 100%;
             .menu_left__list{
-                padding: 2em 1em;
+                padding: 10px 1em;
                 .menu_left__list_element{
                     ul{
                         list-style: none;
@@ -1151,11 +1151,23 @@ content{
                                 color: #000;
                                 font-size: 20px;
                                 text-decoration: none;
+                                .all_no_read_count{
+                                    color:#c03;
+                                    font-weight: bold;
+                                }
                             }
                             a.active{
                                 color: #12121270;
                                 border-bottom: 1px solid #12121270;
+
                             }
+                        }
+                    }
+                    .menu_mobile__list_element_control_close{
+                        display:none;
+                        @media(max-width:990px){
+                            display:block;
+                            margin: 20px auto;
                         }
                     }
                 }
@@ -1270,7 +1282,7 @@ content{
     }
 }
 
-@media (max-width:900px){
+@media (max-width:990px){
     .form_img .modal-content{
         width: 100% !important;
     }

@@ -64,7 +64,7 @@ function OpenMobileMenu(element){
         z = 1001;
     }
     console.log($(window).width())
-    $(".main_section__left").css("width","70%");
+    $(".main_section__left").css("width","100%");
     $(element).css("display","none");
     $(".menu_mobile__list_element_control_close").css("display","block")
     $(".menu_mobile__list_element_control").css("left",""+left+"px");

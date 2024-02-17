@@ -1,10 +1,12 @@
 
 <?php 
+ use app\models\Chat;
   $key = "jG23zxcmsEKs**aS431";
   $user=Yii::$app->user->identity; 
 ?>
   <div class="menu_left__list">
     <div class="menu_left__list_element">
+      <div class="menu_mobile__list_element_control_close" onclick="CloseMobileMenu(this)"></div>
       <ul>
       <?php
           if($user && $user->read == 1){
@@ -111,6 +113,9 @@
               <li>
                 <a href="/list_chat">
                   <?=\Yii::t('app', 'Chat list');?>
+                  <?PHP IF(Chat::GetAllNoRead()):?>
+                    <span class="all_no_read_count"><?=Chat::GetAllNoRead();?></span>
+                  <?PHP ENDIF;?>
                 </a>
               </li>
               <li>
@@ -130,5 +135,6 @@
           }
         ?>
       </ul>
+    
     </div>
   </div>

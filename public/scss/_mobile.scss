@@ -38,7 +38,7 @@
                 padding: 20px;
                 align-items: center;
                 position: fixed;
-                bottom: 0px;
+                top: 0px;
                 background: #fff;
                 width: 100%;
                 z-index: 999;
@@ -103,11 +103,12 @@
     .questions .questions__list .questions__list__element .questions__list_element_btn a.btn_questions{
         padding: 0px !important;
         width: 100%;
+        min-width:120px;
     }
 }
-@media (max-width:900px){
+@media (max-width:990px){
     .menu{
-        &__list{
+        .menu__list_element_logo{
             display:none;
         }
     }
@@ -129,6 +130,7 @@
                     li{
                         a{
                             color: #fff !important;
+                            font-size:14px!important;
                         }
                     }
                 }

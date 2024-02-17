@@ -155,13 +155,11 @@ class Questions extends \yii\db\ActiveRecord
             }elseif($this->status==6){
                 $date_close = new \DateTime("@".$this->date_close);
                 $date_close->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
-                $interval = $date_now->diff($date_close);
-                $hours = $interval->d * 24 + $interval->h;
-                if($interval->d>1){
-                    $result = Yii::t('app', '{d} days {h} hours',['d'=>$interval->d ,'h'=>$interval->h]);
-                }else{
-                    $result = Yii::t('app', '{h} hours {i} minutes',['h'=>$hours ,'i'=>$interval->i]);
-                }
+        
+                
+                
+                    $result = $date_close->format("d.m.Y");
+                
                 
             }else{
                 $date_open = new \DateTime("@".$this->date_open);
@@ -364,11 +362,15 @@ class Questions extends \yii\db\ActiveRecord
         }
         if(!isset($question->id))return 0;
        
-        $date_close = new \DateTime("@".$question->date_close);
-        $date_close->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+        //$date_close = new \DateTime("@".$question->date_close);
+       // $date_close->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
+
+        $date_end_open = new \DateTime("@".$question->date_end_open);
+        $date_end_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
         $date_open = new \DateTime("@".$question->date_open);
         $date_open->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
-        $interval = $date_close->diff($date_open);
+        $interval = $date_end_open->diff($date_open);
+        //$interval = $date_close->diff($date_open);
         $hours = $interval->d * 24 + $interval->h;
       
         return \Yii::t('app', '{h} hours {i} minutes',['h'=>$hours,'i'=>$interval->i]);

@@ -29,4 +29,14 @@ class Chat extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function GetNoRead($user_id){
+
+        return Chat::find()->where(["sender_id"=>$user_id,"status"=>1])->count();
+    }
+
+    public static function GetAllNoRead(){
+
+        return Chat::find()->where(["status"=>1])->count();
+    }
+
 }
