@@ -83,7 +83,11 @@
               <?PHP if($user->moderation != 1):?>
                 <li>
                   <a href="/chat">
-                    <?=\Yii::t('app', 'Go to the chat');?>
+                  <?=\Yii::t('app', 'Go to the chat');?>
+                    <?PHP IF(Chat::GetUserNoRead()):?>
+                      <span class="all_no_read_count"><?=Chat::GetUserNoRead();?></span>
+                    <?PHP ENDIF;?>
+                    
                   </a>
                 </li>
               <?PHP ENDIF;?>

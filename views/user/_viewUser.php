@@ -54,5 +54,14 @@
             ?>
             <?=$users->moderation?>
         </p>
+        <p class="grand">
+            <?php
+                
+                 Yii::t("app","Citizenship");
+           
+             
+            ?>
+            <?=$users->getGrand()?>
+        </p>
     </div>
 </div>

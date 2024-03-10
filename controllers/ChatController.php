@@ -50,7 +50,7 @@ class ChatController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $id_recipient = $this->RandomIdAdmin($user->id);
+        $id_recipient = $this->RandomIdAdmin($user->id); //получаем случайного админа. Или того с кем общались в последний раз
 
         $model = new Chat();
             if ($model->load(Yii::$app->request->post())) {

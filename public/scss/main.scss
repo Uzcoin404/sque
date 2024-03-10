@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import 'old';
 @import 'content';
 @import 'questions';
@@ -13,7 +14,7 @@
 @import 'user_list';
 @import 'block_return';
 @import 'complaints';
-
+ 
 .menu__list_element_search{
     max-width: 1100px;
     @media(max-width:1650px){
@@ -26,8 +27,8 @@
         max-width:300px;
     } 
 }
-
-.sroll_top{
+ 
+.sroll_top{ 
     a{
         background: url(/icons/up-arrow.png);
         background-size: contain;
@@ -47,7 +48,6 @@
 }
 
 footer{
-    padding-top: 2em;
     .menu_left__list{
         background-color: #aba9a9;
         .menu_left__list_element{
@@ -80,7 +80,6 @@ footer{
         .menu_left__list_element{
             text-align: left;
             margin-top: 40px;
-            margin-bottom: 120px;
         }
     }
 }

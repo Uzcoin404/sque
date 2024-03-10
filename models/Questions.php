@@ -273,7 +273,7 @@ class Questions extends \yii\db\ActiveRecord
         return 0;
     }
     public function getGrand(){
-        return $this->grand;
+        return "/";
     }
 
     public function statusIsClosePay(){

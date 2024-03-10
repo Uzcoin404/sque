@@ -43,6 +43,8 @@ $this->title = 'Регистрация';
                     <p class="int">Минимум одна цифра</p>
                   </div>
                   <?= $form->field($model, 'repassword')->textInput(['autofocus' => true,'placeholder' => 'Пароль'])->passwordInput() ?>
+
+
                   <?= $form->field($model, 'grand')->dropdownList($model->getListGrand())?>
                   <?= $form->field($model, 'verifyCode')->widget(yii\captcha\Captcha::className(),
                       [
@@ -83,3 +85,4 @@ $this->title = 'Регистрация';
                 </div>
 </div>
 </div>
+

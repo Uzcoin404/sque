@@ -1017,7 +1017,7 @@ a.btn.form-modal__footer-btn{
             align-items: center;
             @media(max-width:900px){
                 flex-direction: column;
-                gap: 10px;
+                gap: 30px;
             }
             &_logo{
                 background: url(/icons/qa.png);
@@ -1165,6 +1165,7 @@ content{
                     }
                     .menu_mobile__list_element_control_close{
                         display:none;
+                        cursor: pointer;
                         @media(max-width:990px){
                             display:block;
                             margin: 20px auto;

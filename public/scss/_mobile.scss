@@ -16,6 +16,7 @@
                 z-index: 999;
                 transition: all 0.5s ease-in-out;
                 &_burger, &_close{
+                    cursor: pointer;
                     background-size: contain !important;
                     background-repeat: no-repeat !important;
                     background-position: center !important;

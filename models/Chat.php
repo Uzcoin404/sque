@@ -22,7 +22,7 @@ class Chat extends \yii\db\ActiveRecord
     {
         return [
             [['sender_id','recipient_id'], 'required',],
-            [['sender_id','recipient_id','data','status'],'integer'],
+            [['sender_id','recipient_id','data','status','reading_users'],'integer'],
             [['img'],'string'],
             [['text'],'string'],
             [['sender_id'],'safe']
@@ -32,6 +32,10 @@ class Chat extends \yii\db\ActiveRecord
     public static function GetNoRead($user_id){
 
         return Chat::find()->where(["sender_id"=>$user_id,"status"=>1])->count();
+    }
+    public static function GetUserNoRead(){
+
+        return Chat::find()->where(["recipient_id"=>Yii::$app->user->identity,"reading_users"=>0])->count();
     }
 
     public static function GetAllNoRead(){

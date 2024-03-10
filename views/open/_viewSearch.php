@@ -14,7 +14,7 @@
                 <?php
                     if($question->grand){
                 ?>
-                    <p class="grand"><?=$question->grand?></p>
+                    <p class="grand"><?=$question->getGrand()?></p>
                 <?php
                     }
                 ?>
@@ -95,7 +95,7 @@
                     <?php
                         if($question->grand){
                     ?>
-                        <p class="grand"><?=$question->grand?></p>
+                        <p class="grand"><?=$question->getGrand()?></p>
                     <?php
                         }
                     ?>
