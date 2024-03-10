@@ -62,7 +62,7 @@ class SignupForm extends Model
             'grand'=>''.Yii::t('app','Citizenship').'',
             'image'=>''.Yii::t('app','Image').'',
             'verifyCode'=>''.Yii::t('app','VerifyCode').'',
-            'polit'=>''.Yii::t('app','I accept the terms of the User Agreement and the Privacy Policy').''
+            'polit'=>''.Yii::t('app','I accept the Terms of Use, Privacy Policy and Registered User Disclaimer').''
         ];
     }
     /**

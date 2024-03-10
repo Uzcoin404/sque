@@ -130,9 +130,12 @@ a.dropdown-item,
 }
 
 .group-card.main_page{
-    width: 40%;
+    width: 60%;
     left: 50%;
     transform: translate(-50%, 0px);
+    @media(max-width:991px){
+        width:90%;
+    }
     .read{
         padding: 40px 0px;
         text-align: left;

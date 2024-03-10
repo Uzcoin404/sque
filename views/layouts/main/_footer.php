@@ -5,7 +5,7 @@
                 <ul>
                     <li>
                         <a href="/read">
-                            <?=\Yii::t('app', 'Read rules');?>
+                            <?=\Yii::t('app', 'Terms of Use');?>
                         </a>
                     </li>
                     <li>
