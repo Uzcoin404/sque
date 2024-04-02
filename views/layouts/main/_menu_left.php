@@ -132,6 +132,12 @@
                   <?=\Yii::t('app', 'Price change');?>
                 </a>
               </li>
+              <li>
+                <a href="/docs/index">
+                  <?=\Yii::t('app', 'Document editing');?>
+                  
+                </a>
+              </li>
             <?php
               }
             ?>

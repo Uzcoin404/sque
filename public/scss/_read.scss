@@ -3,6 +3,7 @@
     &__list{
         background: #fff;
         padding: 40px;
+    
         &_button{
             button.accept{
                 border: 1px solid #025bc8;
@@ -27,6 +28,17 @@
                     background: #df3e3e;
                     border: 1px solid #df3e3e;
                 }
+            }
+        }
+        .list{
+            display:grid;
+            gap: 20px;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            @media(max-width:997px){
+                grid-template-columns: 1fr 1fr; 
+            }
+            button{
+                background-color: #c12020;
             }
         }
     }

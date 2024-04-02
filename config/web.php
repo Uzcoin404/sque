@@ -176,6 +176,8 @@ $config = [
                 /* Жалобы */
                 '/like/filterlike'=>'like/filterlike',
                 '/dislike/filterdislike'=>'dislike/filterdislike',
+                '/docs/index'=>'docs/index',
+                '/docs/<slug:\w+>'=>'docs/view',
             ],
         ],
     ],
