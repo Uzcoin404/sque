@@ -35,7 +35,7 @@
                     <?PHP } ?>
                 <?php if($question->status >= 5){ ?>
                     <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
-                    <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                    
                     <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                 <?php } ?>
                 <?php if($question->status == 4){ ?>
@@ -118,7 +118,7 @@
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?php } ?>
                     <?php if($question->status >= 6){ ?>
-                        <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+                        
                         <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                     <?php } ?>
                     <div class="questions__list_element_btn">

@@ -75,14 +75,12 @@ if($status_questions->status == 6){
                 <?php
                 if($status_questions->status <= 5){
                 ?>
-                    <img src="/img/img/status.png" loading="lazy" style="display:none">
+                    <img src="/img/img/status.png" loading="lazy">
                 <?php
-                } else {
+                } 
                 ?>
-                    <!-- <img src="/img/users/<?=$user_img->image?>" loading="lazy"> -->
-                <?php
-                }
-                ?>
+   
+      
                     <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
                         <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                         <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
@@ -148,12 +146,9 @@ if($status_questions->status == 6){
                     ?>
                         <img src="/img/img/status.png" loading="lazy" style="display:none">
                     <?php
-                    } else {
+                    } 
                     ?>
-                        <img src="/img/users/<?=$user_img->image?>" loading="lazy">
-                    <?php
-                    }
-                    ?>
+                      
                         <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
                             <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                             <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
@@ -163,7 +158,7 @@ if($status_questions->status == 6){
                             <p class="action"><?=Yii::t('app','Last activity')?>: <span></span></p>
                         </div>
                     </div>
-                    <p class='title' style="margin-bottom: 0px !important;">
+                    <p class='title' style="margin-bottom: 0px !important; cursor:pointer;" data-id="<?=$answer->id_user?>" onclick="UserInfo(this, 0)">
                         <?=$answer->GetUserName();?>
                     </p>   
                 <?PHP ENDIF; ?>
@@ -209,14 +204,11 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
             <?php
             if($status_questions->status <= 5){
             ?>
-                <img src="/img/img/status.png" loading="lazy" style="display:none">
+                <img src="/img/img/status.png" loading="lazy">
             <?php
-            } else {
+            } 
             ?>
-                <img src="/img/users/<?=$user_img->image?>" loading="lazy">
-            <?php
-            }
-            ?>
+               
                 <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
                     <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                     <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>

@@ -74,6 +74,10 @@
                 }
                 p{
                     margin: 0px !important;
+                    &.username{
+                        font-size: 22px;
+                        font-weight: 400;
+                    }
                 }
                 p.price{
                     position: relative;

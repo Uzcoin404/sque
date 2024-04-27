@@ -81,7 +81,7 @@ class UserController extends Controller
         $user= Yii::$app->user->identity;
         if($user->moderation == 1){
             
-            $users = User::find();
+            $users = User::find()->orderby(["create_at"=>SORT_DESC]);
 
             $pages = new Pagination(['totalCount' => $users->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
     

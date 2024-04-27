@@ -18,7 +18,6 @@
             <div class="complaints__list_element_comp">
                 <p class="title"><?=Yii::t("app","Answer")?></p>
                 <div class="complaints__list_element_comp_avatar">
-                    <div class="complaints__list_element_comp_avatar_img" style="background: url(/img/users/<?=$user->image?>)"></div>
                     <p class="username"><?=$user->username?></p>
                 </div>
                 <p class="text"><?=$answers->text?></p>

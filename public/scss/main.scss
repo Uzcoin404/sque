@@ -91,3 +91,16 @@ footer{
 *{
     font-family:"Roboto"!important;
 }
+
+.btn_restore{
+    display: none!important;
+}
+
+.not_alone{
+    display: flex;
+    align-items: center;
+    .not_alone_href{
+        cursor: pointer;
+        padding:10px;
+    }
+}

@@ -133,6 +133,7 @@
         "Sort"=>"Сортировка",
         "By default"=>"По умолчанию",
         "Top up your balance"=>"Пополните баланс",
+		"Go to the Chat section and contact the Administrator"=>"Перейдите в раздел Чат и свяжитесь с Администратором",
         "Voitings"=>"Проголосовало",
         "Chat list"=>"Список чатов",
         "Here to answer questions"=>"Здесь отвечают на вопросы",
@@ -396,6 +397,9 @@
 	"Afghanistan"=>"Афганистан",
 	"Somalia"=>"Сомали",
 	"Channel Islands"=>"Нормандские острова",
+	"Registration error"=>"Ошибка регистрации",
+	"This login/email is already in the system"=>"Такой логин/email уже есть в системе",
+	"Please check your details and try again"=>"Проверьте данные и попробуйте еще раз",
     ];
 
 ?>

@@ -27,15 +27,9 @@ if($answer->id_user == $status_questions->winner_id){
         ?>
             <img src="/img/img/status.png" loading="lazy">
         <?php
-        } else {
+        } 
         ?>
-            <img src="/img/users/<?=$user_img->image?>" loading="lazy">
-            <p class='title'>
-                <?=$answer->GetUserName();?>
-            </p>
-        <?php
-        }
-        ?>
+        
     </div>
     <p class='text'>
         <?=$answer->GetText();?>

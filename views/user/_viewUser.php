@@ -1,6 +1,6 @@
 <div class="user__list_element">
     <div class="user__list_element_img">
-        <div class="avatar_owner" style="background: url(/img/users/<?=$users->image?>)"></div>
+        
         <p class="title"><?=$users->username?></p>
     </div>
     <div class="user__list_element_text">

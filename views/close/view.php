@@ -39,7 +39,6 @@
                                 <?= \app\widgets\Viewspost::widget(['question_id' => $question->id,"addView"=>1]) ?>
                                 <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                                 <div class="question_post_list_element_button" data-id="<?=$question->owner_id?>" onclick="UserInfo(this, 1)">
-                                    <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
                                     <div class="question_post_list_element_user_info" data-id="<?=$question->owner_id?>">
                                         <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                                         <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
@@ -50,7 +49,7 @@
                                     </div>
                                 </div>
 
-                                <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
+                                <p class="username"  data-id="<?=$question->owner_id?>" onclick="UserInfo(this, 1)"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                         </div>
          
                 </div>

@@ -179,10 +179,13 @@ class RegistrationController extends Controller
                 if (Yii::$app->getUser()->login($user)) {
                     return $this->render("ok");
                 }else{
-                    return $this->render("error",['name'=>"Ошибка регистрации",'message'=>"Такой логин/email уже есть в системе"]);
+                    return $this->render("error",['name'=>\Yii::t('app','Registration error'),'message'=>\Yii::t('app','Please check your details and try again')]);
                 }
             }else{
-                return $this->render("error",['name'=>"Ошибка регистрации",'message'=>"Проверьте данные и попробуйте еще раз."]);
+           
+                    return $this->render("error",['name'=>\Yii::t('app','Registration error'),'message'=>\Yii::t('app','This login/email is already in the system')]);
+               
+                
             }
         }
  

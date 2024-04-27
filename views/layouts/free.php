@@ -39,6 +39,25 @@ RegisterAsset::register($this);
   jQuery(document).ready(function() {
     jQuery('#signupform-grand').select2();
   });
+
+$(function(){
+  
+    var signupform_password=$('#signupform-password');
+    signupform_password.parent().addClass("not_alone");
+    signupform_password.parent().prepend("<div class='not_alone_href' OnClick='ShowPassword(this)'><i class='bi bi-eye-slash'></i></div>");
+    
+  });
+  function ShowPassword(element){
+    var notVisible = $(element).parent().find("#signupform-password").attr("type");
+    if (notVisible === "password") {
+      $(element).find(".bi").attr("class", "bi bi-eye");
+      $(element).parent().find("#signupform-password").attr("type", "text");
+    } else {
+      $(element).find(".bi").attr("class", "bi bi-eye-slash");
+      $(element).parent().find("#signupform-password").attr("type", "password");
+    }
+
+  }
 </script>
 </body>
 

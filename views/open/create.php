@@ -19,7 +19,7 @@ if($user){
 
       </div>
       <?php } else { ?>
-          <p style="margin: 60px 0px 0px 40px"><?=\Yii::t('app','Top up your balance')?></p>
+          <p style="margin: 60px 0px 0px 40px"><?=\Yii::t('app','Go to the Chat section and contact the Administrator')?></p>
       <?php } ?>
   <?php
 } else {

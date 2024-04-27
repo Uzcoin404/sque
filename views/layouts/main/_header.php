@@ -42,7 +42,6 @@
                     ?>
                 </div>
                 <a class="menu__list_element_user_avatar">
-                    <button onclick="FormImgSubmit()" class="menu__list_element_user_avatar_img" style="background:url(/img/users/<?=$user->image?>)"></button>
                     <p><?=$user->username?></p>
                 </a>
               <?php

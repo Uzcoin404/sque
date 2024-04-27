@@ -24,11 +24,9 @@ use kartik\select2\Select2;
              <div class="container form-modal__container">
                         <div class="row form-modal__row">
                             <div class="col-12 col-md-6">
-                                <?PHP IF($model->image):?>
-                                            <div style="background:URL('/img/users/<?=$model->image;?>');" class="preview-image img-responsive"></div> 
-                                        <?PHP ELSE:?>
+                               
                                             <div src="" class="preview-image img-responsive"></div>
-                                        <?PHP ENDIF;?>
+                                       
                             </div>
                             <div class="col-12 col-md-6">
                                 <?= $form->field($model, 'imageFile')->fileInput(['placeholder' => 'Изображение',

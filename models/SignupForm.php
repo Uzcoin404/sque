@@ -104,8 +104,8 @@ class SignupForm extends Model
         $user->image= 'user.png';
         if( $this->SendMail(
             $user->email,
-            "<h3>Добро пожаловать!</h3><br>Ваш аккаунт на сайте SQ был создан.<br>Чтобы подтвердить адрес электронной почты и войти в аккаунт, пожалуйста, перейдите по этой ссылке: <br> <a href='https://que.mrtruman.ru/activate/".$user->accessToken."'>https://que.mrtruman.ru/activate/".$user->accessToken."</a><br><br><h3>Ваш пароль для входа в аккаунт: ".$password."</h3><br>Если у Вас возникли трудности или есть вопросы, связанные с использованием сервиса SQ, пожалуйста, свяжитесь с нами по адресу <a href='mailto:support@mrtruman.ru'>support@mrtruman.ru</a><br>",
-            "Регистрация на сайте SQ"
+            "<h3>Добро пожаловать!</h3><br>Ваш аккаунт на сайте plebscracy.com был создан.<br>Чтобы подтвердить адрес электронной почты и войти в аккаунт, пожалуйста, перейдите по этой ссылке: <br> <a href='https://que.mrtruman.ru/activate/".$user->accessToken."'>https://que.mrtruman.ru/activate/".$user->accessToken."</a><br><br><h3>Ваш пароль для входа в аккаунт: ".$password."</h3><br>Если у Вас возникли трудности или есть вопросы, связанные с использованием сервиса SQ, пожалуйста, свяжитесь с нами по адресу <a href='mailto:support@mrtruman.ru'>support@mrtruman.ru</a><br>",
+            "Регистрация на сайте plebscracy.com"
         )){
             
             if($user->save()){
