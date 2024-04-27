@@ -29,7 +29,7 @@ class DocsController extends Controller
                 'rules' => [
 
                     [ 
-                        'actions' => ['index','add'],
+                        'actions' => ['index','add','view'],
                         'allow' => true,
                         'roles' => ['@'], 
                     ],
@@ -50,7 +50,7 @@ class DocsController extends Controller
        if(!isset($Doc->id)){
             return $this->redirect("/");
        }else{
-            return $this->render("view",["html"=>$Doc->text]);
+            return $this->render("view",["html"=>$Doc->text,'href'=>$slug]);
        }
       
     }

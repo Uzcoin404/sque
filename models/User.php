@@ -205,7 +205,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     public function getGrand(){
-        $grand=Grand::find()->where(["id"=>1])->one();
+        $grand=Grand::find()->where(["id"=>$this->grand])->one();
         return  Yii::t("app",$grand->name);
     }
 }

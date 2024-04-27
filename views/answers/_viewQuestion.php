@@ -39,7 +39,7 @@
                     <?PHP } ?>
 
                 <?PHP IF($question->statusMoreOpen() && $question->status == 6):?>
-                    <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+      
                     <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                 <?PHP ENDIF;?>
 
@@ -80,7 +80,7 @@
                         <?= \app\widgets\Answerspost::widget(['question_id' => $question->id]) ?>
                     <?PHP ENDIF;?>
                     <?PHP IF($question->statusMoreOpen()):?>
-                        <div class="avatar_owner" style="background: url(/img/users/<?= \app\widgets\AnswerImgUser::widget(['question_id' => $question->id]) ?>)"></div>
+    
                         <p class="username"><?= \app\widgets\AnswerNameUser::widget(['question_id' => $question->id]) ?></p>
                     <?PHP ENDIF;?>
                 </div>
