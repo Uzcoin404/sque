@@ -152,7 +152,7 @@
         "Image"=>"Фото",
         "VerifyCode"=>"Капча",
         "Read Privacy Policy"=>"Прочитать Политику конфиденциальности",
-        "Read Disclaimer for Registered Users"=>"Прочитать Отказ от ответственности для зарегистрированных пользователей",
+        "Disclaimer for registered users"=>"Отказ от ответственности для зарегистрированных пользователей",
 		"Disclaimer for Unregistered Users"=>"Отказ от ответственности для незарегистрированных пользователей",
         "I accept the terms of the User Agreement and the Privacy Policy"=>"Я принимаю условия пользовательского соглашения и политики конфиденциальности",
         "I accept the Terms of Use, Privacy Policy and Registered User Disclaimer"=>"Я принимаю Условия Использования, Политику конфиденциальности и Отказ от ответственности для зарегистрированных пользователей",
@@ -398,7 +398,7 @@
 	"Somalia"=>"Сомали",
 	"Channel Islands"=>"Нормандские острова",
 	"Registration error"=>"Ошибка регистрации",
-	"This login/email is already in the system"=>"Такой логин/email уже есть в системе",
+	"Your login or email address is already registered in the system"=>"Логин или адрес электронной почты уже зарегистрированы в системе",
 	"Please check your details and try again"=>"Проверьте данные и попробуйте еще раз",
     ];
 

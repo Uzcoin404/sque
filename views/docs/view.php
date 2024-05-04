@@ -8,7 +8,7 @@
         $this->title = \Yii::t('app', 'Privacy policy');
     }
     if($href=="register"){
-        $this->title = \Yii::t('app', 'Read Disclaimer for Registered Users');
+        $this->title = \Yii::t('app', 'Disclaimer for registered users');
     }
     if($href=="unregister"){
         $this->title = \Yii::t('app', 'Disclaimer for Unregistered Users');

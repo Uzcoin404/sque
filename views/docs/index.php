@@ -41,7 +41,7 @@ use kartik\file\FileInput;
                     <?php ActiveForm::end(); ?>
             </div>
             <div class="list_element">
-                <h4><?=\Yii::t('app', 'Read Disclaimer for Registered Users');?></h4>
+                <h4><?=\Yii::t('app', 'Disclaimer for registered users');?></h4>
                     <?php $form = ActiveForm::begin(
                         [
                             'enableClientValidation' => true

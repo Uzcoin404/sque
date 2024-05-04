@@ -4,17 +4,17 @@
             <div class="menu_left__list_element">
                 <ul>
                     <li>
-                        <a href="/docs/term">
+                        <a href="/docs/term" target="_blank">
                             <?=\Yii::t('app', 'Terms of Use');?>
                         </a>
                     </li>
                     <li>
-                        <a href="/docs/privacy">
+                        <a href="/docs/privacy" target="_blank">
                             <?=\Yii::t('app', 'Privacy policy');?>
                         </a>
                     </li>
                     <li>
-                        <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Read Disclaimer for Registered Users');?></a>
+                        <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Disclaimer for registered users');?></a>
                     </li>
                     <li>
                         <a href="/docs/unregister" target="_blank"><?=\Yii::t('app', 'Disclaimer for Unregistered Users');?></a>
