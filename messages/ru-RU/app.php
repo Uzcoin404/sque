@@ -400,6 +400,10 @@
 	"Registration error"=>"Ошибка регистрации",
 	"Your login or email address is already registered in the system"=>"Логин или адрес электронной почты уже зарегистрированы в системе",
 	"Please check your details and try again"=>"Проверьте данные и попробуйте еще раз",
+	"Register"=>"Зарегистрироваться",
+	"Send new password"=>"Отправить новый пароль",
+	"Accept and continue"=>"Принять и продолжить",
+	"Cookie Policy"=>"Политика использования cookie",
     ];
 
 ?>

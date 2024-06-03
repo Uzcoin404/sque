@@ -11,7 +11,9 @@
   <div class="menu">
     <div class="menu__list">
       <div class="menu__list_element">
-            <a href="/" class="menu__list_element_logo"></a>
+            <a href="/" class="menu__list_element_logo">
+            <img src="/icons/logo.png" class="this_logo" />
+            </a>
             <div class="menu__list_element_search">
               <form action="/questions/search" method="get">
                 <?php if(!empty($_GET['text'])){ ?>

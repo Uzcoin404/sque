@@ -72,6 +72,22 @@ use kartik\file\FileInput;
 
                     <?php ActiveForm::end(); ?>
             </div>
+            <div class="list_element">
+                <h4><?=\Yii::t('app', 'Cookie Policy');?></h4>
+                    <?php $form = ActiveForm::begin(
+                        [
+                            'enableClientValidation' => true
+                        ]
+                    ); ?>
+                        <?= $form->field($Docs, 'file', ['template' => "{label}\n{input}"])->fileInput([]) ?>
+                        <?= $form->field($Docs, 'href', ['template' => "{label}\n{input}"])->hiddenInput(['value'=>'cookie']) ?>
+                        <div class="form-group js-model">
+                        
+                            <?= Html::submitButton(\Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+                        </div>
+
+                    <?php ActiveForm::end(); ?>
+            </div>
         </div>
     </div>
 </div>

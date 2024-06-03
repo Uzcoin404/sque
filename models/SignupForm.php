@@ -171,7 +171,7 @@ class SignupForm extends Model
     }
 
     public function getListGrand(){
-        return ArrayHelper::map(Grand::find()->where(["status"=>1])->all(),'id','name');
+        return ArrayHelper::map(Grand::find()->where(["status"=>1])->orderBy(["name"=>SORT_ASC])->all(),'id','name');
     }
  
 }

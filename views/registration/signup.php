@@ -77,7 +77,7 @@ $this->title = 'Регистрация';
         
                   <div class="form-group">
                   <button type="submit" class="btn form-modal__footer-btn">
-                    <i class="bi bi-arrow-right-square"></i>Зарегистрироваться
+                    <i class="bi bi-arrow-right-square"></i><?=\Yii::t('app', 'Register');?>
                   </button>
                   </div>
 

@@ -19,7 +19,7 @@ $this->title = 'Quary';
                     <div class="col" >
                       <div class="group-card main_page">
                             <div class="group-card__img main-page_logo" >
-                            <img src="/icons/qa.png" class="group-card__img main-page_logo">
+                            <img src="/icons/logo.png" class="group-card__img main-page_logo">
                             </div>
                         <?php $form = ActiveForm::begin([
                                 'id' => 'login-form',

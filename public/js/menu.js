@@ -44,11 +44,12 @@ $(document).ready(function(){
     
      $('.menu_left__list .menu_left__list_element a[href="'+url+'"]').addClass("active");
 
+     initCookie();
 });
 
 function OpenMobileMenu(element){
  
-    $(".main_section__left").css("width","100%");
+    $(".main_section__left").addClass("active");
     $(element).css("display","none");
     $(".menu_mobile__list_element_control_close").css("display","block")
 
@@ -57,7 +58,7 @@ function OpenMobileMenu(element){
 function CloseMobileMenu(element){
     $(element).css("display","none");
     $(".menu_mobile__list_element_control_burger").css("display","block");
-    $(".main_section__left").css("width","0px");
+    $(".main_section__left").removeClass("active");
     $(".menu_mobile__list_element_control").css("left","-55px");
 }
 
@@ -73,3 +74,15 @@ $('#questions-text').on( "click", function(){
 $('#questions-coast').on( "click", function(){
     $('.form-group.js-model p').css('display','block');
 });
+
+
+function initCookie(){
+    if ( $.cookie('cookie_accept') == null ) {
+        $(".disclaimer").addClass("active");
+      }
+}
+
+function AccptCookie(){
+    $(".disclaimer").removeClass("active");
+    $.cookie('cookie_accept', 'value', { expires: 700, path: '/' });
+}

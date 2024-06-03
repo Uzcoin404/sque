@@ -1,3 +1,7 @@
+<?PHP 
+
+    use app\models\Docs;
+?>
 <footer>
 
         <div class="menu_left__list">
@@ -25,6 +29,36 @@
 
 
 </footer>
+
+
+<div class="disclaimer ">
+    <div class="bg"></div>
+    <div class="wrapp">
+        <div class="title">
+            <h2>asdasd</h2>
+        </div>
+        <div class="body">
+            <?= Docs::find()->where(["href"=>"cookie","status"=>1])->one()->text;?>
+            
+        </div>
+        <div class="disclaimer__list_list">
+                <a href="/docs/term" target="_blank">
+                            <?=\Yii::t('app', 'Terms of Use');?>
+                </a>
+                <a href="/docs/privacy" target="_blank">
+                    <?=\Yii::t('app', 'Privacy policy');?>
+                </a>
+                <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Disclaimer for registered users');?></a>
+                <a href="/docs/unregister" target="_blank"><?=\Yii::t('app', 'Disclaimer for Unregistered Users');?></a>
+        </div>
+        <div class="footer">
+                <button type="submit" class="btn form-modal__footer-btn" onClick="AccptCookie();">
+                    <i class="bi bi-arrow-right-square"></i><?=\Yii::t('app', 'Accept and continue');?>
+                  </button>
+        </div>
+    </div>
+</div>
+
 <script>
 function AjxFilter(sorts){
     $.post(
@@ -84,6 +118,5 @@ function AjxFilterDislike(id, sorts){
             console.log('error AjxSetCar');
         });
 }
-
 
 </script>

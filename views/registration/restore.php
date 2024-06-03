@@ -41,7 +41,7 @@ $this->title = 'Регистрация';
 
                   <div class="form-group">
                     <a onclick="Restore('login-form',this);" class="btn form-modal__footer-btn">
-                    <i class="bi bi-arrow-right-square"></i>Отправить новый пароль
+                    <i class="bi bi-arrow-right-square"></i><?=\Yii::t('app', 'Send new password');?>
                     </a>
                    
                   </div>

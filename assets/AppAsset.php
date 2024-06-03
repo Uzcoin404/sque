@@ -32,7 +32,8 @@ class AppAsset extends AssetBundle
         "/js/read.js",
         "/js/validregister.js",
         "/js/search.js",
-        "/js/back.js"
+        "/js/back.js",
+        "/js/jquery.cookie.js"
     ];
 
     public $depends = [
