@@ -183,7 +183,7 @@ class RegistrationController extends Controller
                 }
             }else{
            
-                    return $this->render("error",['name'=>\Yii::t('app','Registration error'),'message'=>\Yii::t('app','Your login or email address is already registered in the system')]);
+                    return $this->render("error",['name'=>\Yii::t('app','Registration error'),'message'=>\Yii::t('app','Your login or email address is already registered in the system')."\n\t".\Yii::t('app','Check the details and form again.')]);
                
                 
             }

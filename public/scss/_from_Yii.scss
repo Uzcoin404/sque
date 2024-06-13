@@ -8,7 +8,7 @@
             .btn{
                 color: #fff;
                 padding: 15px 25px;
-                background: #3f3fd9;
+                background: #116edd;
                 border-radius: 10px;
                 text-decoration: none;
                 font-size: 14px;
@@ -47,15 +47,15 @@
             border-radius: 20px;
         }
         button#refresh-captcha{
-            background: #3f3fd9;
-            border: 1px #3f3fd9;
+            background: #116edd;
+            border: 1px #116edd;
             border-radius: 15px;
             color: #fff;
             transition: all 0.3s ease-in-out;
             padding: 10px 25px;
             &:hover{
                 background: #fff;
-                color: #3f3fd9;
+                color: #116edd;
             }
         }
     }

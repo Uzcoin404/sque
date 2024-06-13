@@ -19,14 +19,14 @@
                 text-decoration: none;
                 transition: all 0.3s ease-in-out;
                 &:hover{
-                    background: #3f3fd9;
+                    background: #116edd;
                     color: #fff;
                 }
             }
         }
         li.active{
             a{
-                background: #3f3fd9 !important;
+                background: #116edd !important;
                 color: #fff;
             }
         }

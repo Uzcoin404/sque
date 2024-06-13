@@ -60,7 +60,7 @@ class DocsController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstance($model, 'file');
             Docs::updateAll(['status' => 0],['href'=>$model->href]);
-            $model->upload();
+            $model->upload($model->href);
             $model->user= Yii::$app->user->identity->id;
             $model->data=strtotime('now');
             $model->status=1;

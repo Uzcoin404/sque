@@ -2,7 +2,7 @@
     .questions__filter{
         padding: 2em;
         border-radius: 10px;
-        background: #fff;
+       
         .questions__filter_form__list{
             display: flex;
             flex-wrap: nowrap;
@@ -34,7 +34,7 @@
                     cursor:pointer;
                     color: #fff;
                     padding: 5px 25px;
-                    background: #3f3fd9;
+                    background: #116edd;
                     border-radius: 10px;
                     text-decoration: none;
                     transition: all .5s ease-in-out;

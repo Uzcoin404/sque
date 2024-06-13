@@ -8,7 +8,7 @@
                 height: 200px;
                 width: 100px;
                 top: 35%;
-                background: #3f3fd9;
+                background: #116edd;
                 border-radius: 221px;
                 display: flex;
                 align-items: center;
@@ -124,7 +124,11 @@
         overflow: hidden;
         top:0px;
         transition: all 0.5s ease-in-out;
-        background: #3f3fd9 !important;
+        background: #116edd !important;
+        &.active{
+            width:100%;
+            overflow: unset;
+        }
         .menu_left__list{
             &_element{
                 ul{

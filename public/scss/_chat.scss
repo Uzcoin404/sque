@@ -57,12 +57,12 @@
                         border:none !important;
                         color: #fff;
                         padding: 15px 25px;
-                        background: #3f3fd9;
+                        background: #116edd;
                         border-radius: 10px;
                         text-decoration: none;
                         transition: all .5s ease-in-out;
                         &:hover{
-                            background: #3f3fd9b6;
+                            background: #116eddb6;
                         }
                     }
                 }
@@ -97,14 +97,14 @@
                 text-decoration: none;
                 transition: all 0.3s ease-in-out;
                 &:hover{
-                    background: #3f3fd9;
+                    background: #116edd;
                     color: #fff;
                 }
             }
         }
         li.active{
             a{
-                background: #3f3fd9 !important;
+                background: #116edd !important;
                 color: #fff;
             }
         }
@@ -156,12 +156,12 @@
             a{
                 color: #fff;
                 padding: 15px 25px;
-                background: #3f3fd9;
+                background: #116edd;
                 border-radius: 10px;
                 text-decoration: none;
                 transition: all .5s ease-in-out;
                 &:hover{
-                    background: #3f3fd9b6;
+                    background: #116eddb6;
                 }
             }
         }

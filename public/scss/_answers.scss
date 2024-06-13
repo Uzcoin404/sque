@@ -30,11 +30,11 @@
             }
             &.active{
                 &[data-sort="ASC"]{ 
-                    color: #3995b6;
+                    color: #116edd;
                    
                 }
                 &[data-sort="DESC"]{
-                    color: #3995b6;
+                    color: #116edd;
                    
                 }
             }
@@ -147,7 +147,7 @@
                     .ansers_post_list_element_user_info.active{
                         width: 300px;
                         padding: 20px;
-                        border: 1px solid #3995b6;
+                        border: 1px solid #116edd;
                         &::before{
                             content: '';
                             position: absolute;
@@ -240,7 +240,7 @@
                     .ansers_post_list_element_user_info.active{
                         width: 300px;
                         padding: 20px;
-                        border: 1px solid #3995b6;
+                        border: 1px solid #116edd;
                         &::before{
                             content: '';
                             position: absolute;
@@ -391,7 +391,7 @@
     .question_post_list_element_user_info.active{
         width: 300px;
         padding: 20px;
-        border: 1px solid #3995b6;
+        border: 1px solid #116edd;
     }
 }
 
@@ -478,7 +478,7 @@
             .ansers_post_list_element_user_info.active{
                 width: 300px;
                 padding: 20px;
-                border: 1px solid #3995b6;
+                border: 1px solid #116edd;
                 &::before{
                     content: '';
                     position: absolute;
@@ -571,7 +571,7 @@
             .ansers_post_list_element_user_info.active{
                 width: 300px;
                 padding: 20px;
-                border: 1px solid #3995b6;
+                border: 1px solid #116edd;
                 &::before{
                     content: '';
                     position: absolute;

@@ -29,11 +29,14 @@ class Docs extends \yii\db\ActiveRecord
         ];
     }
 
-    public function upload(){
-        $wordDocument = IOFactory::load($this->file->tempName);
-        $htmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($wordDocument , 'HTML');
+    public function upload($href){
+        if($href!="popup_title"){
+            $wordDocument = IOFactory::load($this->file->tempName);
+            $htmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($wordDocument , 'HTML');
+            $this->text= $htmlWriter->getContent();
+        }
         //$htmlWriter->save('example.html');
-        $this->text= $htmlWriter->getContent();
+       
     }
 
 }

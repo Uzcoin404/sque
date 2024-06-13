@@ -23,6 +23,9 @@
                     <li>
                         <a href="/docs/unregister" target="_blank"><?=\Yii::t('app', 'Disclaimer for Unregistered Users');?></a>
                     </li>
+                    <li>
+                        <a href="/docs/cookie" target="_blank"><?=\Yii::t('app', 'Cookie Policy');?></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -35,10 +38,17 @@
     <div class="bg"></div>
     <div class="wrapp">
         <div class="title">
-            <h2>asdasd</h2>
+            <?PHP $title=Docs::find()->where(["href"=>"popup_title","status"=>1])->one();?>
+            <?PHP IF(isset($title->id)):?>
+            <h2><?=$title->text;?></h2>
+            <?PHP ENDIF;?>
         </div>
         <div class="body">
-            <?= Docs::find()->where(["href"=>"cookie","status"=>1])->one()->text;?>
+            <?PHP $text=Docs::find()->where(["href"=>"popup_text","status"=>1])->one();?>
+
+            <?PHP IF(isset($text->id)):?>
+                <?=$text->text;?>
+            <?PHP ENDIF;?>
             
         </div>
         <div class="disclaimer__list_list">
@@ -48,8 +58,10 @@
                 <a href="/docs/privacy" target="_blank">
                     <?=\Yii::t('app', 'Privacy policy');?>
                 </a>
-                <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Disclaimer for registered users');?></a>
+       
                 <a href="/docs/unregister" target="_blank"><?=\Yii::t('app', 'Disclaimer for Unregistered Users');?></a>
+                <a href="/docs/cookie" target="_blank"><?=\Yii::t('app', 'Cookie Policy');?></a>
+             
         </div>
         <div class="footer">
                 <button type="submit" class="btn form-modal__footer-btn" onClick="AccptCookie();">

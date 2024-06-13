@@ -72,7 +72,7 @@ $this->title = 'Регистрация';
                     <a href="/docs/privacy" target="_blank"><?=\Yii::t('app', 'Read Privacy Policy');?></a>
                   </div>
                   <div class="read">
-                    <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Disclaimer for registered users');?></a>
+                    <a href="/docs/register" target="_blank"><?=\Yii::t('app', 'Read disclaimer for registered users');?></a>
                   </div>
         
                   <div class="form-group">

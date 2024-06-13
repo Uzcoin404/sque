@@ -95,7 +95,7 @@
                     }
                 }
                 p.closed_text{
-                    color: #3995b6;
+                    color: #116edd;
                     position: relative;
                     padding-left: 25px;
                     &::before{
@@ -127,7 +127,7 @@
                     }
                 }
                 p.open_text{
-                    color: #3995b6;
+                    color: #116edd;
                     position: relative;
                     padding-left: 25px;
                     &::before{
@@ -143,7 +143,7 @@
                     }
                 }
                 p.voting_text{
-                    color: #3995b6;
+                    color: #116edd;
                     position: relative;
                     padding-left: 25px;
                     &::before{
@@ -159,7 +159,7 @@
                     }
                 }
                 p.status_time{
-                    color: #3995b6;
+                    color: #116edd;
                     position: relative;
                     padding-left: 25px;
                     &::before{
@@ -175,7 +175,7 @@
                     }
                 }
                 p.moderation_text{
-                    color: #3995b6;
+                    color: #116edd;
                     position: relative;
                     padding-left: 25px;
                     &::before{
@@ -319,7 +319,7 @@
                 a.btn_questions{
                     color: #fff;
                     padding: 15px 25px;
-                    background: #3f3fd9;
+                    background: #116edd;
                     border-radius: 10px;
                     text-decoration: none;
                     transition: all 0.5s ease-in-out;
@@ -330,7 +330,7 @@
                 a.btn_answers{
                     color: #fff;
                     padding: 15px 25px;
-                    background: #3f3fd9;
+                    background: #116edd;
                     border-radius: 10px;
                     text-decoration: none;
                     transition: all 0.5s ease-in-out;
@@ -340,7 +340,7 @@
                 }
                 a.btn_answers.login_user{
                     pointer-events: none;
-                    background: #3f3fd938;
+                    background: #116edd38;
                 }
                 .status_time{
                     font-size: 20px;
@@ -436,8 +436,12 @@
         border-radius: 10px;
         overflow: hidden;
         transition: all 0.3s ease-in-out;
-        @media (max-width: 990px){
-            left:-50vw;
+        @media (max-width: 550px){
+            left:-30vw;
+        }
+        @media (max-width: 400px){
+            left:-60vw;
+          
         }
     }
     .block_btn_info_text_status_text.index{

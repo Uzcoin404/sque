@@ -53,12 +53,18 @@ footer{
         .menu_left__list_element{
             text-align: center;
             padding: 20px;
+            
             ul{
                 list-style: none;
                 padding: 0px;
                 display: flex;
                 gap:20px;
                 margin: 0px;
+                @media(max-width:997px){
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
                 li{
                     a{
                         text-decoration: underline;
@@ -143,6 +149,9 @@ footer{
                 gap: 10px;
                flex-direction: column;
              
+            }
+            .body{
+                text-align: justify;
             }
             .footer{
                 button{
