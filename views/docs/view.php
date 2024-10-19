@@ -13,6 +13,9 @@
     if($href=="unregister"){
         $this->title = \Yii::t('app', 'Disclaimer for Unregistered Users');
     }
+    if($href=="cookie"){
+        $this->title = \Yii::t('app', 'Cookie Policy');
+    }
 ?>
 <div class='read'>
     <div class='read__list'>
