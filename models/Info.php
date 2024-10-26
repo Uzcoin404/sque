@@ -31,7 +31,7 @@ class Info extends \yii\db\ActiveRecord
         return [
             'title' => \Yii::t('app', 'Title of question'),
             'text' => \Yii::t('app', 'Text of question'),
-            'coast' => \Yii::t('app', 'Coast of question'),
+            'cost' => \Yii::t('app', 'cost of question'),
             'status' => \Yii::t('app', 'Status of question'),
             'data' => \Yii::t('app', 'Data created of question'),
             'owner_id' => \Yii::t('app', 'Owner of question'),

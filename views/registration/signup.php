@@ -45,7 +45,7 @@ $this->title = 'Регистрация';
                   <?= $form->field($model, 'repassword')->textInput(['autofocus' => true,'placeholder' => 'Пароль'])->passwordInput() ?>
 
 
-                  <?= $form->field($model, 'grand')->dropdownList($model->getListGrand())?>
+                  <?= $form->field($model, 'grand')->dropdownList($model->getListGrand(), ['prompt' => 'Not Indicated'])?>
                   <?= $form->field($model, 'verifyCode')->widget(yii\captcha\Captcha::className(),
                       [
                           'captchaAction' => '/registration/captcha',

@@ -13,7 +13,7 @@ $this->title = \Yii::t('app', 'Change question');
         'model' => $model,
         'title' => $questions->title,
         'text' => $questions->text,
-        'price' => $questions->coast,
+        'price' => $questions->cost,
     ]) ?>
 
 </div>

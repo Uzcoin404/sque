@@ -154,12 +154,12 @@ class CloseController extends Controller
                     return $this->redirect(['/questions/close']);
                 }
                 $sort= $_GET['sorts'];
-                if($sort=="coast-ASC"){
+                if($sort=="cost-ASC"){
                     echo 1;
-                    $questions->orderBy(['coast'=>SORT_DESC]);
+                    $questions->orderBy(['cost'=>SORT_DESC]);
                 }
-                else if ($sort=="coast-DESC"){
-                    $questions->orderBy(['coast'=>SORT_ASC]);
+                else if ($sort=="cost-DESC"){
+                    $questions->orderBy(['cost'=>SORT_ASC]);
                 }
                 else if($sort=="view-ASC"){
                     $questions->orderBy('views.viewcount ASC');

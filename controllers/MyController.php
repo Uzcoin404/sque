@@ -102,7 +102,7 @@ class MyController extends Controller
 	
 	public function actionFilter($slug){
 
-        $questions = Questions::find()->where(["id"=>$slug])->orderBy(["coast"=>SORT_DESC])->all();
+        $questions = Questions::find()->where(["id"=>$slug])->orderBy(["cost"=>SORT_DESC])->all();
 
         return $this->render(
             'filter',

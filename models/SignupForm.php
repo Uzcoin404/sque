@@ -171,7 +171,11 @@ class SignupForm extends Model
     }
 
     public function getListGrand(){
-        return ArrayHelper::map(Grand::find()->where(["status"=>1])->orderBy(["name"=>SORT_ASC])->all(),'id','name');
+        $grandArray = ArrayHelper::map(Grand::find()->where(["status" => 1])->orderBy(["name" => SORT_ASC])->all(), 'id', 'name');
+
+        // Add "No Citizenship" option at the beginning of the array
+        $grandArray = ['0' => 'No Citizenship'] + $grandArray;
+
+        return $grandArray;
     }
- 
 }

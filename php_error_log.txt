@@ -1,0 +1,5 @@
+[25-Oct-2024 19:24:28 Europe/Berlin] PHP Warning:  This is a test error in D:\code\xampp\htdocs\sque\basic\commands\QuestionsTransferController.php on line 11
+[25-Oct-2024 19:24:28 Europe/Berlin] PHP Fatal error:  Uncaught Error: Class "yii\console\Controller" not found in D:\code\xampp\htdocs\sque\basic\commands\QuestionsTransferController.php:28
+Stack trace:
+#0 {main}
+  thrown in D:\code\xampp\htdocs\sque\basic\commands\QuestionsTransferController.php on line 28

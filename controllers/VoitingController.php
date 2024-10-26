@@ -86,12 +86,10 @@ class VoitingController extends Controller
         
         foreach($id_question as $value){
 
-            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["data_status"=>SORT_DESC])->one();
             array_push($questions, $question);
             
         }
-
-        $count = count($questions);
+        $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->andWhere(['<=', 'date_create', time() - 24 * 3600])->orderBy(["data_status"=>SORT_DESC])->one();
 
         $provider = new ArrayDataProvider([
             'allModels' => $questions,
@@ -134,11 +132,30 @@ class VoitingController extends Controller
     }
 
     public function actionVoting(){
-        $questions = Questions::find()->where(["status"=>[5]])->orderBy(["coast"=>SORT_DESC]);
+        // $questions = Questions::find()->where(["status"=>[5]])->orderBy(["cost"=>SORT_DESC]);
 
-        $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        // $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
-        $questions = $questions->offset($pages->offset)
+        // $questions = $questions->offset($pages->offset)
+        // ->limit($pages->limit)
+        // ->all();
+
+        // return $this->render(
+        //     'voting',
+        //     [
+        //         "questions"=>$questions,
+        //         "pages"=>$pages,
+        //     ]
+        // );
+
+        $questions = Questions::find()
+        ->where(["status"=>[5]])
+        ->orderBy(["cost"=>SORT_DESC]);
+
+        $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 10, 'forcePageParam' => false, 'pageSizeParam' => false]);
+
+        $questions = $questions
+        ->offset($pages->offset)
         ->limit($pages->limit)
         ->all();
 

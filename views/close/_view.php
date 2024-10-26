@@ -21,7 +21,7 @@
                 <?php
                     }
                 ?>
-                <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
            
                     <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
                     <?= \app\widgets\Likeanwsers::widget(['question_id' => $question->id]) ?>
@@ -55,7 +55,7 @@
                     <?php
                         }
                     ?>
-                    <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                    <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                     <p class="status <?=$question->getStatusClassName()?>"><?=$question->getStatusName()?></p>
  
                         <?= \app\widgets\Likeanwsers::widget(['question_id' => $question->id]) ?>

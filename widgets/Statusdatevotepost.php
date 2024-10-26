@@ -17,8 +17,10 @@ class Statusdatevotepost extends \yii\bootstrap5\Widget
         parent::init();
     }
     public function run()
-    {   
-        return '<p class="voting_text">'.Yii::t('app','Was on voiting').' : '.Html::encode(Questions::WasVoting($this->question_id)).'</p>';
+    {
+        if ($this->question_id == null) {
+            return '<p class="voting_text">'.Yii::t('app','Was on voiting').' : '.Html::encode(Questions::WasVoting($this->question_id)).'</p>';
+        }   
     }
 
 

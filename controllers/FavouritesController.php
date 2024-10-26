@@ -54,7 +54,7 @@ class FavouritesController extends Controller
 
         $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
         $queryLike = Favourites::find();
-        $questions->leftJoin(['favourites'=>$queryLike], 'favourites.id_question = questions.id')->where(['id_user'=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $questions->leftJoin(['favourites'=>$queryLike], 'favourites.id_question = questions.id')->where(['id_user'=>$user->id])->orderBy(["cost"=>SORT_DESC]);
         $result = $questions;
 
         $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 6, 'forcePageParam' => false, 'pageSizeParam' => false]);

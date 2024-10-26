@@ -17,7 +17,7 @@
                 <?php
                     }
                 ?>
-                <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                 <?php
                     if($question->status < 6){
                 ?>
@@ -75,7 +75,7 @@
                     <?php
                         }
                     ?>
-                    <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                    <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                     <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                     <?php if($question->status == 6){?>
                         <?= \app\widgets\Statusdatepost::widget(['question_id' => $question->id]) ?>

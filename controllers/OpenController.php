@@ -68,7 +68,9 @@ class OpenController extends Controller
     
     public function actionIndex()
     {
-        $questions = Questions::find()->where(["status"=>[4]])->orderBy(["data_status"=>SORT_DESC]);
+        $questions = Questions::find()
+        ->where(["status"=>[4]])
+        ->orderBy(["created_at"=>SORT_DESC]);
 
         $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
@@ -171,7 +173,7 @@ class OpenController extends Controller
                 ['like','text',$text],
                 ['like','title',$text]
             ]
-        )->orderBy(["coast"=>SORT_DESC])->all();
+        )->orderBy(["cost"=>SORT_DESC])->all();
   
         return $this->render(
             '_search',
@@ -211,7 +213,7 @@ class OpenController extends Controller
                     );
                 }
                 
-                $model->data_status = $model->data;
+                $model->created_at = $model->data;
                 $model->date_changes = 1;
 
                 if($model->status == 4){
@@ -222,7 +224,7 @@ class OpenController extends Controller
                     $model->setDateEndVoting($model->data);
                 }
                 
-                $date = date("d.m.y", $model->data_status);
+                $date = date("d.m.y", $model->created_at);
                 $model->setDateUpdate();
                 if($model->update(0)){
                     return $this->redirect(
@@ -244,12 +246,12 @@ class OpenController extends Controller
     }
 
     public function actionSetStatusActive(){
-        //$questions = Questions::find()->where(['status' => 4])->andWhere(["<=","data_status",strtotime("now")])->all();
+        //$questions = Questions::find()->where(['status' => 4])->andWhere(["<=","created_at",strtotime("now")])->all();
         $questions = Questions::find()->where(['status' => 4])->andWhere(["<=","date_end_open",strtotime("now")])->all();
         foreach($questions as $value){
             if($value->status == 4){
                 $value->status = 5;
-                $value->data_status = strtotime("+1 day");
+                $value->created_at = strtotime("+1 day");
                 $value->data = strtotime("now");
                 $value->setDateVoting();
                 $value->setDateUpdate();
@@ -273,7 +275,7 @@ class OpenController extends Controller
 
     public function actionTime(){
 
-        //$questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data_status",strtotime("now")])->all(); 
+        //$questions = Questions::find()->where(['status' => 5])->andWhere(["<=","created_at",strtotime("now")])->all(); 
         // если надо сменить статус, то раскомментируйте эту строку, она не работает, так что перенос будет работать независимо от времени. 
         // $questions = Questions::find()->where(['status' => 5])->andWhere(["<=","data",strtotime("-1")])->all();
         // echo '<pre>';
@@ -302,9 +304,9 @@ class OpenController extends Controller
 
                     if($users){
                         if(!$users->money){
-                            $users->money = $value->coast/$winners_number + 0;
+                            $users->money = $value->cost/$winners_number + 0;
                         } else {
-                            $users->money = $value->coast/$winners_number + $users->money;
+                            $users->money = $value->cost/$winners_number + $users->money;
                         }
                         $users->update(0);
                     } 
@@ -404,7 +406,7 @@ class OpenController extends Controller
         
         $user=Yii::$app->user->identity;
 
-        $questions = Questions::find()->where(["owner_id"=>$user->id])->orderBy(["coast"=>SORT_DESC]);
+        $questions = Questions::find()->where(["owner_id"=>$user->id])->orderBy(["cost"=>SORT_DESC]);
 
         $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
@@ -423,7 +425,7 @@ class OpenController extends Controller
 
     public function actionMyquestionsfilter($slug){
 
-        $questions = Questions::find()->where(["id"=>$slug])->orderBy(["coast"=>SORT_DESC])->all();
+        $questions = Questions::find()->where(["id"=>$slug])->orderBy(["cost"=>SORT_DESC])->all();
 
         return $this->render(
             '_myquestionfilter',
@@ -477,7 +479,7 @@ class OpenController extends Controller
         
         foreach($id_question as $value){
 
-            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["coast"=>SORT_DESC])->one();
+            $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->orderBy(["cost"=>SORT_DESC])->one();
             array_push($questions, $question);
             
         }
@@ -511,7 +513,7 @@ class OpenController extends Controller
         $user=Yii::$app->user->identity;
         if($user->moderation == 1 && $user->key == "jG23zxcmsEKs**aS431"){
 
-            $questions = Questions::find()->where(["status"=>[1,2,3]])->orderBy(["coast"=>SORT_DESC]);
+            $questions = Questions::find()->where(["status"=>[1,2,3]])->orderBy(["cost"=>SORT_DESC]);
 
             $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 4, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
@@ -622,7 +624,7 @@ class OpenController extends Controller
 
                 $questions->status = $this->slut;
 
-                $questions->data_status=strtotime('+1 day');
+                $questions->created_at=strtotime('+1 day');
 
                 $questions->setDateUpdate();
                 $questions->setDateModeration();
@@ -686,15 +688,15 @@ class OpenController extends Controller
             $model->data_start=strtotime('now');
             $model->status=1;
             $model->grand= \Yii::t('app','Russian');
-            $model->data_status=strtotime('now');
+            $model->created_at=strtotime('now');
             $model->text = strip_tags($model->text);
-            $user_coast = User::find()->where(['id'=>$user->id])->one();
+            $user_cost = User::find()->where(['id'=>$user->id])->one();
             if(!$user->money){
                 return $this->redirect('/questions/myquestions');
             } else {
-                $user_coast->money = $user->money - $model->coast;
+                $user_cost->money = $user->money - $model->cost;
             }
-            $user_coast->update(0);
+            $user_cost->update(0);
             $model->setDateCreate();
             if($model->save()){
                 return $this->redirect(

@@ -17,8 +17,10 @@ class Statusdatepost extends \yii\bootstrap5\Widget
         parent::init();
     }
     public function run()
-    {   
-        return '<p class="open_text">'.Yii::t('app','Was opened').' : ' .Html::encode(Questions::WasOpened($this->question_id)).'</p>';
+    {
+        if ($this->question_id == null) {
+            return '<p class="open_text">'.Yii::t('app','Was opened').' : ' .Html::encode(Questions::WasOpened($this->question_id)).'</p>';
+        }   
     }
 
    

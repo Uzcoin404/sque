@@ -30,7 +30,7 @@
                             <?php
                                 }
                             ?>
-                            <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                            <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                             <?php
                                 if($question->status < 6){
                             ?>

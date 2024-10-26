@@ -2,8 +2,6 @@
 $(document).ready(function(){
     
     let url = window.location.pathname;
-
-    console.log(url);
     
     $menu = $('.menu_left__list .menu_left__list_element a').removeClass("active");
     if (url.toLowerCase().indexOf("/questions/close") >= 0){
@@ -71,7 +69,7 @@ $('#questions-text').on( "click", function(){
     $('.form-group.js-model p').css('display','block');
 });
 
-$('#questions-coast').on( "click", function(){
+$('#questions-cost').on( "click", function(){
     $('.form-group.js-model p').css('display','block');
 });
 

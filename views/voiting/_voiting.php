@@ -16,11 +16,11 @@
                 <?php
                     }
                 ?>
-                <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                 <?php
                     if($question->status > 7 || $question->status < 7){
                 ?>
-                    <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
+                    <p class="status <?=$question->getStatusClassName()?>"> <?=$question->getStatusName()?></p>
                 <?php
                     }
                 ?>
@@ -56,9 +56,9 @@
                     <?php
                         }
                     ?>
-                    <?php if($user->moderation == 1){ ?>
+                    <!-- <?php if($user->moderation == 1){ ?>
                         <a href="/questions/dateupdate/<?=$question->id?>" class="btn_questions"><?=Yii::t("app","Date update")?></a>
-                    <?php } ?>
+                    <?php } ?> -->
                 </div>
             </div>
 
@@ -78,7 +78,7 @@
                     <?php
                         }
                     ?>
-                    <p class="price"><?= number_format($question->coast, 0, ' ', ' ') ?></p>
+                    <p class="price"><?= number_format($question->cost, 0, ' ', ' ') ?></p>
                     <?PHP if($question->status < 6){ ?>
                         <p class="status <?=$question->getStatusClassName()?>"><?=$question->getDateStatus()?> / <?=$question->getStatusName()?></p>
                     <?PHP } ?>
