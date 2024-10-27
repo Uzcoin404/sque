@@ -16,14 +16,14 @@ class DislikeAnswer extends \yii\db\ActiveRecord
    
     public static function tableName()
     {
-        return 'dislike_answer';
+        return 'dislikes';
     }
     public function rules()
     {
         return [
             [['id_answer'], 'required',],
             [['data','id_answer'],'integer'],
-            [['id_user'],'safe']
+            [['user_id'],'safe']
         ];
     }
 

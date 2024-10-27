@@ -21,10 +21,10 @@ class Answers extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_questions','id_user','text'], 'required'],
+            [['question_id','user_id','text'], 'required'],
             [['text'],'string'],
-            [['id_questions','data','number'],'integer'],
-            [['id_user'], 'safe'],
+            [['question_id','created_at','number'],'integer'],
+            [['user_id'], 'safe'],
         ];
     }
 
@@ -36,7 +36,7 @@ class Answers extends \yii\db\ActiveRecord
     }
 
     public function GetUserName(){
-        return User::find()->where(["id"=>$this->id_user])->one()->username;
+        return User::find()->where(["id"=>$this->user_id])->one()->username;
 
     }
 
@@ -46,11 +46,11 @@ class Answers extends \yii\db\ActiveRecord
     }
 
     public function getLiks(){
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM like_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM likes WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
         return $sql['count'];
     }
     public function getDisliks(){
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislike_answer WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislikes WHERE id_answer=:ID_ANSWER",["ID_ANSWER"=>$this->id])->queryOne();
         return $sql['count'];
     }
     public function getView(){

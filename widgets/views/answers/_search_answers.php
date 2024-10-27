@@ -1,7 +1,7 @@
 <?php 
     use app\models\Questions;
     $users=Yii::$app->user->identity; 
-    $questions = Questions::find()->where(['id'=>$id_questions])->one();
+    $questions = Questions::find()->where(['id'=>$question_id])->one();
 ?>
 <div class="seacrh">
     <div class="seacrh__list">

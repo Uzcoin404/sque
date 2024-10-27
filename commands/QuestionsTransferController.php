@@ -16,7 +16,7 @@ $config = require('D:\code\xampp\htdocs\sque\basic\config\console.php'); // Use 
 
 // Set error reporting and log file
 error_reporting(E_ALL);
-$errorLogPath = 'D:\code\xampp\htdocs\sque\basic\config\commands\error_log.txt';
+$errorLogPath = 'D:\code\xampp\htdocs\sque\basic\commands\error_log.txt';
 
 if (!file_exists($errorLogPath)) {
   file_put_contents($errorLogPath, "");
@@ -25,6 +25,8 @@ ini_set('error_log', $errorLogPath);
 
 use yii\console\Controller;
 use app\models\Questions;
+use yii\db\Expression;
+use yii\db\Query;
 
 class CronJob extends Controller
 {
@@ -45,20 +47,29 @@ class CronJob extends Controller
 
   private function TransferToVoting()
   {
+    $subqueryAnswers = (new Query())
+      ->select(['question_id'])
+      ->from('answers')
+      ->groupBy('question_id')
+      ->having('COUNT(*) >= 3');
+
+    $subqueryLikes = (new Query())
+      ->select(['question_id'])
+      ->from('likes')
+      ->groupBy('question_id')
+      ->having('COUNT(*) >= 5');
+
     $questions = Questions::find()
-      ->innerJoin('answers', 'questions.id = answers.id_questions')
-      // ->innerJoin('like_answer', 'questions.id = like_answer.id_questions')
-      ->groupBy(['answers.id_questions', 'like_answer.id_questions'])
-      ->having('COUNT(answers.id) >= 3')
-      ->orHaving('COUNT(like_answer.id) >= 5')
-      ->where(["status" => 4])
-      ->orWhere(['<', new \yii\db\Expression('date_moderation + 86400'), time()])
+      ->innerJoin(['ans' => $subqueryAnswers], 'questions.id = ans.question_id')
+      ->innerJoin(['lik' => $subqueryLikes], 'questions.id = lik.question_id')
+      ->where(['questions.status' => 4])
+      ->andWhere(['<', new Expression('questions.moderated_at + 86400'), time()])
       ->all();
 
     print_r($questions);
     foreach ($questions as $question) {
       $question->status = 5;
-      $question->date_voting = time();
+      $question->voting_at = time();
       $question->update(false); // 'false' skips validation, change to 'true' if validation is needed
     }
   }
@@ -67,13 +78,14 @@ class CronJob extends Controller
   {
     $questions = Questions::find()
       ->where(["status" => 5])
-      ->orWhere(['<', new \yii\db\Expression('date_voting + 86400'), time()])
+      ->andWhere(['<', new \yii\db\Expression('voting_at + 86400'), time()])
       ->all();
 
+    print_r($questions);
     foreach ($questions as $question) {
       $question->status = 6;
-      $question->date_close = time();
-      $question->update(false); // 'false' skips validation, change to 'true' if validation is needed
+      $question->closed_at = time();
+      $question->update(false);
     }
   }
 }

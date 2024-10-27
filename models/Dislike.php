@@ -21,9 +21,9 @@ class Dislike extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_questions'], 'required',],
-            [['id_questions','data'],'integer'],
-            [['id_user'],'safe']
+            [['question_id'], 'required',],
+            [['question_id','data'],'integer'],
+            [['user_id'],'safe']
         ];
     }
 

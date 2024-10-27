@@ -15,9 +15,9 @@ class Favouritesblock extends \yii\bootstrap5\Widget
     {
         $user=Yii::$app->user->identity;
 
-        $favourites = Favourites::find()->where(["id_question"=>$this->question_id, "id_user"=>$user->id])->all();
+        $favourites = Favourites::find()->where(["question_id"=>$this->question_id, "user_id"=>$user->id])->all();
             
-        return $this->render("favourites/index",["favourites"=>$favourites, "id_question"=>$this->question_id]);
+        return $this->render("favourites/index",["favourites"=>$favourites, "question_id"=>$this->question_id]);
        
     }
 

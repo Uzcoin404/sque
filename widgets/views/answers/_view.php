@@ -12,14 +12,14 @@ $user_class = "";
 $moderation = '';
 
 
-$status_questions = Questions::find()->where(["id"=>$answer->id_questions])->one();
+$status_questions = Questions::find()->where(["id"=>$answer->question_id])->one();
 
-$user_img = User::find()->where(["id"=>$answer->id_user])->one();
+$user_img = User::find()->where(["id"=>$answer->user_id])->one();
 
 $users=Yii::$app->user->identity;
 
 if($users){
-    if($users->id == $answer->id_user){
+    if($users->id == $answer->user_id){
         $user_class = "my_answers";
     }
     $moderation = $users->moderation;
@@ -32,24 +32,24 @@ if($status_questions->status == 6){
     <a name="top"></a>
     
     <?PHP IF($answer->number == 1):?>
-        <div class='answers_post__list_element winner <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>" style="display:flex; align-items:center;">
+        <div class='answers_post__list_element winner <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>" style="display:flex; align-items:center;">
     <?PHP ELSEIF($answer->number == 2):?>
-        <div class='answers_post__list_element winner_two <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>" style="display:flex; align-items:center;">
+        <div class='answers_post__list_element winner_two <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>" style="display:flex; align-items:center;">
     <?PHP ELSEIF($answer->number > 2):?>
-        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>" style="display:flex; align-items:center;">
+        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>" style="display:flex; align-items:center;">
     <?PHP ELSEIF($status_questions->status <= 5):?>
-        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <?PHP ENDIF;?>
     <?php if($users){ ?>
-        <a name="<?=$answer->id_user?>"></a>
+        <a name="<?=$answer->user_id?>"></a>
     <?php } ?>
     <?php
         $text_view = Yii::t('app','Full text');
         $class_view = ''; 
         $status_user = 0;  
         if($users){
-            $view = ViewsAnswers::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
-            $close = CloseAnswer::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
+            $view = ViewsAnswers::find()->where(['id_answer'=>$answer->id, 'user_id'=>$users->id])->one();
+            $close = CloseAnswer::find()->where(['id_answer'=>$answer->id, 'user_id'=>$users->id])->one();
             if($view){
                 if($view->button_click == 1){
                     $text_view = Yii::t('app','Show the whole text again');
@@ -71,7 +71,7 @@ if($status_questions->status == 6){
             <?PHP ENDIF;?>
 
             <?PHP IF($answer->number > 2):?>
-                <div class="answers_post_list_element_button" data-id="<?=$answer->id_user?>" onclick="UserInfo(this, 0)">
+                <div class="answers_post_list_element_button" data-id="<?=$answer->user_id?>" onclick="UserInfo(this, 0)">
                 <?php
                 if($status_questions->status <= 5){
                 ?>
@@ -81,7 +81,7 @@ if($status_questions->status == 6){
                 ?>
    
       
-                    <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
+                    <div class="ansers_post_list_element_user_info" data-id="<?=$answer->user_id?>">
                         <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                         <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
                         <p class="answers"><?=Yii::t('app','Gave answers')?>: <span></span></p>
@@ -133,14 +133,14 @@ if($status_questions->status == 6){
                 <?php } ?>
                 <?php if($status_questions->status == 5) {?>
                     <p class="complaints">
-                        <a href="/complaints?id_user=<?=$answer->id_user?>&id_answers=<?=$answer->id?>&id_questions=<?=$answer->id_questions?>"><?=Yii::t('app','Complain')?></a>
+                        <a href="/complaints?user_id=<?=$answer->user_id?>&id_answers=<?=$answer->id?>&question_id=<?=$answer->question_id?>"><?=Yii::t('app','Complain')?></a>
                     </p>
                 <?php } ?>
                 <?PHP 
                     // IF($answer->number <= 2): тут было так
                 ?> 
                 <?PHP IF($answer->number):?>
-                    <div class="answers_post_list_element_button" data-id="<?=$answer->id_user?>" onclick="UserInfo(this, 0)">
+                    <div class="answers_post_list_element_button" data-id="<?=$answer->user_id?>" onclick="UserInfo(this, 0)">
                     <?php
                     if($status_questions->status <= 5){
                     ?>
@@ -149,7 +149,7 @@ if($status_questions->status == 6){
                     } 
                     ?>
                       
-                        <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
+                        <div class="ansers_post_list_element_user_info" data-id="<?=$answer->user_id?>">
                             <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                             <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
                             <p class="answers"><?=Yii::t('app','Gave answers')?>: <span></span></p>
@@ -158,7 +158,7 @@ if($status_questions->status == 6){
                             <p class="action"><?=Yii::t('app','Last activity')?>: <span></span></p>
                         </div>
                     </div>
-                    <p class='title' style="margin-bottom: 0px !important; cursor:pointer;" data-id="<?=$answer->id_user?>" onclick="UserInfo(this, 0)">
+                    <p class='title' style="margin-bottom: 0px !important; cursor:pointer;" data-id="<?=$answer->user_id?>" onclick="UserInfo(this, 0)">
                         <?=$answer->GetUserName();?>
                     </p>   
                 <?PHP ENDIF; ?>
@@ -182,16 +182,16 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
 ?>
   <a name="top"></a>
     <?PHP IF($answer->number == 1):?>
-        <div class='answers_post__list_element winner <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+        <div class='answers_post__list_element winner <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <?PHP ELSEIF($answer->number == 2):?>
-        <div class='answers_post__list_element winner_two <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+        <div class='answers_post__list_element winner_two <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <?PHP ELSEIF($answer->number > 2):?>
-        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <?PHP ELSEIF($status_questions->status <= 5):?>
-        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+        <div class='answers_post__list_element <?=$user_class?>' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <?PHP ENDIF;?>
     <?php if($users){ ?>
-        <a name="<?=$answer->id_user?>"></a>
+        <a name="<?=$answer->user_id?>"></a>
     <?php } ?>
     <div class="title_info">
         <?PHP IF($orderWinner || $answer->number>0):?>
@@ -200,7 +200,7 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
             <?PHP ELSE:?>
             <?PHP ENDIF;?>
         <?PHP ENDIF;?>
-            <div class="answers_post_list_element_button" data-id="<?=$answer->id_user?>" onclick="UserInfo(this, 0)">
+            <div class="answers_post_list_element_button" data-id="<?=$answer->user_id?>" onclick="UserInfo(this, 0)">
             <?php
             if($status_questions->status <= 5){
             ?>
@@ -209,7 +209,7 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
             } 
             ?>
                
-                <div class="ansers_post_list_element_user_info" data-id="<?=$answer->id_user?>">
+                <div class="ansers_post_list_element_user_info" data-id="<?=$answer->user_id?>">
                     <p class="date"><?=Yii::t('app','Date of registration')?>: <span></span></p>
                     <p class="question"><?=Yii::t('app','Asked questions')?>: <span></span></p>
                     <p class="answers"><?=Yii::t('app','Gave answers')?>: <span></span></p>
@@ -228,8 +228,8 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
         $class_view = ''; 
         $status_user = 0;  
         if($users){
-            $view = ViewsAnswers::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
-            $close = CloseAnswer::find()->where(['id_answer'=>$answer->id, 'id_user'=>$users->id])->one();
+            $view = ViewsAnswers::find()->where(['id_answer'=>$answer->id, 'user_id'=>$users->id])->one();
+            $close = CloseAnswer::find()->where(['id_answer'=>$answer->id, 'user_id'=>$users->id])->one();
             if($view){
                 if($view->button_click == 1){
                     $text_view = Yii::t('app','Show the whole text again');
@@ -279,7 +279,7 @@ if($status_questions->status >= 4 && $status_questions->status != 6){
                 <?php } ?>
                 <?php if($status_questions->status == 5) {?>
                     <p class="complaints">
-                        <a href="/complaints?id_user=<?=$answer->id_user?>&id_answers=<?=$answer->id?>&id_questions=<?=$answer->id_questions?>"><?=Yii::t('app','Complain')?></a>
+                        <a href="/complaints?user_id=<?=$answer->user_id?>&id_answers=<?=$answer->id?>&question_id=<?=$answer->question_id?>"><?=Yii::t('app','Complain')?></a>
                     </p>
                 <?php } ?>
         

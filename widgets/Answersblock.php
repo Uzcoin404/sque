@@ -18,22 +18,22 @@ class Answersblock extends \yii\bootstrap5\Widget
     {
         $user=Yii::$app->user->identity;
 
-        $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
+        $answers = Answers::find()->where(["question_id"=>$this->question_id]);
         $question_status = Questions::find()->where(["id"=>$this->question_id])->one();
        
         if($question_status->status >= 5){
-            $answers = Answers::find()->where(["id_questions"=>$this->question_id]);
+            $answers = Answers::find()->where(["question_id"=>$this->question_id]);
             $answers->orderBy('views_answer.views_answercount ASC');
             
             $answerlike = ViewsAnswers::find()
-            ->select('id_answer,count(id_user) as views_answercount')
+            ->select('id_answer,count(user_id) as views_answercount')
             ->groupBy('id_answer');
             $answers->leftJoin(['views_answer'=>$answerlike], 'views_answer.id_answer = answers.id');
             if($this->orderWinner){
 
                 $answers->orderBy('views_answer.views_answercount ASC, dislikes_answer.views_dislaikanswercount as ASC');
                 $answerlike = DislikeAnswer::find()
-                ->select('id_answer,count(id_user) as views_answercount')
+                ->select('id_answer,count(user_id) as views_answercount')
                 ->groupBy('id_answer');
                 $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.id_answer = answers.id');
             }
@@ -42,8 +42,8 @@ class Answersblock extends \yii\bootstrap5\Widget
        
         if($question_status->status == 4){
             if($user){
-                $answers = Answers::find()->where(["id_questions"=>$this->question_id,"id_user"=>$user->id]);
-                return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
+                $answers = Answers::find()->where(["question_id"=>$this->question_id,"user_id"=>$user->id]);
+                return $this->render("answers/index",["answers"=>$answers->all(),"question_id"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
             } else {
                 return;
             }
@@ -54,7 +54,7 @@ class Answersblock extends \yii\bootstrap5\Widget
         }
 
         if($answers){
-            return $this->render("answers/index",["answers"=>$answers->all(),"id_questions"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
+            return $this->render("answers/index",["answers"=>$answers->all(),"question_id"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
         }
        
     }

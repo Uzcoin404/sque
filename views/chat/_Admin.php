@@ -3,7 +3,7 @@
     $result = "";
 
     $first_date = new \DateTime("now");
-    $second_date = new \DateTime("@".$chat->data);
+    $second_date = new \DateTime("@".$chat->created_at);
     $interval = $second_date->diff($first_date);
     if($interval->days <= 0){
         $result= \Yii::t('app','{i} minutes back',['i'=>$interval->i]);

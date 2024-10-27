@@ -63,9 +63,9 @@ class DislikeController extends Controller
 
         $user=Yii::$app->user->identity;
 
-        $dislike->id_questions = 12;
-        $dislike->id_user = $user->id;
-        $dislike->data = strtotime('now');
+        $dislike->question_id = 12;
+        $dislike->user_id = $user->id;
+        $dislike->created_at = strtotime('now');
 
         $this->DislikeAnswers();
 
@@ -75,7 +75,7 @@ class DislikeController extends Controller
     }
 
     public function actionFilterdislike(){
-        // ->where(['id_questions'=>$_GET['id_question']])
+        // ->where(['question_id'=>$_GET['question_id']])
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $status=0;
         $result="";
@@ -84,24 +84,24 @@ class DislikeController extends Controller
         $id = $data['id'];
         $filter = 0;
       
-        $answer = Answers::find()->where(['in', 'id_questions', $id]);
+        $answer = Answers::find()->where(['in', 'question_id', $id]);
         if($sort == "DESC"){
-            $answer->orderBy('dislike_answer.dislike_answercount DESC');
+            $answer->orderBy('dislikes.dislike_answercount DESC');
             $filter = 1;
         }
         if($sort == "ASC"){
-            $answer->orderBy('dislike_answer.dislike_answercount ASC');
+            $answer->orderBy('dislikes.dislike_answercount ASC');
         }
         if($sort == "ALL"){
             $answer->orderBy('number ASC');
         }
         $answerLike = DislikeAnswer::find()
-        ->select('id_answer,count(id_questions) as dislike_answercount')
+        ->select('id_answer,count(question_id) as dislike_answercount')
         ->groupBy('id_answer');
-        $answer->leftJoin(['dislike_answer'=>$answerLike], 'dislike_answer.id_answer = answers.id');
+        $answer->leftJoin(['dislikes'=>$answerLike], 'dislikes.id_answer = answers.id');
         foreach($answer->all() as $question){
             $status=1;
-            $result.=$this->renderAjax("@app/widgets/views/answers/_view",["answer"=>$question,"id_questions"=>$id, "orderWinner"=>$question->number, 'filter_status'=> $filter]);
+            $result.=$this->renderAjax("@app/widgets/views/answers/_view",["answer"=>$question,"question_id"=>$id, "orderWinner"=>$question->number, 'filter_status'=> $filter]);
         }
         return \yii\helpers\Json::encode(
             [
@@ -125,12 +125,12 @@ class DislikeController extends Controller
 
             foreach($post as $id_answers){
                 $id_an=$id_answers['answer'];
-                $answer_views = ViewsAnswers::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
-                $dislike_answer=DislikeAnswer::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
-                $like_answer=LikeAnswers::find()->where(["id_answer"=>$id_an,"id_user"=>$user->id])->one();
-                if($dislike_answer || $like_answer){
+                $answer_views = ViewsAnswers::find()->where(["id_answer"=>$id_an,"user_id"=>$user->id])->one();
+                $dislikes=DislikeAnswer::find()->where(["id_answer"=>$id_an,"user_id"=>$user->id])->one();
+                $likes=LikeAnswers::find()->where(["id_answer"=>$id_an,"user_id"=>$user->id])->one();
+                if($dislikes || $likes){
                     if($id_answers['status'] == 1){
-                        $dislike_answer->delete();
+                        $dislikes->delete();
                         if (!$answer_views->button_click) {
                             $answer_views->delete();
                         }
@@ -141,28 +141,28 @@ class DislikeController extends Controller
                     $answer=Answers::find()->where(["id"=>$id_an])->one();
                     $question = Questions::find()->where(["id"=>$id_answers['question'][0]])->one();
                     if($question->status == 5){
-                        if(isset($answer->id_user)){
+                        if(isset($answer->user_id)){
                             if($user){
-                                if($answer->id_user!=$user->id && $user->moderation == 0){
+                                if($answer->user_id!=$user->id && $user->moderation == 0){
                                     $id_an=$id_answers['answer'];
-                                    $dislike_answer = new DislikeAnswer();
-                                    $dislike_answer->id_answer = $id_an;
-                                    $dislike_answer->id_user = $user->id;
-                                    $dislike_answer->id_questions = $id_answers['question'][0];
-                                    $dislike_answer->data = strtotime('now');
+                                    $dislikes = new DislikeAnswer();
+                                    $dislikes->id_answer = $id_an;
+                                    $dislikes->user_id = $user->id;
+                                    $dislikes->question_id = $id_answers['question'][0];
+                                    $dislikes->created_at = strtotime('now');
                                     
-                                    $dislike_answer->save(0);
+                                    $dislikes->save(0);
 
                                     if(!$answer_views){
                                         $views = new ViewsAnswers();
                                         $views->id_answer=$id_an;
-                                        $views->id_user=$user->id;
+                                        $views->user_id=$user->id;
                                         $views->type_user=1;
-                                        $views->data=strtotime("now");
+                                        $views->created_at=time();
                                         $views->save(0);
                                     }
                     
-                                    //unset($like_answer);
+                                    //unset($likes);
                                 }
                             }
                         }
@@ -186,7 +186,7 @@ class DislikeController extends Controller
         $answer = DislikeAnswer::find()->where(['id_answer'=>$this->info[0]])->all();
         
         foreach($answer as $value){
-            array_push($this->user_id,$value->id_user);
+            array_push($this->user_id,$value->user_id);
         }
 
         foreach($this->user_id as $user){

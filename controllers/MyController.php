@@ -68,7 +68,7 @@ class MyController extends Controller
         
         $user=Yii::$app->user->identity;
 
-        $questions = Questions::find()->where(["owner_id"=>$user->id])->orderBy(["data"=>SORT_DESC]);
+        $questions = Questions::find()->where(["owner_id"=>$user->id])->orderBy(["created_at"=>SORT_DESC]);
 
         $pages = new Pagination(['totalCount' => $questions->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 

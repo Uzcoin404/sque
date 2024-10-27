@@ -24,7 +24,7 @@ class ViewController extends Controller
     //Настройка прав доступа
     public $info = [];
     public $type_user_id = 0;
-    public $id_question = [];
+    public $question_id = [];
     public $btn_click = [];
     public function behaviors()
     {
@@ -65,8 +65,8 @@ class ViewController extends Controller
             $request->get('status_view'),
         ];
 
-        $this->id_question = [
-            $request->get('id_question'),
+        $this->question_id = [
+            $request->get('question_id'),
         ];
 
         $this->btn_click = [
@@ -88,8 +88,8 @@ class ViewController extends Controller
                     if(!$moderation){
                        
                        
-                            $questions = Questions::find()->where(['id'=>$this->id_question[0][0]])->one();
-                            $Views=ViewsAnswers::find()->where(["id_answer"=>$post,"id_user"=>$user->id])->one();
+                            $questions = Questions::find()->where(['id'=>$this->question_id[0][0]])->one();
+                            $Views=ViewsAnswers::find()->where(["id_answer"=>$post,"user_id"=>$user->id])->one();
                     
                             if($questions->status < 6){
                                 if($questions->status == 5){
@@ -99,8 +99,8 @@ class ViewController extends Controller
                                                 $Views = new ViewsAnswers();
                                                 $Views->id_answer=$post;
                                                 $Views->type_user=$this->type_user_id;
-                                                $Views->id_user=$user->id;
-                                                $Views->data=strtotime("now");
+                                                $Views->user_id=$user->id;
+                                                $Views->created_at=time();
                                                 $Views->isNewRecord=1;
                                                 $Views->button_click=$this->btn_click[0];
                                                 $Views->save(0);
@@ -108,14 +108,14 @@ class ViewController extends Controller
                                                 $Views = new ViewsAnswers();
                                                 $Views->id_answer=$post;
                                                 $Views->type_user=$this->type_user_id;
-                                                $Views->id_user=$user->id;
-                                                $Views->data=strtotime("now");
+                                                $Views->user_id=$user->id;
+                                                $Views->created_at=time();
                                                 $Views->isNewRecord=1;
                                                 $Views->save(0);
                                             }
 
                                         
-                                            //unset($like_answer);
+                                            //unset($likes);
                                         } else {
                                             if($this->btn_click[0] == 1){
                                                 $Views->button_click=$this->btn_click[0];

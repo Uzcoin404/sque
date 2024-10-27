@@ -62,7 +62,7 @@ class DocsController extends Controller
             Docs::updateAll(['status' => 0],['href'=>$model->href]);
             $model->upload($model->href);
             $model->user= Yii::$app->user->identity->id;
-            $model->data=strtotime('now');
+            $model->created_at=strtotime('now');
             $model->status=1;
             $model->save();  
         }

@@ -64,7 +64,7 @@
                         ?>
                             <div class="questions__list_element_btn">
                                 <?php
-                                    $answers = Answers::find()->where(['id_user'=>$user->id, 'id_questions'=>$question->id])->one();
+                                    $answers = Answers::find()->where(['user_id'=>$user->id, 'question_id'=>$question->id])->one();
                                     if(!$answers){
                                 ?>
 

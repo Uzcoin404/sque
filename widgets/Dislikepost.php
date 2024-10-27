@@ -20,7 +20,7 @@ class Dislikepost extends \yii\bootstrap5\Widget
     }
     public function run()
     {
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislikepost WHERE id_questions=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM dislikepost WHERE question_id=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
         return '<p class="dislike"><button class="btn_dislike" onclick="'.$this->dislike_submit.'"></button>'.Html::encode($sql['count']).' '.\Yii::t('app','Dislike').'</p>';
     }
     

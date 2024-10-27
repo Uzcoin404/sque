@@ -61,35 +61,35 @@ class VoitingController extends Controller
     {
         $user=Yii::$app->user->identity;
         
-        $answer_like = LikeAnswers::find()->where(['id_user'=>$user->id])->all();
+        $answer_like = LikeAnswers::find()->where(['user_id'=>$user->id])->all();
 
-        $answer_dislike = DislikeAnswer::find()->where(['id_user'=>$user->id])->all();
+        $answer_dislike = DislikeAnswer::find()->where(['user_id'=>$user->id])->all();
 
-        $id_questions = [];
+        $question_id = [];
         
         $questions = [];
 
         if($answer_like){
             
             foreach($answer_like as $value){
-               array_push($id_questions, $value->id_questions);
+               array_push($question_id, $value->question_id);
             }
 
         }
         if($answer_dislike){
             foreach($answer_dislike as $value){
-                array_push($id_questions, $value->id_questions);
+                array_push($question_id, $value->question_id);
             }
         }
         
-        $id_question = array_unique($id_questions, SORT_REGULAR);
+        $question_id = array_unique($question_id, SORT_REGULAR);
         
-        foreach($id_question as $value){
+        foreach($question_id as $value){
 
             array_push($questions, $question);
             
         }
-        $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->andWhere(['<=', 'date_create', time() - 24 * 3600])->orderBy(["data_status"=>SORT_DESC])->one();
+        $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->andWhere(['<=', 'created_at', time() - 24 * 3600])->orderBy(["data_status"=>SORT_DESC])->one();
 
         $provider = new ArrayDataProvider([
             'allModels' => $questions,
@@ -177,7 +177,7 @@ class VoitingController extends Controller
             if($users){
                 $model = User::find()->where(['id'=>$users->id])->one();
 
-                $model->date_online = strtotime("now");
+                $model->date_online = time();
         
                 $model->update();
             }
@@ -196,31 +196,31 @@ class VoitingController extends Controller
       public function ViewCreate($slug){
         $users = Yii::$app->user->identity;
 
-        $id_user = '';
+        $user_id = '';
         $type = '';
         $moderation = '';
 
         if($users){
-            $id_user = $users->id;
+            $user_id = $users->id;
             $type = 1;
             $moderation = $users->moderation;
         } else {
-            $id_user = 1;
+            $user_id = 1;
             $type = 0;
         }
         if($users){
             if(!$users->moderation){
 
-                $view = Views::find()->where(['id_questions'=>$slug,'id_user'=>$id_user])->one();
+                $view = Views::find()->where(['question_id'=>$slug,'user_id'=>$user_id])->one();
     
                 $questions = Questions::find()->where(['id'=>$slug])->one();
     
                 if($questions->status < 6){
                     if(!$view){
                         $views = new Views();
-                        $views->id_questions = $slug;
-                        $views->data = strtotime("now");
-                        $views->id_user = $id_user;
+                        $views->question_id = $slug;
+                        $views->created_at = time();
+                        $views->user_id = $user_id;
                         $views->type_user = $type;
                 
                         $views->save();

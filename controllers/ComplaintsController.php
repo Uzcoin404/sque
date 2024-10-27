@@ -45,20 +45,20 @@ class ComplaintsController extends Controller
     public function actionIndex()
     {
 
-        $id_user = $_GET['id_user'];
+        $user_id = $_GET['user_id'];
         $id_answers = $_GET['id_answers'];
-        $id_questions = $_GET['id_questions'];
+        $question_id = $_GET['question_id'];
        
         $model = new Complaints();
 
         $user=Yii::$app->user->identity;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->id_user=$id_user;
-            $model->id_user_sender=$user->id;
+            $model->user_id=$user_id;
+            $model->user_id_sender=$user->id;
             $model->id_answers=$id_answers;
-            $model->id_question=$id_questions;
-            $model->data=strtotime('now');
+            $model->question_id=$question_id;
+            $model->created_at=strtotime('now');
            
             if($model->save()){
                

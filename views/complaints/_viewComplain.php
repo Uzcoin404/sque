@@ -4,10 +4,10 @@
     use app\models\Questions;
     $answers = Answers::find()->where(["id"=>$complaints->id_answers])->one();
 ?>
-<?PHP IF(isset($answers->id_user)):?>
+<?PHP IF(isset($answers->user_id)):?>
     <?PHP
-        $user = User::find()->where(["id"=>$answers->id_user])->one();
-        $question = Questions::find()->where(["id"=>$answers->id_questions])->one();
+        $user = User::find()->where(["id"=>$answers->user_id])->one();
+        $question = Questions::find()->where(["id"=>$answers->question_id])->one();
     ?>
     <?PHP IF(isset($user->id)):?>
         <div class="complaints__list_element">
@@ -24,7 +24,7 @@
             </div>
             <div class="complaints__list_element_btn">
                 <?PHP IF(!$question->statusIsClosePay() && !$question->statusIsCloseNoPay()):?>
-                    <a href="/questions/voting/<?=$answers->id_questions?>" class="question_btn"><?=Yii::t('app','Go questions')?></a>
+                    <a href="/questions/voting/<?=$answers->question_id?>" class="question_btn"><?=Yii::t('app','Go questions')?></a>
                 <?PHP ELSE:?>
                     <a class="question_btn"><?=Yii::t('app','Questions is closed')?></a>
                 <?PHP ENDIF;?>

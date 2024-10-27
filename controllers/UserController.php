@@ -178,14 +178,14 @@ class UserController extends Controller
         $request = Yii::$app->request;
 
         $this->info = [
-            $request->get('id_user'),
+            $request->get('user_id'),
         ];
 
         $user = User::find()->where(['id'=>$this->info[0]])->one();
 
-        $like = LikeAnswers::find()->where(['id_user'=>$this->info[0]])->all();
-        $dislike = DislikeAnswer::find()->where(['id_user'=>$this->info[0]])->all();
-        $answers = Answers::find()->where(['id_user'=>$this->info[0]])->all();
+        $like = LikeAnswers::find()->where(['user_id'=>$this->info[0]])->all();
+        $dislike = DislikeAnswer::find()->where(['user_id'=>$this->info[0]])->all();
+        $answers = Answers::find()->where(['user_id'=>$this->info[0]])->all();
         $questions = Questions::find()->where(['owner_id'=>$this->info[0]])->all();
 
         $like_count = count($like);
@@ -286,20 +286,20 @@ class UserController extends Controller
             $number = 0;
     
             foreach($users as $user){
-                $like = LikeAnswers::find()->where(['id_user'=>$user->id])->all();
-                $dislike = DislikeAnswer::find()->where(['id_user'=>$user->id])->all();
+                $like = LikeAnswers::find()->where(['user_id'=>$user->id])->all();
+                $dislike = DislikeAnswer::find()->where(['user_id'=>$user->id])->all();
                 $like_count = count($like); // 4 колво лайков
                 $dislike_count = count($dislike); // 7 колво дизлайки    
-                $ViewsAnswers_noclick = ViewsAnswers::find()->where(['id_user'=>$user->id,'button_click'=>0])->all();
+                $ViewsAnswers_noclick = ViewsAnswers::find()->where(['user_id'=>$user->id,'button_click'=>0])->all();
                 $ViewsAnswers_noclick_count = count($ViewsAnswers_noclick); // колво ответов где поставил лайк или диз но не нажал на кнопку
-                $ViewsAnswers_click = ViewsAnswers::find()->where(['id_user'=>$user->id,'button_click'=>1])->all();
+                $ViewsAnswers_click = ViewsAnswers::find()->where(['user_id'=>$user->id,'button_click'=>1])->all();
                 $ViewsAnswers_click_count = count($ViewsAnswers_click); // колво ответов где поставил лайк диз и нажал кнопку
 
                 // лайк и не нажал на кнопку
                 $likes_noclick_count = 0;
 
                 foreach ($ViewsAnswers_noclick as $noclick) {
-                    $likes_noclick = LikeAnswers::find()->where(['id_user'=>$user->id, 'id_answer'=>$noclick])->all();
+                    $likes_noclick = LikeAnswers::find()->where(['user_id'=>$user->id, 'id_answer'=>$noclick])->all();
                     $likes_noclick ? $likes_noclick_count++ : 0;
                 }
 
@@ -307,7 +307,7 @@ class UserController extends Controller
                 $dislike_noclick_count = 0;
 
                 foreach ($ViewsAnswers_noclick as $noclick) {
-                    $dislikes_noclick = DislikeAnswer::find()->where(['id_user'=>$user->id, 'id_answer'=>$noclick])->all();
+                    $dislikes_noclick = DislikeAnswer::find()->where(['user_id'=>$user->id, 'id_answer'=>$noclick])->all();
                     $dislikes_noclick ? $dislike_noclick_count++ : 0;
                 }
 
@@ -315,7 +315,7 @@ class UserController extends Controller
                 $likes_click_count = 0;
 
                 foreach ($ViewsAnswers_click as $click) {
-                    $likes_click = LikeAnswers::find()->where(['id_user'=>$user->id, 'id_answer'=>$click])->all();
+                    $likes_click = LikeAnswers::find()->where(['user_id'=>$user->id, 'id_answer'=>$click])->all();
                     $likes_click ? $likes_click_count++ : 0;
                 }
 
@@ -323,7 +323,7 @@ class UserController extends Controller
                 $dislike_click_count = 0;
 
                 foreach ($ViewsAnswers_click as $click) {
-                    $dislike_click = DislikeAnswer::find()->where(['id_user'=>$user->id, 'id_answer'=>$click])->all();
+                    $dislike_click = DislikeAnswer::find()->where(['user_id'=>$user->id, 'id_answer'=>$click])->all();
                     $dislike_click ? $dislike_click_count++ : 0;
                 }
                 

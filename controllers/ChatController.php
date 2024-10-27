@@ -23,7 +23,7 @@ class ChatController extends Controller
 {
     public $info = [];
     public $admin_id = [];
-    public $id_user = [];
+    public $user_id = [];
     //Настройка прав доступа
     public function behaviors()
     {
@@ -56,7 +56,7 @@ class ChatController extends Controller
             if ($model->load(Yii::$app->request->post())) {
                 $model->sender_id=$user->id;
                 $model->recipient_id=$id_recipient;
-                $model->data=strtotime('now');
+                $model->created_at=strtotime('now');
                 $model->status=1;
                 if(strlen($model->text)>1){
                     if($model->save()){
@@ -89,26 +89,26 @@ class ChatController extends Controller
 
         $chat_list = Chat::find()->where(["recipient_id"=>$admin])->all();
 
-        $id_user=[];
-        $id_user_no_read=[];
+        $user_id=[];
+        $user_id_no_read=[];
         foreach($chat_list as $value){
-            if(!isset($id_user[$value->sender_id])){
+            if(!isset($user_id[$value->sender_id])){
                 if(Chat::GetNoRead($value->sender_id)){
-                    if(!isset($id_user_no_read[$value->sender_id])){
-                        $id_user_no_read[$value->sender_id]=Chat::LastData($value->sender_id);
+                    if(!isset($user_id_no_read[$value->sender_id])){
+                        $user_id_no_read[$value->sender_id]=Chat::LastData($value->sender_id);
                     }
                 }else{
-                    $id_user[$value->sender_id]=Chat::LastData($value->sender_id);
+                    $user_id[$value->sender_id]=Chat::LastData($value->sender_id);
                 }
                 
             }
            
         }
-        arsort($id_user);
-        arsort($id_user_no_read);
-        $result = $id_user_no_read+$id_user;
+        arsort($user_id);
+        arsort($user_id_no_read);
+        $result = $user_id_no_read+$user_id;
      
-       // $result = array_unique($this->id_user);
+       // $result = array_unique($this->user_id);
         $pages = new Pagination(['totalCount' => count($result), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
 
         return $this->render(
@@ -130,7 +130,7 @@ class ChatController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->sender_id=$user->id;
             $model->recipient_id=$slug;
-            $model->data=strtotime('now');
+            $model->created_at=strtotime('now');
             $model->status=0;
             if(strlen($model->text)>1){
                 if($model->save()){
@@ -149,14 +149,14 @@ class ChatController extends Controller
         );
     }
 
-    public function RandomIdAdmin($id_user=0){
+    public function RandomIdAdmin($user_id=0){
 
         $admin = User::find()->where(["moderation"=>1])->all();
         foreach($admin as $value){
             array_push($this->admin_id, $value->id);
         }
-        if($id_user){
-            $user = Chat::find()->where(["sender_id"=>$id_user])->orderBy("id DESC")->one();
+        if($user_id){
+            $user = Chat::find()->where(["sender_id"=>$user_id])->orderBy("id DESC")->one();
         
             if(isset($user->recipient_id)){
                 return $user->recipient_id;
@@ -174,15 +174,15 @@ class ChatController extends Controller
 
     }
 
-    public function SearchChat($id_user, $id_admin){
+    public function SearchChat($user_id, $id_admin){
 
-        $user = Chat::find()->where(["sender_id"=>$id_user])->all();
+        $user = Chat::find()->where(["sender_id"=>$user_id])->all();
 
         if(!$user){
             return 1;
         }
 
-        $chat = Chat::find()->where(["sender_id"=>$id_user,"recipient_id"=>$id_admin])->all();
+        $chat = Chat::find()->where(["sender_id"=>$user_id,"recipient_id"=>$id_admin])->all();
 
         if($chat){
             return 1;

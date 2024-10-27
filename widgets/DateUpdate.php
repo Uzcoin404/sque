@@ -16,7 +16,7 @@ class DateUpdate extends \yii\bootstrap5\Widget
     }
     public function run()
     {
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM answers WHERE id_questions=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM answers WHERE question_id=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
         return '<p class="answers">'.Html::encode($sql['count']).' '.\Yii::t('app','Answers').'</p>';
     }
     

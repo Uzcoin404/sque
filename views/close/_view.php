@@ -4,7 +4,7 @@
     use app\models\Answers;
 
     if($user){
-        $answer = Answers::find()->where(['id_user'=>$user->id,'id_questions'=>$question->id])->one();
+        $answer = Answers::find()->where(['user_id'=>$user->id,'question_id'=>$question->id])->one();
     }
 ?>
 <?PHP IF($user && $user->read == 1):?>

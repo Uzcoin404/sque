@@ -21,8 +21,8 @@ class CloseAnswer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id','id_user','id_answer','id_question'], 'required',],
-            [['id','id_user','id_answer','id_question'],'integer'],
+            [['id','user_id','id_answer','question_id'], 'required',],
+            [['id','user_id','id_answer','question_id'],'integer'],
         ];
     }
 

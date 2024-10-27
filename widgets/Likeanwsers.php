@@ -20,14 +20,14 @@ class Likeanwsers extends \yii\bootstrap5\Widget
     }
     public function run()
     {
-        $id_user = [];
-        $sql = LikeAnswers::find()->where(['id_questions'=>$this->question_id])->all();
+        $user_id = [];
+        $sql = LikeAnswers::find()->where(['question_id'=>$this->question_id])->all();
         foreach($sql as $value){
-            array_push($id_user, $value->id_user);
+            array_push($user_id, $value->user_id);
         }
-        $result = array_unique($id_user);
+        $result = array_unique($user_id);
         $count = count($result);
-        return '<p class="like_answer">'.Html::encode($count).' '.Yii::t('app','Voitings').'</p>';
+        return '<p class="likes">'.Html::encode($count).' '.Yii::t('app','Voitings').'</p>';
     }
     
 }

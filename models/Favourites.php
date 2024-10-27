@@ -21,9 +21,9 @@ class Favourites extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_questions', 'id_user'], 'required',],
-            [['id_questions','data'],'integer'],
-            [['id_user'],'safe']
+            [['question_id', 'user_id'], 'required',],
+            [['question_id','data'],'integer'],
+            [['user_id'],'safe']
         ];
     }
 

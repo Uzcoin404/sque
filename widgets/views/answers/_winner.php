@@ -8,16 +8,16 @@ use app\models\Questions;
 $class_like = '';
 $class_dislike = '';
 
-$status_questions = Questions::find()->where(["id"=>$answer->id_questions])->one();
+$status_questions = Questions::find()->where(["id"=>$answer->question_id])->one();
 
-$user_img = User::find()->where(["id"=>$answer->id_user])->one();
+$user_img = User::find()->where(["id"=>$answer->user_id])->one();
 
 $users=Yii::$app->user->identity;
 
-if($answer->id_user == $status_questions->winner_id){
+if($answer->user_id == $status_questions->winner_id){
 ?>
 
-<div class='answers_post__list_element winner' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$id_questions?>">
+<div class='answers_post__list_element winner' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <div class="title_info">
         <?PHP IF($orderWinner):?>
             <span class="answer_number__level">№<?=$answer->number;?></span>
@@ -45,16 +45,16 @@ if($answer->id_user == $status_questions->winner_id){
                     $user=User::find()->all();
                 
                     foreach($user as $info){
-                        $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
+                        $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"user_id"=>$info->id])->one();
         
-                        $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$info->id])->one();
+                        $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"user_id"=>$info->id])->one();
                     }
 
                 } else {
 
-                    $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"id_user"=>$user->id])->one();
+                    $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"user_id"=>$user->id])->one();
         
-                    $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"id_user"=>$user->id])->one();
+                    $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"user_id"=>$user->id])->one();
 
                 }
 
@@ -77,10 +77,10 @@ if($answer->id_user == $status_questions->winner_id){
             
 
         ?>
-                <p class="like_answer">
+                <p class="likes">
                     <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button><?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
                 </p>
-                <p class="dislike_answer">
+                <p class="dislikes">
                     <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
                 </p>
                 <?php if($status_questions->status == 6) {?>

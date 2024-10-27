@@ -158,7 +158,7 @@ class RegistrationController extends Controller
     {
         $model = User::find()->where(['id'=>Yii::$app->user->id])->one();
 
-        $model->date_online = strtotime("now");
+        $model->date_online = time();
 
         if($model->update()){
             Yii::$app->user->logout();

@@ -54,7 +54,7 @@ class FavouritesController extends Controller
 
         $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
         $queryLike = Favourites::find();
-        $questions->leftJoin(['favourites'=>$queryLike], 'favourites.id_question = questions.id')->where(['id_user'=>$user->id])->orderBy(["cost"=>SORT_DESC]);
+        $questions->leftJoin(['favourites'=>$queryLike], 'favourites.question_id = questions.id')->where(['user_id'=>$user->id])->orderBy(["cost"=>SORT_DESC]);
         $result = $questions;
 
         $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 6, 'forcePageParam' => false, 'pageSizeParam' => false]);
@@ -88,9 +88,9 @@ class FavouritesController extends Controller
         foreach($this->info as $post){
             foreach($post as $question_id){
 
-                $favourites->id_question = $question_id;
-                $favourites->id_user = $user->id;
-                $favourites->data = strtotime('now');
+                $favourites->question_id = $question_id;
+                $favourites->user_id = $user->id;
+                $favourites->created_at = strtotime('now');
                 
                 if($favourites->save(0)){
                     return \yii\helpers\Json::encode(
@@ -117,7 +117,7 @@ class FavouritesController extends Controller
         
         foreach($this->info as $post){
                 
-                $favourit = Favourites::find()->where(['id'=>$post, 'id_user'=>$user->id])->one();
+                $favourit = Favourites::find()->where(['id'=>$post, 'user_id'=>$user->id])->one();
                 
                 $favourit->delete();
                 

@@ -270,7 +270,7 @@
                         left: 0px;
                     }
                 }
-                p.like_answer{
+                p.likes{
                     position: relative;
                     padding-left: 25px;
                     button.active{
@@ -314,7 +314,7 @@
                         pointer-events: none !important;
                     }
                 }
-                p.dislike_answer{
+                p.dislikes{
                     position: relative;
                     padding-left: 25px;
                     button.active{
@@ -601,7 +601,7 @@
                 left: 0px;
             }
         }
-        p.like_answer{
+        p.likes{
             position: relative;
             padding-left: 25px;
             button.active{
@@ -645,7 +645,7 @@
                 pointer-events: none !important;
             }
         }
-        p.dislike_answer{
+        p.dislikes{
             position: relative;
             padding-left: 25px;
             button.active{

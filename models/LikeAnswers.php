@@ -16,14 +16,14 @@ class LikeAnswers extends \yii\db\ActiveRecord
    
     public static function tableName()
     {
-        return 'like_answer';
+        return 'likes';
     }
     public function rules()
     {
         return [
-            [['id_answer','id_questions'], 'required',],
-            [['data','id_answer'],'integer'],
-            [['id_user'],'safe']
+            [['answer_id','question_id'], 'required',],
+            [['created_at','answer_id'],'integer'],
+            [['user_id'],'safe']
         ];
     }
 

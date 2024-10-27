@@ -214,11 +214,11 @@ CREATE TABLE `complaints` (
 
 
 --
--- Definition of table `dislike_answer`
+-- Definition of table `dislikes`
 --
 
-DROP TABLE IF EXISTS `dislike_answer`;
-CREATE TABLE `dislike_answer` (
+DROP TABLE IF EXISTS `dislikes`;
+CREATE TABLE `dislikes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `id_answer` int unsigned NOT NULL,
   `id_user` int unsigned NOT NULL,
@@ -228,11 +228,11 @@ CREATE TABLE `dislike_answer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=503 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `dislike_answer`
+-- Dumping data for table `dislikes`
 --
 
-/*!40000 ALTER TABLE `dislike_answer` DISABLE KEYS */;
-INSERT INTO `dislike_answer` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
+/*!40000 ALTER TABLE `dislikes` DISABLE KEYS */;
+INSERT INTO `dislikes` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
  (475,445,92,1708586782,242),
  (476,441,92,1708586787,242),
  (477,445,91,1708586830,242),
@@ -261,7 +261,7 @@ INSERT INTO `dislike_answer` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) 
  (500,460,112,1713529118,249),
  (501,461,112,1713529120,249),
  (502,462,112,1713529125,249);
-/*!40000 ALTER TABLE `dislike_answer` ENABLE KEYS */;
+/*!40000 ALTER TABLE `dislikes` ENABLE KEYS */;
 
 
 --
@@ -662,11 +662,11 @@ INSERT INTO `info_post` (`id`,`text_ru`,`text_eng`,`status`,`name_status`) VALUE
 
 
 --
--- Definition of table `like_answer`
+-- Definition of table `likes`
 --
 
-DROP TABLE IF EXISTS `like_answer`;
-CREATE TABLE `like_answer` (
+DROP TABLE IF EXISTS `likes`;
+CREATE TABLE `likes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `id_answer` int unsigned NOT NULL,
   `id_user` int unsigned NOT NULL,
@@ -676,11 +676,11 @@ CREATE TABLE `like_answer` (
 ) ENGINE=InnoDB AUTO_INCREMENT=729 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `like_answer`
+-- Dumping data for table `likes`
 --
 
-/*!40000 ALTER TABLE `like_answer` DISABLE KEYS */;
-INSERT INTO `like_answer` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
+/*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+INSERT INTO `likes` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
  (693,443,92,1708586772,242),
  (694,444,92,1708586776,242),
  (695,442,91,1708586824,242),
@@ -717,7 +717,7 @@ INSERT INTO `like_answer` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VAL
  (726,459,94,1713529052,249),
  (727,464,95,1713529074,249),
  (728,464,112,1713529109,249);
-/*!40000 ALTER TABLE `like_answer` ENABLE KEYS */;
+/*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 
 
 --

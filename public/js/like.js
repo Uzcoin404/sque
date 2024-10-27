@@ -66,11 +66,11 @@ function VoteSave(question_id){
     var like_post=[];
     var dislike_post=[];
     var dislike=[];
-    var id_question=[];
+    var question_id=[];
 
     $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
         status.push($(element).attr("data-answer-id"));
-        id_question.push($(element).attr("data-id-question"));
+        question_id.push($(element).attr("data-id-question"));
     });
     $('.answers_post .answers_post__list .answers_post__list_element .btn_like_answer[data-like-status="1"]').each(function(i,element){
         like.push(
@@ -113,7 +113,7 @@ function VoteSave(question_id){
         url: '/viewanswer',
         method: 'get',
         dataType: 'html',
-        data: {status_view: status, id_questions: id_question},
+        data: {status_view: status, question_id: question_id},
         success: function(data){
             location.reload();
         }
@@ -124,7 +124,7 @@ function VoteSave(question_id){
 
 function SubmitLikeStatus(element){
     var status=[];
-    var id_question=[];
+    var question_id=[];
     var like=[];
     var dislike=[];
 
@@ -136,14 +136,14 @@ function SubmitLikeStatus(element){
         $(element).attr('data-like-status', 1);
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
             status.push($(element).attr("data-answer-id"));
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             like.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: $(element).attr('data-like-status'),
                 }
             );
@@ -173,14 +173,14 @@ function SubmitLikeStatus(element){
 
     if($('.answers_post .answers_post__list .answers_post__list_element .btn_dislike_answer.block'+$id+'').hasClass('active')){
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             dislike.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: 1,
                 }
             );
@@ -210,14 +210,14 @@ function SubmitLikeStatus(element){
 
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
             status.push($(element).attr("data-answer-id"));
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             like.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: 0,
                 }
             );
@@ -253,7 +253,7 @@ function SubmitDislikeStatus(element){
     var status=[];
     var dislike_post=[];
     var dislike=[];
-    var id_question=[];
+    var question_id=[];
     var like=[];
 
     $id = $(element).attr('data-id');
@@ -262,14 +262,14 @@ function SubmitDislikeStatus(element){
         $(element).attr('data-dislike-status', 1);
 
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             dislike.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: 1,
                 }
             );
@@ -301,14 +301,14 @@ function SubmitDislikeStatus(element){
     
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
             status.push($(element).attr("data-answer-id"));
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             like.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: 1,
                 }
             );
@@ -337,14 +337,14 @@ function SubmitDislikeStatus(element){
     if($(element).attr('data-dislike-status') == 0){
 
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $(element).each(function(i,element){
             dislike.push(
                 {
                     answer:$(element).attr("data-id"),
-                    question:id_question,
+                    question:question_id,
                     status: 0,
                 }
             );
@@ -378,7 +378,7 @@ function SubmitDislikeStatus(element){
 function OpenFullTextClose(element){
 
     var status=[];
-    var id_question=[];
+    var question_id=[];
     $st = 1;
     $id = $(element).attr('data-answer-id');
 
@@ -386,14 +386,14 @@ function OpenFullTextClose(element){
 
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
             status.push($(element).attr("data-answer-id"));
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $.ajax({
             url: '/viewan',
             method: 'get',
             dataType: 'html',
-            data: {status_view: $(element).attr('data-answer-id'), id_question: id_question},
+            data: {status_view: $(element).attr('data-answer-id'), question_id: question_id},
             success: function(data){
                 console.log(data);
             }
@@ -427,7 +427,7 @@ function OpenFullTextClose(element){
 function OpenFullText(element){
 
     var status=[];
-    var id_question=[];
+    var question_id=[];
     $st = 1;
     $id = $(element).attr('data-answer-id');
 
@@ -435,14 +435,14 @@ function OpenFullText(element){
 
         $('.answers_post .answers_post__list .answers_post__list_element[data-status="1"]').each(function(i,element){
             status.push($(element).attr("data-answer-id"));
-            id_question.push($(element).attr("data-id-question"));
+            question_id.push($(element).attr("data-id-question"));
         });
     
         $.ajax({
             url: '/viewanswer',
             method: 'get',
             dataType: 'html',
-            data: {status_view: $(element).attr('data-answer-id'), id_question: id_question, button_click: 1},
+            data: {status_view: $(element).attr('data-answer-id'), question_id: question_id, button_click: 1},
             success: function(data){
                 console.log(data);
             }

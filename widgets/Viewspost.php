@@ -29,7 +29,7 @@ class Viewspost extends \yii\bootstrap5\Widget
     public function run()
     {
         $this->AddUserView();
-        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM views WHERE id_questions=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
+        $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM views WHERE question_id=:QUESTION_ID",["QUESTION_ID"=>$this->question_id])->queryOne();
         return '<p class="views">'.Html::encode($sql['count']).' '.\Yii::t('app','Views').'</p>';
     }
 
@@ -45,13 +45,13 @@ class Viewspost extends \yii\bootstrap5\Widget
 
         if(isset($Question->id)) return 0;
     
-        $Views=Views::find()->where(["id_questions"=>$this->question_id,"type_user"=>$this->type_user_id,"id_user"=>$this->user_id])->one();
+        $Views=Views::find()->where(["question_id"=>$this->question_id,"type_user"=>$this->type_user_id,"user_id"=>$this->user_id])->one();
             if(!isset($Views->id)){
                 $Views=new Views();
-                $Views->id_questions=$this->question_id;
+                $Views->question_id=$this->question_id;
                 $Views->type_user=$this->type_user_id;
-                $Views->id_user=$this->user_id;
-                $Views->data=strtotime("now");
+                $Views->user_id=$this->user_id;
+                $Views->created_at=time();
                 $Views->isNewRecord=1;
                 $Views->save();
             }

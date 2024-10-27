@@ -86,9 +86,9 @@ class AnswersController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $user = Yii::$app->user->identity;
-            $model->id_user=$user->id;
-            $model->id_questions=$slug;
-            $model->data=strtotime('now');
+            $model->user_id=$user->id;
+            $model->question_id=$slug;
+            $model->created_at=time();
             if($this->CheckUser($slug)){
                 return $this->redirect('/questions/view/'.$slug.'');
             }
@@ -112,7 +112,7 @@ class AnswersController extends Controller
     {
         $user=Yii::$app->user->identity;
 
-        $Answers=Answers::find()->where(["id_questions"=>$slug,"id_user"=>$user->id])->one();
+        $Answers=Answers::find()->where(["question_id"=>$slug,"user_id"=>$user->id])->one();
 
         if(!isset($Answers)){
             return 0;
@@ -127,7 +127,7 @@ class AnswersController extends Controller
 
         $questions = Questions::find()->where(['in', 'status', [4,5,6]]);
         $queryLike = Answers::find();
-        $questions->leftJoin(['answers'=>$queryLike], 'answers.id_questions = questions.id')->where(['id_user'=>$user->id])->orderBy(["data"=>SORT_DESC]);
+        $questions->leftJoin(['answers'=>$queryLike], 'answers.question_id = questions.id')->where(['user_id'=>$user->id])->orderBy(["created_at"=>SORT_DESC]);
         $result = $questions;
         
         $pages = new Pagination(['totalCount' => $result->count(), 'pageSize' => 5, 'forcePageParam' => false, 'pageSizeParam' => false]);
