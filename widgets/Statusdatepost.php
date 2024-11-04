@@ -10,7 +10,7 @@ class Statusdatepost extends \yii\bootstrap5\Widget
     public $question_id=0;
     public $addView=0;
     public $user_id=0;
-    public $type_user_id=1;
+    public $user_type_id=1;
     public $admin = 0;
     public function init()
     {

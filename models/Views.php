@@ -22,7 +22,7 @@ class Views extends \yii\db\ActiveRecord
     {
         return [
             [['question_id'], 'required',],
-            [['question_id','created_at','type_user'],'integer'],
+            [['question_id','created_at','user_type'],'integer'],
             [['user_id'],'safe']
         ];
     }

@@ -17,6 +17,7 @@ use app\models\LikeAnswers;
 use app\models\DislikeAnswer;
 use app\models\ChangeEmail;
 use app\models\Questions;
+use yii\db\Expression;
 
 
 // AJAX
@@ -75,11 +76,6 @@ class LikeController extends Controller
 
     public function LikeAnswers()
     {
-
-        $views = "";
-
-        $likes = new LikeAnswers();
-
         $request = Yii::$app->request;
 
         $user = Yii::$app->user->identity;
@@ -87,47 +83,49 @@ class LikeController extends Controller
         $this->info = [
             $request->get('id_answer_like'),
         ];
+        if (!$user) {
+            return;
+        }
 
         foreach ($this->info as $post) {
             if ($post) {
                 foreach ($post as $like) {
-                    $id_answer = $like['answer'];
-                    $answer_views = ViewsAnswers::find()->where(["id_answer" => $id_answer, "user_id" => $user->id])->one();
-                    $answer = LikeAnswers::find()->where(["id_answer" => $id_answer, "user_id" => $user->id])->one();
-                    $answer_dis = DislikeAnswer::find()->where(["id_answer" => $id_answer, "user_id" => $user->id])->one();
-                    if ($answer || $answer_dis) {
-                        if ($like['status'] == 1) {
-                            $answer->delete();
-                            if (!$answer_views->button_click) {
-                                $answer_views->delete();
-                            }
-                            // $answer_views->delete();
+                    $answer_id = $like['answer'];
+                    // $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+
+                    $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+                    $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+
+                    if ($answer_like) {
+
+                        $answer_like->changeLike($answer_id);
+                    } else {
+                        $answer = Answers::find()->where(["id" => $answer_id])->one();
+                        $question = Questions::find()->where(['id' => $like['question'][0]])->one();
+
+                        if ($answer_dis) {
+                            $answer_dis->changeLike();
                         }
 
-                        return 0;
-                    } else {
-                        $answer = Answers::find()->where(["id" => $id_answer])->one();
-                        $question = Questions::find()->where(['id' => $like['question'][0]])->one();
                         if ($question->status == 5) {
-                            if (isset($answer->user_id)) {
-                                if ($user) {
-                                    if ($answer->user_id != $user->id && $user->moderation == 0) {
-                                        $likes = new LikeAnswers();
-                                        $likes->id_answer = $id_answer;
-                                        $likes->question_id = $like['question'][0];
-                                        $likes->user_id = $user->id;
-                                        $likes->created_at = strtotime('now');
-                                        $likes->save(0);
-                                        if (!$answer_views) {
-                                            $views = new ViewsAnswers();
-                                            $views->id_answer = $id_answer;
-                                            $views->user_id = $user->id;
-                                            $views->type_user = 1;
-                                            $views->created_at = time();
-                                            $views->save(0);
-                                        }
-                                    }
-                                }
+                            if ($answer->user_id != $user->id && $user->moderation == 0) {
+                                $likes = new LikeAnswers();
+                                $likes->answer_id = $answer_id;
+                                $likes->question_id = $like['question'][0];
+                                $likes->user_id = $user->id;
+                                $likes->status = 1;
+                                $likes->created_at = time();
+                                $likes->save();
+                                $answer->likes = $answer->likes + 1;
+                                $answer->update();
+                                // if (!$answer_views) {
+                                //     $views = new ViewsAnswers();
+                                //     $views->answer_id = $answer_id;
+                                //     $views->user_id = $user->id;
+                                //     $views->user_type = 1;
+                                //     $views->created_at = time();
+                                //     $views->save(0);
+                                // }
                             }
                         }
                     }
@@ -145,7 +143,7 @@ class LikeController extends Controller
             $request->get('id_block'),
         ];
 
-        $answer = LikeAnswers::find()->where(['id_answer' => $this->info[0]])->all();
+        $answer = LikeAnswers::find()->andWhere(['answer_id' => $this->info[0]])->all();
 
         foreach ($answer as $value) {
             array_push($this->user_id, $value->user_id);
@@ -171,23 +169,23 @@ class LikeController extends Controller
         $sort = $data['sorts'];
         $id = $data['id'];
         $answer = Answers::find()->where(['in', 'question_id', $id]);
-        $answerLike = LikeAnswers::find()
-            ->select('id_answer,count(question_id) as like_answercount')
-            ->groupBy('id_answer');
+        // $answerLike = LikeAnswers::find()
+        //     ->select('answer_id,count(question_id) as like_answercount')
+        //     ->groupBy('answer_id');
         if ($sort == "DESC") {
-            $answer->orderBy('likes.like_answercount DESC');
+            $answer->orderBy('likes DESC');
         }
         if ($sort == "ASC") {
-            $answer->orderBy('likes.like_answercount ASC');
+            $answer->orderBy('likes ASC');
         }
         if ($sort == "ALL") {
-            $answer->orderBy('number ASC');
+            $answer->orderBy('rank DESC');
         }
-        $answer->leftJoin(['likes' => $answerLike], 'likes.id_answer = answers.id');
+        // $answer->leftJoin(['likes' => $answerLike], 'likes.answer_id = answers.id');
 
-        foreach ($answer->all() as $question) {
+        foreach ($answer->all() as $item) {
             $status = 1;
-            $result .= $this->renderAjax("@app/widgets/views/answers/_view", ["answer" => $question, "question_id" => $id, "orderWinner" => $question->number]);
+            $result .= $this->renderAjax("@app/widgets/views/answers/_view", ["answer" => $item, "question_id" => $id, "orderWinner" => $item->rank]);
         }
         return \yii\helpers\Json::encode(
             [

@@ -16,13 +16,13 @@ class ViewsAnswers extends \yii\db\ActiveRecord
    
     public static function tableName()
     {
-        return 'views_answer';
+        return 'answers_view';
     }
     public function rules()
     {
         return [
-            [['id_answer'], 'required',],
-            [['data','type_user','id_answer'],'integer'],
+            [['answer_id'], 'required'],
+            [['created_at','user_type','answer_id'],'integer'],
             [['user_id'],'safe']
         ];
     }

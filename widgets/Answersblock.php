@@ -11,54 +11,72 @@ use app\models\User;
 
 class Answersblock extends \yii\bootstrap5\Widget
 {
-    public $question_id=0;
-    public $show_my=0;
-    public $orderWinner=0;
+    public $question_id = 0;
+    public $show_my = 0;
+    public $orderWinner = 0;
     public function run()
     {
-        $user=Yii::$app->user->identity;
+        $user = Yii::$app->user->identity;
 
-        $answers = Answers::find()->where(["question_id"=>$this->question_id]);
-        $question_status = Questions::find()->where(["id"=>$this->question_id])->one();
-       
-        if($question_status->status >= 5){
-            $answers = Answers::find()->where(["question_id"=>$this->question_id]);
-            $answers->orderBy('views_answer.views_answercount ASC');
-            
-            $answerlike = ViewsAnswers::find()
-            ->select('id_answer,count(user_id) as views_answercount')
-            ->groupBy('id_answer');
-            $answers->leftJoin(['views_answer'=>$answerlike], 'views_answer.id_answer = answers.id');
-            if($this->orderWinner){
+        $answers = Answers::find()->where(["question_id" => $this->question_id]);
+        $question_status = Questions::find()->where(["id" => $this->question_id])->one();
 
-                $answers->orderBy('views_answer.views_answercount ASC, dislikes_answer.views_dislaikanswercount as ASC');
-                $answerlike = DislikeAnswer::find()
-                ->select('id_answer,count(user_id) as views_answercount')
-                ->groupBy('id_answer');
-                $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.id_answer = answers.id');
+        if ($question_status->status >= 5) {
+
+            $allAnswers = Answers::find()->where(["question_id" => $this->question_id])->all();
+            $answers_id = [];
+            $views_id = [];
+            foreach ($allAnswers as $answer) {
+                array_push($answers_id, $answer->id);
             }
             
+            $views = ViewsAnswers::find()->where(['answer_id' => $answers_id])->all();
+            foreach ($views as $views) {
+                array_push($views_id, $views->answer_id);
+            }
+
+
+            foreach ($allAnswers as $answer) {
+                if (!in_array($answer->id, $views_id)) {
+                    $newView = new ViewsAnswers();
+                    $newView->answer_id = $answer->id;
+                    $newView->user_id = $user->id;
+                    $newView->created_at = time();
+                    $newView->user_type = 1;
+                    $newView->save();
+                }
+            }
+            // $answers->orderBy('answers_view.answers_viewcount ASC');
+
+            // $answerlike = ViewsAnswers::find()
+            // ->select('answer_id,count(user_id) as answers_viewcount')
+            // ->groupBy('answer_id');
+            // $answers->leftJoin(['answers_view'=>$answerlike], 'answers_view.answer_id = answers.id');
+            // if($this->orderWinner){
+
+            //     $answers->orderBy('answers_view.answers_viewcount ASC, dislikes_answer.views_dislaikanswercount as ASC');
+            //     $answerlike = DislikeAnswer::find()
+            //     ->select('answer_id,count(user_id) as answers_viewcount')
+            //     ->groupBy('answer_id');
+            //     $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.answer_id = answers.id');
+            // }
+
         }
-       
-        if($question_status->status == 4){
-            if($user){
-                $answers = Answers::find()->where(["question_id"=>$this->question_id,"user_id"=>$user->id]);
-                return $this->render("answers/index",["answers"=>$answers->all(),"question_id"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
+
+        if ($question_status->status == 4) {
+            if ($user) {
+                $answers = Answers::find()->where(["question_id" => $this->question_id, "user_id" => $user->id]);
+                return $this->render("answers/index", ["answers" => $answers->all(), "question_id" => $this->question_id, "orderWinner" => $this->orderWinner, "filter_status" => 0]);
             } else {
                 return;
             }
         }
 
-        if($this->orderWinner){
-            $answers->orderBy(["number"=>SORT_ASC]);
+        if ($this->orderWinner) {
+            $answers->orderBy("rank ASC");
         }
-
-        if($answers){
-            return $this->render("answers/index",["answers"=>$answers->all(),"question_id"=>$this->question_id,"orderWinner"=>$this->orderWinner, "filter_status"=>0]);
+        if ($answers) {
+            return $this->render("answers/index", ["answers" => $answers->all(), "question_id" => $this->question_id, "orderWinner" => $this->orderWinner, "filter_status" => 0]);
         }
-       
     }
-
-
-
 }

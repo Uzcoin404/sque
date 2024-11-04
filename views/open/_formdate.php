@@ -22,7 +22,7 @@ use yii\jui\DatePicker;
             <?php echo Yii::$app->session->getFlash('error'); ?>
         </div>
     <?php endif;?>
-        <?= Html::submitButton(\Yii::t('app', 'Create and send moderation'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(\Yii::t('app', 'Pay and send for moderation'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

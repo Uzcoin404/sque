@@ -1,67 +1,65 @@
 <div class="user__list_element">
     <div class="user__list_element_img">
-        
-        <p class="title"><?=$users->username?></p>
+
+        <p class="title"><?= $users->username ?></p>
     </div>
     <div class="user__list_element_text">
-        <a href="mailto:<?=$users->email?>" class="email"><?=$users->email?></a>
+        <a href="mailto:<?= $users->email ?>" class="email"><?= $users->email ?></a>
         <p class="balance">
             <?php
-                if(!$users->money){
-                    $users->money = 0;
-                }
+            if (!$users->money) {
+                $users->money = 0;
+            }
             ?>
-            <?=$users->money?>
+            <?= $users->money ?>
         </p>
         <p class="date">
-            <?=Yii::t("app","Date registration")?>:
+            <?= Yii::t("app", "Date registration") ?>:
             <?php
-                $users->create_at = date("d.m.y",$users->create_at);
+            $users->create_at = date("d.m.y", $users->create_at);
             ?>
-            <?=$users->create_at?>
+            <?= $users->create_at ?>
         </p>
         <p class="ready">
             <?php
-                if($users->status == 1){
-                    $users->status = Yii::t("app","Accept email");
-                } else {
-                    $users->status = Yii::t("app","Not accept email");
-                }
+            if ($users->status == 1) {
+                $users->status = Yii::t("app", "Accept email");
+            } else {
+                $users->status = Yii::t("app", "Not accept email");
+            }
             ?>
-            <?=$users->status?>
+            <?= $users->status ?>
         </p>
         <p class="grand">
             <?php
-                if($users->read == 1){
-                    $users->read = Yii::t("app","Read accept");
-                } else {
-                    $users->read = Yii::t("app","Read not accept");
-                }
+            if ($users->read == 1) {
+                $users->read = Yii::t("app", "Read accept");
+            } else {
+                $users->read = Yii::t("app", "Read not accept");
+            }
             ?>
-            <?=$users->read?>
+            <?= $users->read ?>
         </p>
         <p class="id">
-            <?=Yii::t("app","Number user")?>:
-            <?=$users->id?>
+            <?= Yii::t("app", "Number user") ?>:
+            <?= $users->id ?>
         </p>
         <p class="admin">
             <?php
-                if($users->moderation == 1){
-                    $users->moderation = Yii::t("app","Moderation");
-                } else {
-                    $users->moderation = Yii::t("app","User");
-                }
+            if ($users->moderation == 1) {
+                $users->moderation = Yii::t("app", "Moderation");
+            } else {
+                $users->moderation = Yii::t("app", "User");
+            }
             ?>
-            <?=$users->moderation?>
+            <?= $users->moderation ?>
         </p>
         <p class="grand">
-            <?php
-                
-                 Yii::t("app","Citizenship");
-           
-             
-            ?>
-            <?=$users->getGrand()?>
+            <?php Yii::t("app", "Citizenship"); ?>
+            <?= $users->getGrand() ?>
         </p>
+        <div class="questions__list_element_btn">
+            <a href="user/<?= $users->id ?>" class="btn_questions"><?= \Yii::t('app', 'More detailed') ?></a>
+        </div>
     </div>
 </div>

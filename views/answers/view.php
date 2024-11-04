@@ -2,7 +2,6 @@
 <?php 
 
     $user=Yii::$app->user->identity;
-
 ?>
 <?=Yii::$app->controller->renderPartial("//../widgets/BackUrl", ['question_id' => $question->id]);?>
 <div class="questions">
@@ -64,9 +63,9 @@
                                 <?php
                                     }
                                 ?>
-                                <!-- <?php if($question->status == 5){ ?>
+                                <?php if($question->status == 5){ ?>
                                     <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
-                                <?php } ?> -->
+                                <?php } ?>
                             </div>
                         <?php
                             }

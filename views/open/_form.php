@@ -21,7 +21,7 @@ $price = Price::find()->one();
     <?= $form->field($model, 'cost', ['template' => "{label}\n{input}"])->textInput(['maxlength' => true])->input('cost', ['placeholder' => "".Yii::t('app', 'The value of Cost for the best answer must be at least')." ".$price->money.""])  ?>
     <div class="form-group js-model">
         <p><?=Yii::t('app','* These fields must be filled in')?></p>
-        <?= Html::submitButton(\Yii::t('app', 'Create and send moderation'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(\Yii::t('app', 'Pay and send for moderation'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -21,7 +21,7 @@ class Likeanwsers extends \yii\bootstrap5\Widget
     public function run()
     {
         $user_id = [];
-        $sql = LikeAnswers::find()->where(['question_id'=>$this->question_id])->all();
+        $sql = LikeAnswers::find()->andWhere(['question_id'=>$this->question_id])->all();
         foreach($sql as $value){
             array_push($user_id, $value->user_id);
         }

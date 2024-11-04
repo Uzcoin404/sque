@@ -5,22 +5,15 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 use yii\data\Pagination;
 use yii\data\ArrayDataProvider;
 
 use app\models\Views;
-use app\models\Dislike;
-use app\models\Like;
 use app\models\Questions;
 use app\models\User;
 use app\models\Answers;
 use app\models\LikeAnswers;
 use app\models\DislikeAnswer;
-use app\models\ChangeEmail;
-use app\models\ViewsAnswers;
 
 
 // AJAX
@@ -149,7 +142,7 @@ class OpenController extends Controller
                         $views->question_id = $slug;
                         $views->created_at = time();
                         $views->user_id = $user_id;
-                        $views->type_user = $type;
+                        $views->user_type = $type;
                         $views->save();
                     }
                 }
@@ -325,47 +318,47 @@ class OpenController extends Controller
 
     public function actionWinner($id, $user)
     {
-        $win = [];
-        $answers_number_win = [];
-        $answers = [];
-        $answer = Answers::find()->where(['question_id' => $id])->orderBy(['created_at' => SORT_DESC])->all();
+        // $win = [];
+        // $answers_number_win = [];
+        // $answers = [];
+        // $answer = Answers::find()->where(['question_id' => $id])->orderBy(['created_at' => SORT_DESC])->all();
 
-        foreach ($answer as $value) {
+        // foreach ($answer as $value) {
 
-            $this->winner_procent = LikeAnswers::find()->where(['id_answer' => $value->id])->count();
-            //  $this->winner_procent= $this->winner_procent-DislikeAnswer::find()->where(['id_answer'=>$value->id])->count();
-
-
-
-            if ($value->user_id) {
-                $answers[$value->user_id] = $value->id;
-                $win[$this->winner_procent][] = $value->user_id;
-            }
-        }
-
-        //  $dislikeItem = DislikeAnswer::find()->where(['user_id' => $item['user_id'], 'question_id' => $value['id']])->count();
-        //  $winner_id[$key]['dislike'] = $dislikeItem;
+        //     $this->winner_procent = LikeAnswers::find()->andWhere(['answer_id' => $value->id])->count();
+        //     //  $this->winner_procent= $this->winner_procent-DislikeAnswer::find()->andWhere(['answer_id'=>$value->id])->count();
 
 
-        krsort($win);
-        $win = array_reverse($win);
 
-        $winner = [];
-        $number = 0;
+        //     if ($value->user_id) {
+        //         $answers[$value->user_id] = $value->id;
+        //         $win[$this->winner_procent][] = $value->user_id;
+        //     }
+        // }
 
-        foreach ($win as $k => $values) {
+        // //  $dislikeItem = DislikeAnswer::find()->andWhere(['user_id' => $item['user_id'], 'question_id' => $value['id']])->count();
+        // //  $winner_id[$key]['dislike'] = $dislikeItem;
 
-            foreach ($values as $value) {
 
-                array_push($winner, array('user_id' => $value, 'number' => count($win) - $number));
-                $answer = Answers::find()->where(['id' => $answers[$value]])->one();
-                $answer->number = count($win) - $number; //$winner[$number]['number'];
-                $answer->update(0);
-            }
-            $number++;
-        }
+        // krsort($win);
+        // $win = array_reverse($win);
 
-        return $winner;
+        // $winner = [];
+        // $number = 0;
+
+        // foreach ($win as $k => $values) {
+
+        //     foreach ($values as $value) {
+
+        //         array_push($winner, array('user_id' => $value, 'number' => count($win) - $number));
+        //         $answer = Answers::find()->where(['id' => $answers[$value]])->one();
+        //         $answer->rank = count($win) - $number; //$winner[$number]['number'];
+        //         $answer->update(0);
+        //     }
+        //     $number++;
+        // }
+
+        // return $winner;
     }
 
     // Страница моих вопросов
@@ -438,9 +431,9 @@ class OpenController extends Controller
 
         $user = Yii::$app->user->identity;
 
-        $answer_like = LikeAnswers::find()->where(['user_id' => $user->id])->all();
+        $answer_like = LikeAnswers::find()->andWhere(['user_id' => $user->id])->all();
 
-        $answer_dislike = DislikeAnswer::find()->where(['user_id' => $user->id])->all();
+        $answer_dislike = DislikeAnswer::find()->andWhere(['user_id' => $user->id])->all();
 
         $question_id = [];
 

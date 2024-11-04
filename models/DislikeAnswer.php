@@ -2,18 +2,11 @@
 
 namespace app\models;
 
-use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
-use app\modules\books\models\Books;
-use app\models\NoteGroups;
-use yii\helpers\ArrayHelper;
+use yii\db\Expression;
 
 class DislikeAnswer extends \yii\db\ActiveRecord
 {
-   
+
     public static function tableName()
     {
         return 'dislikes';
@@ -21,10 +14,20 @@ class DislikeAnswer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_answer'], 'required',],
-            [['data','id_answer'],'integer'],
-            [['user_id'],'safe']
+            [['answer_id', 'question_id'], 'required',],
+            [['created_at', 'answer_id'], 'integer'],
+            [['user_id'], 'safe']
         ];
     }
+    public static function find()
+    {
+        return parent::find()->where(['status' => 1]);
+    }
 
+
+    public function changeLike()
+    {
+        $this->status = !$this->status;
+        return $this->save(false, ['status']);
+    }
 }

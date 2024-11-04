@@ -22,7 +22,7 @@ class Chat extends \yii\db\ActiveRecord
     {
         return [
             [['sender_id','recipient_id'], 'required',],
-            [['sender_id','recipient_id','data','status','reading_users'],'integer'],
+            [['sender_id','recipient_id','status','reading_users', 'created_at'],'integer'],
             [['img'],'string'],
             [['text'],'string'],
             [['sender_id'],'safe']
@@ -46,7 +46,7 @@ class Chat extends \yii\db\ActiveRecord
     public static function LastData($user_id){
 
     
-            return Chat::find()->where(["sender_id"=>$user_id])->orderBy(["data"=>SORT_DESC])->one()->created_at;
+            return Chat::find()->where(["sender_id"=>$user_id])->orderBy(["created_at"=>SORT_DESC])->one()->created_at;
         
     }
 

@@ -46,7 +46,7 @@ class ComplaintsController extends Controller
     {
 
         $user_id = $_GET['user_id'];
-        $id_answers = $_GET['id_answers'];
+        $answer_id = $_GET['answer_id'];
         $question_id = $_GET['question_id'];
        
         $model = new Complaints();
@@ -55,10 +55,10 @@ class ComplaintsController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->user_id=$user_id;
-            $model->user_id_sender=$user->id;
-            $model->id_answers=$id_answers;
+            $model->sender_id=$user->id;
+            $model->answer_id=$answer_id;
             $model->question_id=$question_id;
-            $model->created_at=strtotime('now');
+            $model->created_at=time();
            
             if($model->save()){
                

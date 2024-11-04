@@ -77,9 +77,9 @@
                                         }
                                     }
                                 ?>
-                                <!-- <?php if($question->status == 4){ ?>
+                                <?php if($question->status == 4){ ?>
                                     <a OnClick="VoteSave(<?=$question->id;?>)" class="btn_questions"><?=\Yii::t('app','Vote')?></a>
-                                <?php } ?> -->
+                                <?php } ?>
                             </div>
                         <?php
                             }

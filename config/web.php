@@ -162,6 +162,8 @@ $config = [
                 /* Правила */
                 /* Список пользователей */
                 '/user'=>"user/userlist",
+                '/user/<slug:\d+>'=>"user/view",
+                '/user/<slug:\d+>/update'=>"user/changemoney",
                 /* Список  пользователей */
                 /* Изменение минимального платежа */
                 '/price'=>"price/index",

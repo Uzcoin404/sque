@@ -122,7 +122,8 @@ function VoteSave(question_id){
 
 }
 
-function SubmitLikeStatus(element){
+function SubmitLikeStatus(element) {
+    
     var status=[];
     var question_id=[];
     var like=[];
@@ -139,7 +140,9 @@ function SubmitLikeStatus(element){
             question_id.push($(element).attr("data-id-question"));
         });
     
-        $(element).each(function(i,element){
+        $(element).each(function (i, element) {
+            console.log(element);
+            
             like.push(
                 {
                     answer:$(element).attr("data-id"),
@@ -148,6 +151,8 @@ function SubmitLikeStatus(element){
                 }
             );
         });
+
+        console.log(like);
 
         $.ajax({
             url: '/like/',
@@ -213,7 +218,9 @@ function SubmitLikeStatus(element){
             question_id.push($(element).attr("data-id-question"));
         });
     
-        $(element).each(function(i,element){
+        $(element).each(function (i, element) {
+            console.log(element);
+            
             like.push(
                 {
                     answer:$(element).attr("data-id"),
@@ -222,6 +229,8 @@ function SubmitLikeStatus(element){
                 }
             );
         });
+        console.log(like);
+            
 
         $.ajax({
             url: '/like/',

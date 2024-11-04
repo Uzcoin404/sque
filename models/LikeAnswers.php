@@ -2,14 +2,8 @@
 
 namespace app\models;
 
-use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
-use app\modules\books\models\Books;
-use app\models\NoteGroups;
-use yii\helpers\ArrayHelper;
+use app\models\Answers;
+use yii\db\Expression;
 
 class LikeAnswers extends \yii\db\ActiveRecord
 {
@@ -26,5 +20,18 @@ class LikeAnswers extends \yii\db\ActiveRecord
             [['user_id'],'safe']
         ];
     }
-
+    public static function find()
+    {
+        return parent::find()->where(['status' => 1]);
+    }
+    public function changeLike($answer_id)
+    {
+        if ($this->status == 1) {
+            Answers::updateAll(['likes' => new Expression('likes - 1')], ['id' => $answer_id]);
+        } else {
+            Answers::updateAll(['likes' => new Expression('likes + 1')], ['id' => $answer_id]);
+        }
+        $this->status = !$this->status;
+        return $this->save(false, ['status']);
+    }
 }

@@ -9,7 +9,7 @@
                     <a class="sort" data-sort="cost-DESC" OnClick="ApplyFilter(this);"><img src="/img/icons/az.png" style="transform: scale(-1, 1);"></a>
                   </div>  
                 </div>
-                <div class="questions__filter_form__list_element">
+                <!-- <div class="questions__filter_form__list_element">
                   <label for="">
                     <?=\Yii::t('app', 'Interested users');?>
                   </label>
@@ -17,7 +17,7 @@
                     <a class="sort" data-sort="view-DESC" OnClick="ApplyFilter(this);"><img src="/img/icons/za.png" style="transform: scale(-1, 1);"></a>
                     <a class="sort" data-sort="view-ASC" OnClick="ApplyFilter(this);"><img src="/img/icons/az.png" style="transform: scale(-1, 1);"></a>
                   </div>
-                </div>
+                </div> -->
                 <div class="questions__filter_form__list_element">
                   <label for="">
                     <?=\Yii::t('app', 'Count answers');?>

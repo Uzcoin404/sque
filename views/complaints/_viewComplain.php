@@ -2,7 +2,7 @@
     use app\models\Answers;
     use app\models\User;
     use app\models\Questions;
-    $answers = Answers::find()->where(["id"=>$complaints->id_answers])->one();
+    $answers = Answers::find()->where(["id"=>$complaints->answer_id])->one();
 ?>
 <?PHP IF(isset($answers->user_id)):?>
     <?PHP

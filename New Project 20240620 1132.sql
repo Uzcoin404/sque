@@ -170,7 +170,7 @@ DROP TABLE IF EXISTS `close_answers`;
 CREATE TABLE `close_answers` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `id_user` int unsigned NOT NULL,
-  `id_answer` int unsigned NOT NULL,
+  `answer_id` int unsigned NOT NULL,
   `id_question` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -180,7 +180,7 @@ CREATE TABLE `close_answers` (
 --
 
 /*!40000 ALTER TABLE `close_answers` DISABLE KEYS */;
-INSERT INTO `close_answers` (`id`,`id_user`,`id_answer`,`id_question`) VALUES 
+INSERT INTO `close_answers` (`id`,`id_user`,`answer_id`,`id_question`) VALUES 
  (62,91,449,243),
  (63,91,446,243),
  (64,91,460,249),
@@ -199,7 +199,7 @@ CREATE TABLE `complaints` (
   `id_user_sender` int unsigned NOT NULL,
   `id_user` int unsigned NOT NULL,
   `id_question` int unsigned NOT NULL,
-  `id_answers` int unsigned NOT NULL,
+  `answer_id` int unsigned NOT NULL,
   `reason` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
@@ -220,7 +220,7 @@ CREATE TABLE `complaints` (
 DROP TABLE IF EXISTS `dislikes`;
 CREATE TABLE `dislikes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_answer` int unsigned NOT NULL,
+  `answer_id` int unsigned NOT NULL,
   `id_user` int unsigned NOT NULL,
   `data` int unsigned NOT NULL,
   `id_questions` int unsigned NOT NULL,
@@ -232,7 +232,7 @@ CREATE TABLE `dislikes` (
 --
 
 /*!40000 ALTER TABLE `dislikes` DISABLE KEYS */;
-INSERT INTO `dislikes` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
+INSERT INTO `dislikes` (`id`,`answer_id`,`id_user`,`data`,`id_questions`) VALUES 
  (475,445,92,1708586782,242),
  (476,441,92,1708586787,242),
  (477,445,91,1708586830,242),
@@ -668,7 +668,7 @@ INSERT INTO `info_post` (`id`,`text_ru`,`text_eng`,`status`,`name_status`) VALUE
 DROP TABLE IF EXISTS `likes`;
 CREATE TABLE `likes` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_answer` int unsigned NOT NULL,
+  `answer_id` int unsigned NOT NULL,
   `id_user` int unsigned NOT NULL,
   `data` int unsigned NOT NULL,
   `id_questions` int unsigned NOT NULL,
@@ -680,7 +680,7 @@ CREATE TABLE `likes` (
 --
 
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
-INSERT INTO `likes` (`id`,`id_answer`,`id_user`,`data`,`id_questions`) VALUES 
+INSERT INTO `likes` (`id`,`answer_id`,`id_user`,`data`,`id_questions`) VALUES 
  (693,443,92,1708586772,242),
  (694,444,92,1708586776,242),
  (695,442,91,1708586824,242),
@@ -951,7 +951,7 @@ CREATE TABLE `views` (
   `id_questions` int unsigned NOT NULL,
   `id_user` text NOT NULL,
   `data` int unsigned NOT NULL,
-  `type_user` int unsigned NOT NULL,
+  `user_type` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=915 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -960,7 +960,7 @@ CREATE TABLE `views` (
 --
 
 /*!40000 ALTER TABLE `views` DISABLE KEYS */;
-INSERT INTO `views` (`id`,`id_questions`,`id_user`,`data`,`type_user`) VALUES 
+INSERT INTO `views` (`id`,`id_questions`,`id_user`,`data`,`user_type`) VALUES 
  (888,242,'95',1708423758,1),
  (889,242,'92',1708423868,1),
  (890,242,'91',1708423937,1),
@@ -998,10 +998,10 @@ INSERT INTO `views` (`id`,`id_questions`,`id_user`,`data`,`type_user`) VALUES
 DROP TABLE IF EXISTS `views_answer`;
 CREATE TABLE `views_answer` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `id_answer` int unsigned NOT NULL,
+  `answer_id` int unsigned NOT NULL,
   `id_user` text NOT NULL,
   `data` int unsigned NOT NULL,
-  `type_user` int unsigned NOT NULL,
+  `user_type` int unsigned NOT NULL,
   `button_click` int unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=925 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1011,7 +1011,7 @@ CREATE TABLE `views_answer` (
 --
 
 /*!40000 ALTER TABLE `views_answer` DISABLE KEYS */;
-INSERT INTO `views_answer` (`id`,`id_answer`,`id_user`,`data`,`type_user`,`button_click`) VALUES 
+INSERT INTO `views_answer` (`id`,`answer_id`,`id_user`,`data`,`user_type`,`button_click`) VALUES 
  (861,443,'92',1708586772,1,0),
  (862,444,'92',1708586776,1,0),
  (863,445,'92',1708586782,1,0),

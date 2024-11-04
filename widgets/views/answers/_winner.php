@@ -20,7 +20,7 @@ if($answer->user_id == $status_questions->winner_id){
 <div class='answers_post__list_element winner' data-answer-id="<?=$answer->id;?>" data-status="0" data-id-question="<?=$question_id?>">
     <div class="title_info">
         <?PHP IF($orderWinner):?>
-            <span class="answer_number__level">№<?=$answer->number;?></span>
+            <span class="answer_number__level">№<?=$answer->rank;?></span>
         <?PHP ENDIF;?>
         <?php
         if($status_questions->status <= 5){
@@ -45,16 +45,16 @@ if($answer->user_id == $status_questions->winner_id){
                     $user=User::find()->all();
                 
                     foreach($user as $info){
-                        $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"user_id"=>$info->id])->one();
+                        $like_user=LikeAnswers::find()->andWhere(["answer_id"=>$answer->id,"user_id"=>$info->id])->one();
         
-                        $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"user_id"=>$info->id])->one();
+                        $dislike_user=DislikeAnswer::find()->andWhere(["answer_id"=>$answer->id,"user_id"=>$info->id])->one();
                     }
 
                 } else {
 
-                    $like_user=LikeAnswers::find()->where(["id_answer"=>$answer->id,"user_id"=>$user->id])->one();
+                    $like_user=LikeAnswers::find()->andWhere(["answer_id"=>$answer->id,"user_id"=>$user->id])->one();
         
-                    $dislike_user=DislikeAnswer::find()->where(["id_answer"=>$answer->id,"user_id"=>$user->id])->one();
+                    $dislike_user=DislikeAnswer::find()->andWhere(["answer_id"=>$answer->id,"user_id"=>$user->id])->one();
 
                 }
 

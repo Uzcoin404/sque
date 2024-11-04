@@ -5,27 +5,14 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 use yii\data\Pagination;
 use yii\data\ArrayDataProvider;
 
 use app\models\Views;
-use app\models\Dislike;
-use app\models\Like;
 use app\models\Questions;
 use app\models\User;
-use app\models\Answers;
 use app\models\LikeAnswers;
 use app\models\DislikeAnswer;
-use app\models\ChangeEmail;
-use app\models\ViewsAnswers;
-
-
-// AJAX
-use yii\widgets\ActiveForm;
-
 
 class VoitingController extends Controller
 {
@@ -61,9 +48,9 @@ class VoitingController extends Controller
     {
         $user=Yii::$app->user->identity;
         
-        $answer_like = LikeAnswers::find()->where(['user_id'=>$user->id])->all();
+        $answer_like = LikeAnswers::find()->andWhere(['user_id'=>$user->id])->all();
 
-        $answer_dislike = DislikeAnswer::find()->where(['user_id'=>$user->id])->all();
+        $answer_dislike = DislikeAnswer::find()->andWhere(['user_id'=>$user->id])->all();
 
         $question_id = [];
         
@@ -86,10 +73,10 @@ class VoitingController extends Controller
         
         foreach($question_id as $value){
 
-            array_push($questions, $question);
+            array_push($questions, $value);
             
         }
-        $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->andWhere(['<=', 'created_at', time() - 24 * 3600])->orderBy(["data_status"=>SORT_DESC])->one();
+        $question = Questions::find()->where(["status"=>[5,6],"id"=>$value])->andWhere(['<=', 'created_at', time() - 24 * 3600])->orderBy(["updated_at"=>SORT_DESC])->one();
 
         $provider = new ArrayDataProvider([
             'allModels' => $questions,
@@ -221,7 +208,7 @@ class VoitingController extends Controller
                         $views->question_id = $slug;
                         $views->created_at = time();
                         $views->user_id = $user_id;
-                        $views->type_user = $type;
+                        $views->user_type = $type;
                 
                         $views->save();
                     }

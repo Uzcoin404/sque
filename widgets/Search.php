@@ -4,7 +4,6 @@ namespace app\widgets;
 
 use Yii;
 use app\models\Questions;
-use app\models\ViewsAnswers;
 use app\models\User;
 
 class Search extends \yii\bootstrap5\Widget

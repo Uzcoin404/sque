@@ -21,8 +21,8 @@ class Complaints extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id_sender','user_id','question_id','id_answers','reason','data'], 'required',],
-            [['user_id_sender','user_id','question_id','id_answers','data'],'integer'],
+            [['sender_id','user_id','question_id','answer_id','reason','created_at'], 'required',],
+            [['sender_id','user_id','question_id','answer_id','created_at'],'integer'],
             [['reason'],'string']
         ];
     }

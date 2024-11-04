@@ -53,7 +53,7 @@ class Questions extends \yii\db\ActiveRecord
         return [
             'title' => \Yii::t('app', 'Title of question'),
             'text' => \Yii::t('app', 'Text of question'),
-            'cost' => \Yii::t('app', 'cost of question'),
+            'cost' => \Yii::t('app', 'Cost of the best answer'),
             'status' => \Yii::t('app', 'Status of question'),
             // 'data' => \Yii::t('app', 'Data created of question'),
             'owner_id' => \Yii::t('app', 'Owner of question'),
@@ -145,7 +145,7 @@ class Questions extends \yii\db\ActiveRecord
                 $hours = $interval->d * 24 + $interval->h;
                 $result = Yii::t('app', '{h} hours {i} minutes', ['h' => $hours, 'i' => $interval->i]);
             } elseif ($this->status == 5) {
-                $date_voting = new \DateTime("@" . $this->moderated_at);
+                $date_voting = new \DateTime("@" . $this->voting_at);
                 $date_voting->setTimezone(new \DateTimeZone('Asia/Yekaterinburg'));
                 $interval = $date_voting->diff($date_now);
                 $hours = $interval->d * 24 + $interval->h;

@@ -5,27 +5,10 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
-use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
+
 use yii\data\Pagination;
-use yii\data\ArrayDataProvider;
-
-use app\models\Views;
-use app\models\Dislike;
-use app\models\Like;
 use app\models\Questions;
-use app\models\User;
-use app\models\Answers;
 use app\models\LikeAnswers;
-use app\models\DislikeAnswer;
-use app\models\ChangeEmail;
-use app\models\ViewsAnswers;
-
-
-// AJAX
-use yii\widgets\ActiveForm;
-
 
 class MyvoitingController extends Controller
 {
@@ -65,7 +48,7 @@ class MyvoitingController extends Controller
         
         $questions = [];
 
-        $questions = Questions::find()->where(['status', [4,5,6]])->orderBy(["data"=>SORT_DESC]);
+        $questions = Questions::find()->where(['status', [4,5,6]])->orderBy(["created_at"=>SORT_DESC]);
 
         $queryLike = LikeAnswers::find();
         $questions->leftJoin(['likes'=>$queryLike], 'likes.question_id = questions.id')->where(['user_id'=>$user->id])

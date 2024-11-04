@@ -50,15 +50,15 @@ class AnswersController extends Controller
 
     public function actionDelete(){
         $user=Yii::$app->user->identity;
-        $id_answers = $_GET['answer'];
+        $answer_id = $_GET['answer'];
         $id_complaints = $_GET['complaints'];
-        $like = LikeAnswers::find()->where(["id_answer"=>$id_answers])->all();
-        $dislike = DislikeAnswer::find()->where(["id_answer"=>$id_answers])->all();
-        $view = ViewsAnswers::find()->where(["id_answer"=>$id_answers])->all();
+        $like = LikeAnswers::find()->andWhere(["answer_id"=>$answer_id])->all();
+        $dislike = DislikeAnswer::find()->andWhere(["answer_id"=>$answer_id])->all();
+        $view = ViewsAnswers::find()->where(["answer_id"=>$answer_id])->all();
         if($user->moderation == 1){
             if($like){
                 foreach($like as $post){
-                    LikeAnswers::find()->where(["id"=>$post->id])->one()->delete();
+                    LikeAnswers::find()->andWhere(["id"=>$post->id])->one()->delete();
                 }
             }
             if($view){
@@ -68,10 +68,10 @@ class AnswersController extends Controller
             }
             if($dislike){
                 foreach($dislike as $post){
-                    DislikeAnswer::find()->where(["id"=>$post->id])->one()->delete();
+                    DislikeAnswer::find()->andWhere(["id"=>$post->id])->one()->delete();
                 }
             }
-            Answers::find()->where(["id"=>$id_answers])->one()->delete();
+            Answers::find()->where(["id"=>$answer_id])->one()->delete();
             Complaints::find()->where(["id"=>$id_complaints])->one()->delete();
             return $this->redirect('/');
         } else {

@@ -11,18 +11,18 @@ class Viewspost extends \yii\bootstrap5\Widget
     public $question_id=0;
     public $addView=0;
     public $user_id=0;
-    public $type_user_id=1;
+    public $user_type_id=1;
     public $admin = 0;
     public function init()
     {
         parent::init();
         if(isset(\Yii::$app->user->identity->id)){
             $this->user_id=\Yii::$app->user->identity->id;
-            $this->type_user_id=1;
+            $this->user_type_id=1;
             $this->admin = \Yii::$app->user->identity->moderation;
         }else{
             $this->user_id=Yii::$app->session->getId();
-            $this->type_user_id=0;
+            $this->user_type_id=0;
             $this->admin = 0;
         }
     }
@@ -45,11 +45,11 @@ class Viewspost extends \yii\bootstrap5\Widget
 
         if(isset($Question->id)) return 0;
     
-        $Views=Views::find()->where(["question_id"=>$this->question_id,"type_user"=>$this->type_user_id,"user_id"=>$this->user_id])->one();
+        $Views=Views::find()->where(["question_id"=>$this->question_id,"user_type"=>$this->user_type_id,"user_id"=>$this->user_id])->one();
             if(!isset($Views->id)){
                 $Views=new Views();
                 $Views->question_id=$this->question_id;
-                $Views->type_user=$this->type_user_id;
+                $Views->user_type=$this->user_type_id;
                 $Views->user_id=$this->user_id;
                 $Views->created_at=time();
                 $Views->isNewRecord=1;
