@@ -17,26 +17,26 @@ class Answersblock extends \yii\bootstrap5\Widget
     public function run()
     {
         $user = Yii::$app->user->identity;
-
         $answers = Answers::find()->where(["question_id" => $this->question_id]);
+
         $question_status = Questions::find()->where(["id" => $this->question_id])->one();
 
         if ($question_status->status >= 5) {
 
-            // $answers->orderBy('answers_view.answers_viewcount ASC');
+            $answers->orderBy('answers_view.answers_viewcount ASC');
 
-            // $answerlike = ViewsAnswers::find()
-            // ->select('answer_id,count(user_id) as answers_viewcount')
-            // ->groupBy('answer_id');
-            // $answers->leftJoin(['answers_view'=>$answerlike], 'answers_view.answer_id = answers.id');
-            // if($this->orderWinner){
+            $answerlike = ViewsAnswers::find()
+            ->select('answer_id,count(user_id) as answers_viewcount')
+            ->groupBy('answer_id');
+            $answers->leftJoin(['answers_view'=>$answerlike], 'answers_view.answer_id = answers.id');
+            if($this->orderWinner){
 
-            //     $answers->orderBy('answers_view.answers_viewcount ASC, dislikes_answer.views_dislaikanswercount as ASC');
-            //     $answerlike = DislikeAnswer::find()
-            //     ->select('answer_id,count(user_id) as answers_viewcount')
-            //     ->groupBy('answer_id');
-            //     $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.answer_id = answers.id');
-            // }
+                $answers->orderBy('answers_view.answers_viewcount ASC, dislikes_answer.views_dislaikanswercount as ASC');
+                $answerlike = DislikeAnswer::find()
+                ->select('answer_id,count(user_id) as answers_viewcount')
+                ->groupBy('answer_id');
+                $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.answer_id = answers.id');
+            }
         }
 
         if ($question_status->status == 4) {

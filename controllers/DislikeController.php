@@ -128,19 +128,22 @@ class DislikeController extends Controller
                     $answer_id = $dislike['answer'];
                     $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
-                    $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+                    // $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
                     $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
                     if ($answer_dis) {
 
-                        $answer_dis->changeLike();
+                        if ($answer_dis->status == 1 && $answer_views->button_click == 0) {
+                            ViewsAnswers::find()->where(['answer_id' => $answer_id])->one()->delete();
+                        }
+                        $answer_dis->delete();
                     } else {
                         $answer = Answers::find()->where(["id" => $answer_id])->one();
                         $question = Questions::find()->where(['id' => $dislike['question'][0]])->one();
 
-                        if ($answer_like) {
-                            $answer_like->changeLike($answer_id);
-                        }
+                        // if ($answer_like) {
+                        //     $answer_like->delete();
+                        // }
 
                         if ($question->status == 5) {
                             if ($answer->user_id != $user->id && $user->moderation == 0) {

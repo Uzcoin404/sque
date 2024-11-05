@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\db\Expression;
+use app\models\ViewsAnswers;
 
 class DislikeAnswer extends \yii\db\ActiveRecord
 {
@@ -18,16 +19,5 @@ class DislikeAnswer extends \yii\db\ActiveRecord
             [['created_at', 'answer_id'], 'integer'],
             [['user_id'], 'safe']
         ];
-    }
-    public static function find()
-    {
-        return parent::find()->where(['status' => 1]);
-    }
-
-
-    public function changeLike()
-    {
-        $this->status = !$this->status;
-        return $this->save(false, ['status']);
     }
 }

@@ -94,18 +94,24 @@ class LikeController extends Controller
                     $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
                     $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
-                    $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+                    // $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
                     if ($answer_like) {
 
-                        $answer_like->changeLike($answer_id);
+                        if ($answer_like->status == 1 && $answer_views->button_click == 0) {
+
+                            ViewsAnswers::find()->where(['answer_id' => $answer_id])->one()->delete();
+                        }
+                        $answer_like->delete();
+                        Answers::updateAll(['likes' => new Expression('likes - 1')], ['id' => $answer_id]);
+
                     } else {
                         $answer = Answers::find()->where(["id" => $answer_id])->one();
                         $question = Questions::find()->where(['id' => $like['question'][0]])->one();
 
-                        if ($answer_dis) {
-                            $answer_dis->changeLike();
-                        }
+                        // if ($answer_dis) {
+                        //     $answer_dis->delete();
+                        // }
 
                         if ($question->status == 5) {
                             if ($answer->user_id != $user->id && $user->moderation == 0) {

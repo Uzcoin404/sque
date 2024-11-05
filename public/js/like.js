@@ -379,9 +379,6 @@ function SubmitDislikeStatus(element){
         }, 1000);
 
     }
-
-
-
 }
 
 function OpenFullTextClose(element){

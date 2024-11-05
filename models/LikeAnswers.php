@@ -4,6 +4,7 @@ namespace app\models;
 
 use app\models\Answers;
 use yii\db\Expression;
+use app\models\ViewsAnswers;
 
 class LikeAnswers extends \yii\db\ActiveRecord
 {
@@ -19,19 +20,5 @@ class LikeAnswers extends \yii\db\ActiveRecord
             [['created_at','answer_id'],'integer'],
             [['user_id'],'safe']
         ];
-    }
-    public static function find()
-    {
-        return parent::find()->where(['status' => 1]);
-    }
-    public function changeLike($answer_id)
-    {
-        if ($this->status == 1) {
-            Answers::updateAll(['likes' => new Expression('likes - 1')], ['id' => $answer_id]);
-        } else {
-            Answers::updateAll(['likes' => new Expression('likes + 1')], ['id' => $answer_id]);
-        }
-        $this->status = !$this->status;
-        return $this->save(false, ['status']);
     }
 }
