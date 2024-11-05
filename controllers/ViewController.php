@@ -81,53 +81,50 @@ class ViewController extends Controller
             $this->user_type_id = 0;
         }
 
-
-
         foreach ($this->info as $post) {
 
-            // if (!$moderation) {
+            if (!$moderation) {
+
+                $questions = Questions::find()->where(['id' => $this->question_id[0][0]])->one();
+                $Views = ViewsAnswers::find()->where(["answer_id" => $post, "user_id" => $user->id])->one();
+
+                if ($questions->status < 6) {
+                    if ($questions->status == 5) {
+
+                        if (!isset($Views->id)) {
+                            if ($this->btn_click[0] == 1) {
+                                $Views = new ViewsAnswers();
+                                $Views->answer_id = $post;
+                                $Views->user_type = $this->user_type_id;
+                                $Views->user_id = $user->id;
+                                $Views->created_at = time();
+                                $Views->isNewRecord = 1;
+                                $Views->button_click = $this->btn_click[0];
+                                $Views->save(0);
+                            } else {
+                                $Views = new ViewsAnswers();
+                                $Views->answer_id = $post;
+                                $Views->user_type = $this->user_type_id;
+                                $Views->user_id = $user->id;
+                                $Views->created_at = time();
+                                $Views->isNewRecord = 1;
+                                $Views->save(0);
+                            }
 
 
-            //     $questions = Questions::find()->where(['id' => $this->question_id[0][0]])->one();
-            //     $Views = ViewsAnswers::find()->where(["answer_id" => $post, "user_id" => $user->id])->one();
-
-            //     if ($questions->status < 6) {
-            //         if ($questions->status == 5) {
-
-            //             if (!isset($Views->id)) {
-            //                 if ($this->btn_click[0] == 1) {
-            //                     $Views = new ViewsAnswers();
-            //                     $Views->answer_id = $post;
-            //                     $Views->user_type = $this->user_type_id;
-            //                     $Views->user_id = $user->id;
-            //                     $Views->created_at = time();
-            //                     $Views->isNewRecord = 1;
-            //                     $Views->button_click = $this->btn_click[0];
-            //                     $Views->save(0);
-            //                 } else {
-            //                     $Views = new ViewsAnswers();
-            //                     $Views->answer_id = $post;
-            //                     $Views->user_type = $this->user_type_id;
-            //                     $Views->user_id = $user->id;
-            //                     $Views->created_at = time();
-            //                     $Views->isNewRecord = 1;
-            //                     $Views->save(0);
-            //                 }
-
-
-            //                 //unset($likes);
-            //             } else {
-            //                 if ($this->btn_click[0] == 1) {
-            //                     $Views->button_click = $this->btn_click[0];
-            //                     $Views->update(0);
-            //                 } else {
-            //                     $Views->button_click = 0;
-            //                     $Views->update(0);
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+                            //unset($likes);
+                        } else {
+                            if ($this->btn_click[0] == 1) {
+                                $Views->button_click = $this->btn_click[0];
+                                $Views->update(0);
+                            } else {
+                                $Views->button_click = 0;
+                                $Views->update(0);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -91,7 +91,7 @@ class LikeController extends Controller
             if ($post) {
                 foreach ($post as $like) {
                     $answer_id = $like['answer'];
-                    // $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+                    $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
                     $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
                     $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
@@ -118,14 +118,14 @@ class LikeController extends Controller
                                 $likes->save();
                                 $answer->likes = $answer->likes + 1;
                                 $answer->update();
-                                // if (!$answer_views) {
-                                //     $views = new ViewsAnswers();
-                                //     $views->answer_id = $answer_id;
-                                //     $views->user_id = $user->id;
-                                //     $views->user_type = 1;
-                                //     $views->created_at = time();
-                                //     $views->save(0);
-                                // }
+                                if (!$answer_views) {
+                                    $newView = new ViewsAnswers();
+                                    $newView->answer_id = $answer->id;
+                                    $newView->user_id = $user->id;
+                                    $newView->user_type = 1;
+                                    $newView->created_at = time();
+                                    $newView->save();
+                                }
                             }
                         }
                     }

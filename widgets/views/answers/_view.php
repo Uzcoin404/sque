@@ -67,7 +67,7 @@ if ($status_questions->status >= 4 && $status_questions->status != 6): ?>
         <?php
         $text_view = Yii::t('app', 'Full text');
         $class_view = '';
-        $status_user = 0;
+        $status_user = 1;
         if ($users) {
             $view = ViewsAnswers::find()->where(['answer_id' => $answer->id, 'user_id' => $users->id])->one();
             // $close = CloseAnswer::find()->where(['answer_id'=>$answer->id, 'user_id'=>$users->id])->one();

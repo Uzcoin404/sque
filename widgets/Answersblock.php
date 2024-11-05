@@ -23,29 +23,6 @@ class Answersblock extends \yii\bootstrap5\Widget
 
         if ($question_status->status >= 5) {
 
-            $allAnswers = Answers::find()->where(["question_id" => $this->question_id])->all();
-            $answers_id = [];
-            $views_id = [];
-            foreach ($allAnswers as $answer) {
-                array_push($answers_id, $answer->id);
-            }
-            
-            $views = ViewsAnswers::find()->where(['answer_id' => $answers_id])->all();
-            foreach ($views as $views) {
-                array_push($views_id, $views->answer_id);
-            }
-
-
-            foreach ($allAnswers as $answer) {
-                if (!in_array($answer->id, $views_id)) {
-                    $newView = new ViewsAnswers();
-                    $newView->answer_id = $answer->id;
-                    $newView->user_id = $user->id;
-                    $newView->created_at = time();
-                    $newView->user_type = 1;
-                    $newView->save();
-                }
-            }
             // $answers->orderBy('answers_view.answers_viewcount ASC');
 
             // $answerlike = ViewsAnswers::find()
@@ -60,7 +37,6 @@ class Answersblock extends \yii\bootstrap5\Widget
             //     ->groupBy('answer_id');
             //     $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.answer_id = answers.id');
             // }
-
         }
 
         if ($question_status->status == 4) {

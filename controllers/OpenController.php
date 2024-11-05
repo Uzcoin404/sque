@@ -14,11 +14,7 @@ use app\models\User;
 use app\models\Answers;
 use app\models\LikeAnswers;
 use app\models\DislikeAnswer;
-
-
-// AJAX
-use yii\widgets\ActiveForm;
-
+use yii\web\NotFoundHttpException;
 
 class OpenController extends Controller
 {

@@ -17,6 +17,7 @@ use app\models\LikeAnswers;
 use app\models\ChangeEmail;
 use app\models\Answers;
 use app\models\Questions;
+use app\widgets\Viewsanswer;
 
 
 // AJAX
@@ -125,7 +126,7 @@ class DislikeController extends Controller
             if ($post) {
                 foreach ($post as $dislike) {
                     $answer_id = $dislike['answer'];
-                    // $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
+                    $answer_views = ViewsAnswers::find()->where(["answer_id" => $answer_id, "user_id" => $user->id])->one();
 
                     $answer_like = LikeAnswers::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
                     $answer_dis = DislikeAnswer::find()->andWhere(["answer_id" => $answer_id, "user_id" => $user->id])->one();
@@ -150,14 +151,14 @@ class DislikeController extends Controller
                                 $newDislike->status = 1;
                                 $newDislike->created_at = time();
                                 $newDislike->save();
-                                // if (!$answer_views) {
-                                //     $views = new ViewsAnswers();
-                                //     $views->answer_id = $answer_id;
-                                //     $views->user_id = $user->id;
-                                //     $views->user_type = 1;
-                                //     $views->created_at = time();
-                                //     $views->save(0);
-                                // }
+                                if (!$answer_views) {
+                                    $newView = new ViewsAnswers();
+                                    $newView->answer_id = $answer->id;
+                                    $newView->user_id = $user->id;
+                                    $newView->user_type = 1;
+                                    $newView->created_at = time();
+                                    $newView->save();
+                                }
                             }
                         }
                     }
