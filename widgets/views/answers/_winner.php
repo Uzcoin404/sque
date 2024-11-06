@@ -78,10 +78,10 @@ if($answer->user_id == $status_questions->winner_id){
 
         ?>
                 <p class="likes">
-                    <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button><?=Html::encode($answer->getLiks()).' '.\Yii::t('app','Like')?>
+                    <button class="btn_like_answer block<?=$answer->id;?> <?=$class_like;?>" onclick="SubmitLikeStatus(this)" data-id="<?=$answer->id;?>" data-like-status="0"></button><?=Html::encode($answer->getLikes()).' '.\Yii::t('app','Like')?>
                 </p>
                 <p class="dislikes">
-                    <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDisliks()).' '.\Yii::t('app','Dislike');?>
+                    <button class="btn_dislike_answer block<?=$answer->id;?> <?=$class_dislike?>" onclick="SubmitDislikeStatus(this)" data-id="<?=$answer->id;?>" data-dislike-status="0"></button><?=Html::encode($answer->getDislikes()).' '.\Yii::t('app','Dislike');?>
                 </p>
                 <?php if($status_questions->status == 6) {?>
                     <p class="views">

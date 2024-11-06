@@ -23,19 +23,25 @@ class Answersblock extends \yii\bootstrap5\Widget
 
         if ($question_status->status >= 5) {
 
-            $answers->orderBy('answers_view.answers_viewcount ASC');
+            $answers->orderBy(['answers_view.answers_viewcount ASC']);
 
-            $answerlike = ViewsAnswers::find()
-            ->select('answer_id,count(user_id) as answers_viewcount')
-            ->groupBy('answer_id');
-            $answers->leftJoin(['answers_view'=>$answerlike], 'answers_view.answer_id = answers.id');
-            if($this->orderWinner){
+            $answerViews = ViewsAnswers::find()
+                ->select(['answer_id', 'count(user_id) as answers_viewcount', 'MAX(created_at) as latest_view_time'])
+                ->groupBy('answer_id');
+
+            // Join the subquery and order by views count first, and latest view time second
+            $answers->leftJoin(['answers_view' => $answerViews], 'answers_view.answer_id = answers.id')
+                ->orderBy([
+                    'answers_view.answers_viewcount' => SORT_ASC, // Sort by view count in descending order
+                    'answers_view.latest_view_time' => SORT_ASC   // Sort by latest view time in descending order if view counts are the same
+                ]);
+            if ($this->orderWinner) {
 
                 $answers->orderBy('answers_view.answers_viewcount ASC, dislikes_answer.views_dislaikanswercount as ASC');
                 $answerlike = DislikeAnswer::find()
-                ->select('answer_id,count(user_id) as answers_viewcount')
-                ->groupBy('answer_id');
-                $answers->leftJoin(['dislikes_answer'=>$answerlike], 'dislikes_answer.answer_id = answers.id');
+                    ->select('answer_id,count(user_id) as answers_viewcount')
+                    ->groupBy('answer_id');
+                $answers->leftJoin(['dislikes_answer' => $answerlike], 'dislikes_answer.answer_id = answers.id');
             }
         }
 

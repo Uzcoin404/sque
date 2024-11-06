@@ -46,17 +46,16 @@ class Answers extends \yii\db\ActiveRecord
         return $text;
     }
 
-    public function getLiks(){
+    public function getLikes(){
         return Answers::find('likes')->where(['id' => $this->id])->one()->likes;
         // $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM likes WHERE answer_id=:answer_id",["answer_id"=>$this->id, 'status' => 1])->queryOne();
         // return $sql['count'];
     }
-    public function getDisliks(){
-        return DislikeAnswer::find()->count();
+    public function getDislikes(){
+        return DislikeAnswer::find()->where(['answer_id' => $this->id])->count();
     }
     public function getView(){
         $sql = Yii::$app->getDb()->createCommand("SELECT COUNT(id) as count FROM answers_view WHERE answer_id=:answer_id",["answer_id"=>$this->id])->queryOne();
         return $sql['count'];
     }
-
 }
