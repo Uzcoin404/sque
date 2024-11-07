@@ -32,8 +32,8 @@ class Answersblock extends \yii\bootstrap5\Widget
             // Join the subquery and order by views count first, and latest view time second
             $answers->leftJoin(['answers_view' => $answerViews], 'answers_view.answer_id = answers.id')
                 ->orderBy([
-                    'answers_view.answers_viewcount' => SORT_ASC, // Sort by view count in descending order
-                    'answers_view.latest_view_time' => SORT_ASC   // Sort by latest view time in descending order if view counts are the same
+                    'answers_view.answers_viewcount' => SORT_ASC, // Sort by view count in ascending order
+                    'answers_view.latest_view_time' => SORT_DESC   // Sort by latest view time in descending order if view counts are the same
                 ]);
             if ($this->orderWinner) {
 
